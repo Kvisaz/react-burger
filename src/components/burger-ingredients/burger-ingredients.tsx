@@ -9,11 +9,14 @@ interface IBurgerIngredientsProps {
 
 export function BurgerIngredients({parts}: IBurgerIngredientsProps) {
     return (
-        <section className={`mt-4 mb-4`}>
-            <div className='pt-4 pb-4'>
+        <section className={`mt-4 mb-4 ${styles.main}`}>
+            <div className={`pt-4 pb-4 ${styles.list}`}>
                 {parts.map(p => (
                     <BasketItem key={p._id} part={p}/>
                 ))}
+            </div>
+            <div className={`mt-10 ${styles.sum}`}>
+                Sum
             </div>
         </section>
     );

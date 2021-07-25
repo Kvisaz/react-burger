@@ -1,0 +1,16 @@
+.main {
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.list {
+    display: flex;
+    overflow: scroll;
+    flex-direction: column;
+}
+
+.sum {
+    align-self: flex-end;
+}
