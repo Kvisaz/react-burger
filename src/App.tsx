@@ -12,7 +12,7 @@ function App() {
     return (
         <div className={styles.App}>
             <AppHeader/>
-            <div className={styles.row}>
+            <main className={styles.row}>
                 <div className={styles.col_left}>
                     <span className='text text_type_main-large'>Соберите бургер</span>
                     <BurgerConstructor/>
@@ -20,7 +20,7 @@ function App() {
                 <div className={styles.col_right}>
                     <BurgerIngredients/>
                 </div>
-            </div>
+            </main>
         </div>
     );
 }

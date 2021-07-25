@@ -6,17 +6,19 @@ import styles from './app-header.module.css';
 export function AppHeader() {
     const className = `${styles.header} mt-4 mb-4`;
     return (
-        <nav className={className}>
+        <header>
+            <nav className={className}>
             <span className={styles.left}>
-                <AppHeaderItem text='Конструктор' icon={ICON.Burger} active />
+                <AppHeaderItem text='Конструктор' icon={ICON.Burger} active/>
                 <AppHeaderItem text='Лента заказов' icon={ICON.List}/>
             </span>
-            <span className={styles.center}>
+                <span className={styles.center}>
                 <Logo/>
             </span>
-            <span className={styles.right}>
+                <span className={styles.right}>
                 <AppHeaderItem text='Личный кабинет' icon={ICON.Person}/>
             </span>
-        </nav>
+            </nav>
+        </header>
     )
 }
