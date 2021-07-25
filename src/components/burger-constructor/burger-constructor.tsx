@@ -28,11 +28,13 @@ export function BurgerConstructor({parts}: IBurgerConstructorProps) {
     });
 
     return (
-        <div className='mt-5'>
+        <div className={`mt-5 ${styles.main}`}>
             <BurgerConstructorTabs/>
-            <BurgerConstructorSection title={'Булки'} parts={buns}/>
-            <BurgerConstructorSection title={'Соусы'} parts={sauces}/>
-            <BurgerConstructorSection title={'Начинки'} parts={fills}/>
+            <div className={styles.list}>
+                <BurgerConstructorSection title={'Булки'} parts={buns}/>
+                <BurgerConstructorSection title={'Соусы'} parts={sauces}/>
+                <BurgerConstructorSection title={'Начинки'} parts={fills}/>
+            </div>
         </div>
     );
 }

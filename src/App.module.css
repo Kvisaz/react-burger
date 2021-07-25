@@ -14,7 +14,9 @@
 
 .col {
     flex: 50%;
-    overflow: scroll;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .col_left {
