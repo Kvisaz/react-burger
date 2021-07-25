@@ -1,0 +1,21 @@
+.item {
+    display: flex;
+    align-items: center;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.icon {
+    display: flex;
+    align-items: center;
+}
+
+.image {
+    width: 80px;
+}
+
+.name {
+    flex: 1;
+}
