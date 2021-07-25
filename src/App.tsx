@@ -41,7 +41,7 @@ function App() {
     return (
         <div className={styles.App}>
             <AppHeader/>
-            <main className={styles.row}>
+            <main className={styles.content}>
                 <div className={styles.col_left}>
                     <span className='text text_type_main-large'>Соберите бургер</span>
                     <BurgerConstructor parts={parts}/>
