@@ -12,7 +12,7 @@
 
 .col {
   flex: 50%;
-  height: 200px;
+  overflow: scroll;
 }
 
 .col_left {

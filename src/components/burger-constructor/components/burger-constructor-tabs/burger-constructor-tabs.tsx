@@ -23,8 +23,8 @@ export function BurgerConstructorTabs({onPageSelect}: IBurgerConstructorTabsProp
     return (
         <div style={{display: 'flex'}}>
             {
-                Object.entries(ITabsPage).map(([key, text]) => (
-                    <Tab value={key} active={current === key} onClick={() => onClick(key)}>
+                Object.entries(ITabsPage).map(([key, text], index) => (
+                    <Tab key={index} value={key} active={current === key} onClick={() => onClick(key)}>
                         {text}
                     </Tab>
                 ))
