@@ -1,27 +1,31 @@
 .App {
-  margin: 0 auto;
-  max-width: 1280px;
+    margin: 0 auto;
+    max-width: 1280px;
+    background: brown;
+    display: flex;
+    flex-direction: column;
 }
 
-.row {
-  width: 100%;
-  padding-left: 20px;
-  padding-right: 20px;
-  display: flex;
+.content {
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    background: chartreuse;
+    overflow: hidden;
 }
 
 .col {
-  flex: 50%;
-  overflow: scroll;
+    flex: 50%;
+    overflow: scroll;
 }
 
 .col_left {
-  composes: col;
-  margin-top: 40px;
-  margin-right: 40px;
+    composes: col;
+    margin-top: 40px;
+    margin-right: 40px;
 }
 
 .col_right {
-  composes: col;
-  margin-top: 100px;
+    composes: col;
+    margin-top: 100px;
 }
