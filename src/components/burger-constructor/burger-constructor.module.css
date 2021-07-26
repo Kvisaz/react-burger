@@ -8,6 +8,6 @@
 
 .list {
     display: flex;
-    overflow: scroll;
+    overflow-y: scroll;
     flex-direction: column;
 }
