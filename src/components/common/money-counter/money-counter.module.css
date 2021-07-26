@@ -1,4 +1,9 @@
-.counter {
+.main {
     display: flex;
     align-items: center;
+}
+
+.big_icon > svg {
+    width: 33px;
+    height: 33px;
 }

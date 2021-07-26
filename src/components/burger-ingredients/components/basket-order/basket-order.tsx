@@ -1,5 +1,7 @@
 import React from 'react';
 import styles from './basket-order.module.css';
+import {Button} from '@ya.praktikum/react-developer-burger-ui-components';
+import {MoneyCounter} from '../../../common/money-counter/money-counter';
 
 interface IBasketOrderProps {
     sum: number;
@@ -7,8 +9,11 @@ interface IBasketOrderProps {
 
 export function BasketOrder({sum}: IBasketOrderProps) {
     return (
-        <div className={styles.main}>
-            {sum}
+        <div className={`mr-4 ${styles.main}`}>
+            <div className='mr-10'><MoneyCounter sum={sum} big/></div>
+            <Button type="primary" size="large">
+                Оформить заказ
+            </Button>
         </div>
     )
 }
