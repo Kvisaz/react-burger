@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './burger-ingredients.module.css';
-import {IBurgerPart} from "../../model/IBurgerPart";
 import {BasketItem} from "./components/basket-item/basket-item";
 import {BasketOrder} from './components/basket-order/basket-order';
+import {ISelectedBurgerPart} from '../../model/ISelectedBurgerPart';
 
 interface IBurgerIngredientsProps {
-    parts: IBurgerPart[]
+    parts: ISelectedBurgerPart[]
 }
 
 export function BurgerIngredients({parts}: IBurgerIngredientsProps) {

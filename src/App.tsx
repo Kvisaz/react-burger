@@ -5,6 +5,7 @@ import {BurgerConstructor} from "./components/burger-constructor/burger-construc
 import {BurgerIngredients} from "./components/burger-ingredients/burger-ingredients";
 import {Api} from "./service/Api";
 import {IBurgerPart} from "./model/IBurgerPart";
+import {BunType, ISelectedBurgerPart} from './model/ISelectedBurgerPart';
 
 const API = new Api();
 
@@ -20,14 +21,32 @@ function App() {
     useEffect(() => {
         if (state.loaded) return;
         let parts: IBurgerPart[] = [];
-        let selected: IBurgerPart[] = [];
+        let selected: ISelectedBurgerPart[] = [];
         API.getBurgerParts()
             .then(({data, error}) => {
                 if (error) {
                     console.warn(error);
                 } else {
                     parts = data;
-                    selected = (data.slice(0, 7)); // test only
+
+                    // test only
+                    const buns = data.filter(i => i.type === 'bun');
+                    const notBuns = data.filter(i => i.type !== 'bun');
+                    selected = [
+                        ...notBuns
+                    ];
+
+                    if (buns.length > 0) selected.unshift({
+                        ...buns[0],
+                        bunType: BunType.top,
+                        locked: true
+                    });
+                    if (buns.length > 1) selected.push({
+                        ...buns[1],
+                        bunType: BunType.bottom,
+                        locked: true
+                    });
+
                 }
                 setState({
                     parts,
