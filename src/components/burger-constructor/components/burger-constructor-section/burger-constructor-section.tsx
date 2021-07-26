@@ -14,7 +14,7 @@ export function BurgerConstructorSection({title, parts}: IBurgerConstructorSecti
             <span className='text text_type_main-medium'>{title}</span>
             <div className={`mt-6 pl-4 ${styles.list}`}>
                 {parts.map(p => (
-                    <BurgerConstructorItem key={p._id} part={p} />
+                    <BurgerConstructorItem key={p._id} part={p} amount={Math.floor(Math.random() * 6 - 3)}/>
                 ))}
             </div>
         </section>
