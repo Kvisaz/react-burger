@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './burger-ingredients.module.css';
 import {IBurgerPart} from "../../model/IBurgerPart";
 import {BasketItem} from "./components/basket-item/basket-item";
+import {BasketOrder} from './components/basket-order/basket-order';
 
 interface IBurgerIngredientsProps {
     parts: IBurgerPart[]
@@ -15,8 +16,8 @@ export function BurgerIngredients({parts}: IBurgerIngredientsProps) {
                     <BasketItem key={p._id} part={p}/>
                 ))}
             </div>
-            <div className={`mt-10 ${styles.sum}`}>
-                Sum
+            <div className={`mt-10 mb-10 ${styles.sum}`}>
+                <BasketOrder sum={100} />
             </div>
         </section>
     );
