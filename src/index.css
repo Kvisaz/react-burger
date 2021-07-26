@@ -8,3 +8,23 @@ html, body, #root, #root > div {
     height: 100%;
     overflow: hidden; /* fix iOS drag scrolling*/
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #8585AD;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #9494d2;
+}
