@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from 'burger-constructor-tabs.module.css';
+import styles from './burger-constructor-tabs.module.css';
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 
 export interface IBurgerConstructorTabsProps {
@@ -21,7 +21,7 @@ export function BurgerConstructorTabs({onPageSelect}: IBurgerConstructorTabsProp
     }
 
     return (
-        <div style={{display: 'flex'}}>
+        <div className={`mt-5 ${styles.main}`}>
             {
                 Object.entries(ITabsPage).map(([key, text], index) => (
                     <Tab key={index} value={key} active={current === key} onClick={() => onClick(key)}>

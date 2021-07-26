@@ -28,9 +28,9 @@ export function BurgerConstructor({parts}: IBurgerConstructorProps) {
     });
 
     return (
-        <div className={`mt-5 ${styles.main}`}>
+        <div className={`${styles.main}`}>
             <BurgerConstructorTabs/>
-            <div className={styles.list}>
+            <div className={`mb-10 ${styles.list}`}>
                 <BurgerConstructorSection title={'Булки'} parts={buns}/>
                 <BurgerConstructorSection title={'Соусы'} parts={sauces}/>
                 <BurgerConstructorSection title={'Начинки'} parts={fills}/>
