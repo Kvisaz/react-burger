@@ -3,6 +3,11 @@
     align-items: center;
 }
 
+.icon {
+    display: flex;
+    align-content: center;
+}
+
 .big_icon > svg {
     width: 33px;
     height: 33px;

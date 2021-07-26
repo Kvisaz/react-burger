@@ -9,7 +9,7 @@ interface IMoneyCounterProps {
 
 export function MoneyCounter({sum, big = false}: IMoneyCounterProps) {
     const digitClass = big ? 'text_type_digits-medium' : 'text_type_digits-default';
-    const iconClass = big ? styles.big_icon : '';
+    const iconClass = (big ? styles.big_icon : '') + ' ' + styles.icon;
     return (
         <div className={`text ${digitClass} ${styles.main}`}>
             <div className='mr-2'>{sum}</div>

@@ -11,11 +11,6 @@
     display: block;
 }
 
-.price {
-    display: flex;
-    justify-content: center;
-}
-
 .name {
     text-align: center;
     height: 48px;
