@@ -2,71 +2,90 @@ import React, {useEffect, useState} from 'react';
 import styles from './App.module.css';
 import {AppHeader} from "./components/app-header/app-header";
 import {BurgerIngredients} from "./components/burger-ingredients/burger-ingredients";
-import {BurgerConstructor} from "./components/burger-constructor/burger-constructor";
+import {
+    BurgerConstructor,
+    IConstructorElementProps,
+    mapBurgerItem
+} from "./components/burger-constructor/burger-constructor";
 import {Api} from "./service/Api";
 import {IBurgerPart} from "./model/IBurgerPart";
-import {BunType, ISelectedBurgerPart} from './model/ISelectedBurgerPart';
 
 const API = new Api();
 
 interface IAppState {
     loaded: boolean;
-    parts: IBurgerPart[];
-    selected: IBurgerPart[];
+    ingredients: IBurgerPart[];
+    selectedTop?: IConstructorElementProps;
+    selectedParts: IConstructorElementProps[];
+    selectedBottom?: IConstructorElementProps;
 }
 
 function App() {
-    const [state, setState] = useState<IAppState>({loaded: false, parts: [], selected: []});
+    const [state, setState] = useState<IAppState>({
+        loaded: false,
+        ingredients: [],
+        selectedTop: undefined,
+        selectedParts: [],
+        selectedBottom: undefined,
+    });
 
     useEffect(() => {
         if (state.loaded) return;
-        let parts: IBurgerPart[] = [];
-        let selected: ISelectedBurgerPart[] = [];
+        let ingredients: IBurgerPart[] = [];
+        let selectedParts: IConstructorElementProps[] = [];
+        let selectedTop: IConstructorElementProps;
+        let selectedBottom: IConstructorElementProps;
         API.getBurgerParts()
             .then(({data, error}) => {
                 if (error) {
                     console.warn(error);
                 } else {
-                    parts = data;
+                    ingredients = data;
 
                     // test only
                     const buns = data.filter(i => i.type === 'bun');
                     const notBuns = data.filter(i => i.type !== 'bun');
-                    selected = [
-                        ...notBuns
+                    selectedParts = [
+                        ...notBuns.map(i => mapBurgerItem(i))
                     ];
 
-                    if (buns.length > 0) selected.unshift({
-                        ...buns[0],
-                        bunType: BunType.top,
-                        locked: true
-                    });
-                    if (buns.length > 1) selected.push({
-                        ...buns[1],
-                        bunType: BunType.bottom,
-                        locked: true
-                    });
+                    if (buns.length > 0) {
+                        selectedTop = {
+                            ...mapBurgerItem(buns[0], ' (верх)'),
+                            type: 'top',
+                            isLocked: true
+                        };
+                    }
+                    if (buns.length > 1) {
+                        selectedBottom = {
+                            ...mapBurgerItem(buns[1], ' (низ)'),
+                            type: 'bottom',
+                            isLocked: true
+                        };
+                    }
 
                 }
                 setState({
-                    parts,
-                    selected,
+                    ingredients,
+                    selectedTop,
+                    selectedParts,
+                    selectedBottom,
                     loaded: true
                 });
             });
     });
 
-    const {parts, selected} = state;
+    const {ingredients, selectedParts, selectedBottom, selectedTop} = state;
     return (
         <div className={styles.App}>
             <AppHeader/>
             <main className={styles.content}>
                 <div className={styles.col_left}>
                     <span className='text text_type_main-large'>Соберите бургер</span>
-                    <BurgerIngredients parts={parts}/>
+                    <BurgerIngredients parts={ingredients}/>
                 </div>
                 <div className={styles.col_right}>
-                    <BurgerConstructor parts={selected}/>
+                    <BurgerConstructor parts={selectedParts} bottom={selectedBottom} top={selectedTop}/>
                 </div>
             </main>
         </div>
