@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './burger-constructor-tabs.module.css';
+import styles from './burger-ingredients-tabs.module.css';
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 
 export interface IBurgerConstructorTabsProps {
@@ -12,7 +12,7 @@ export enum ITabsPage {
     fills = 'Начинки'
 }
 
-export function BurgerConstructorTabs({onPageSelect}: IBurgerConstructorTabsProps) {
+export function BurgerIngredientsTabs({onPageSelect}: IBurgerConstructorTabsProps) {
     const [current, setCurrent] = React.useState(Object.keys(ITabsPage)[0])
 
     const onClick = (value: string) => {

@@ -1,40 +1,24 @@
 import React from 'react';
 import styles from './burger-constructor.module.css';
-import {BurgerConstructorTabs} from "./components/burger-constructor-tabs/burger-constructor-tabs";
-import {BurgerConstructorSection} from "./components/burger-constructor-section/burger-constructor-section";
-import {IBurgerPart} from "../../model/IBurgerPart";
+import {BurgerConstructorItem} from "./components/basket-item/burger-constructor-item";
+import {BurgerConstructorOrder} from './components/basket-order/burger-constructor-order';
+import {ISelectedBurgerPart} from '../../model/ISelectedBurgerPart';
 
-interface IBurgerConstructorProps {
-    parts: IBurgerPart[]
+interface IBurgerIngredientsProps {
+    parts: ISelectedBurgerPart[]
 }
 
-export function BurgerConstructor({parts}: IBurgerConstructorProps) {
-
-    const buns: IBurgerPart[] = [];
-    const fills: IBurgerPart[] = [];
-    const sauces: IBurgerPart[] = [];
-    parts.forEach((part) => {
-        switch (part.type) {
-            case 'bun':
-                buns.push(part);
-                break;
-            case 'main':
-                fills.push(part);
-                break;
-            case 'sauce':
-                sauces.push(part);
-                break;
-        }
-    });
-
+export function BurgerConstructor({parts}: IBurgerIngredientsProps) {
     return (
-        <div className={`${styles.main}`}>
-            <BurgerConstructorTabs/>
-            <div className={`mb-10 ${styles.list}`}>
-                <BurgerConstructorSection title={'Булки'} parts={buns}/>
-                <BurgerConstructorSection title={'Соусы'} parts={sauces}/>
-                <BurgerConstructorSection title={'Начинки'} parts={fills}/>
+        <section className={`mt-4 mb-4 ${styles.main}`}>
+            <div className={`pt-4 pb-4 ${styles.list}`}>
+                {parts.map(p => (
+                    <BurgerConstructorItem key={p._id} part={p}/>
+                ))}
             </div>
-        </div>
+            <div className={`mt-10 mb-10 ${styles.sum}`}>
+                <BurgerConstructorOrder sum={100} />
+            </div>
+        </section>
     );
 }

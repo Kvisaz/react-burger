@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import styles from './App.module.css';
 import {AppHeader} from "./components/app-header/app-header";
-import {BurgerConstructor} from "./components/burger-constructor/burger-constructor";
 import {BurgerIngredients} from "./components/burger-ingredients/burger-ingredients";
+import {BurgerConstructor} from "./components/burger-constructor/burger-constructor";
 import {Api} from "./service/Api";
 import {IBurgerPart} from "./model/IBurgerPart";
 import {BunType, ISelectedBurgerPart} from './model/ISelectedBurgerPart';
@@ -63,10 +63,10 @@ function App() {
             <main className={styles.content}>
                 <div className={styles.col_left}>
                     <span className='text text_type_main-large'>Соберите бургер</span>
-                    <BurgerConstructor parts={parts}/>
+                    <BurgerIngredients parts={parts}/>
                 </div>
                 <div className={styles.col_right}>
-                    <BurgerIngredients parts={selected}/>
+                    <BurgerConstructor parts={selected}/>
                 </div>
             </main>
         </div>

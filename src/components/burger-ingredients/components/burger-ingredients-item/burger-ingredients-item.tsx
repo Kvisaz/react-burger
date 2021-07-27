@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './burger-constructor-item.module.css';
+import styles from './burger-ingredients-item.module.css';
 import {IBurgerPart} from '../../../../model/IBurgerPart';
 import {Counter} from '@ya.praktikum/react-developer-burger-ui-components';
 import {MoneyCounter} from '../../../common/money-counter/money-counter';
@@ -9,7 +9,7 @@ interface IBurgerConstructorItemProps {
     amount?: number;
 }
 
-export function BurgerConstructorItem({part, amount = 0}: IBurgerConstructorItemProps) {
+export function BurgerIngredientsItem({part, amount = 0}: IBurgerConstructorItemProps) {
     console.log('part amount', amount);
     const hasAmount = amount > 0;
     const counter = hasAmount ? (<Counter count={amount} size='default'/>) : null;

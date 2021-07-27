@@ -1,24 +1,40 @@
 import React from 'react';
 import styles from './burger-ingredients.module.css';
-import {BasketItem} from "./components/basket-item/basket-item";
-import {BasketOrder} from './components/basket-order/basket-order';
-import {ISelectedBurgerPart} from '../../model/ISelectedBurgerPart';
+import {BurgerIngredientsTabs} from "./components/burger-ingredients-tabs/burger-ingredients-tabs";
+import {BurgerIngredientsSection} from "./components/burger-ingredients-section/burger-ingredients-section";
+import {IBurgerPart} from "../../model/IBurgerPart";
 
-interface IBurgerIngredientsProps {
-    parts: ISelectedBurgerPart[]
+interface IBurgerConstructorProps {
+    parts: IBurgerPart[]
 }
 
-export function BurgerIngredients({parts}: IBurgerIngredientsProps) {
+export function BurgerIngredients({parts}: IBurgerConstructorProps) {
+
+    const buns: IBurgerPart[] = [];
+    const fills: IBurgerPart[] = [];
+    const sauces: IBurgerPart[] = [];
+    parts.forEach((part) => {
+        switch (part.type) {
+            case 'bun':
+                buns.push(part);
+                break;
+            case 'main':
+                fills.push(part);
+                break;
+            case 'sauce':
+                sauces.push(part);
+                break;
+        }
+    });
+
     return (
-        <section className={`mt-4 mb-4 ${styles.main}`}>
-            <div className={`pt-4 pb-4 ${styles.list}`}>
-                {parts.map(p => (
-                    <BasketItem key={p._id} part={p}/>
-                ))}
+        <div className={`${styles.main}`}>
+            <BurgerIngredientsTabs/>
+            <div className={`mb-10 ${styles.list}`}>
+                <BurgerIngredientsSection title={'Булки'} parts={buns}/>
+                <BurgerIngredientsSection title={'Соусы'} parts={sauces}/>
+                <BurgerIngredientsSection title={'Начинки'} parts={fills}/>
             </div>
-            <div className={`mt-10 mb-10 ${styles.sum}`}>
-                <BasketOrder sum={100} />
-            </div>
-        </section>
+        </div>
     );
 }

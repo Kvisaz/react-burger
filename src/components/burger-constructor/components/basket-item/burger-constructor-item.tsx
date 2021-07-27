@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './basket-item.module.css';
+import styles from './burger-constructor-item.module.css';
 import {DeleteIcon, DragIcon, LockIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {MoneyCounter} from '../../../common/money-counter/money-counter';
 import {BunType, ISelectedBurgerPart} from '../../../../model/ISelectedBurgerPart';
@@ -8,7 +8,7 @@ interface IBasketItemProps {
     part: ISelectedBurgerPart;
 }
 
-export function BasketItem({part}: IBasketItemProps) {
+export function BurgerConstructorItem({part}: IBasketItemProps) {
     const locked = part.locked === true;
 
     function getNameSuffix(bun?: BunType): string {

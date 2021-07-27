@@ -10,3 +10,7 @@
     overflow-y: scroll;
     flex-direction: column;
 }
+
+.sum {
+    align-self: flex-end;
+}
