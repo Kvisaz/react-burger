@@ -1,0 +1,28 @@
+.header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.col {
+    display: flex;
+    flex: 1;
+}
+
+.left {
+    composes: col;
+    display: flex;
+    justify-content: space-between;
+}
+
+.center {
+    composes: col;
+    display: flex;
+    justify-content: center;
+}
+
+.right {
+    composes: col;
+    display: flex;
+    justify-content: flex-end;
+}

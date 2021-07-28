@@ -1,26 +1,95 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect, useState} from 'react';
+import styles from './App.module.css';
+import {AppHeader} from "./components/app-header/app-header";
+import {BurgerIngredients} from "./components/burger-ingredients/burger-ingredients";
+import {
+    BurgerConstructor,
+    IConstructorElementProps,
+    mapBurgerItem
+} from "./components/burger-constructor/burger-constructor";
+import {Api} from "./service/Api";
+import {IBurgerPart} from "./model/IBurgerPart";
+
+const API = new Api();
+
+interface IAppState {
+    loaded: boolean;
+    ingredients: IBurgerPart[];
+    selectedTop?: IConstructorElementProps;
+    selectedParts: IConstructorElementProps[];
+    selectedBottom?: IConstructorElementProps;
+}
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [state, setState] = useState<IAppState>({
+        loaded: false,
+        ingredients: [],
+        selectedTop: undefined,
+        selectedParts: [],
+        selectedBottom: undefined,
+    });
+
+    useEffect(() => {
+        if (state.loaded) return;
+        let ingredients: IBurgerPart[] = [];
+        let selectedParts: IConstructorElementProps[] = [];
+        let selectedTop: IConstructorElementProps;
+        let selectedBottom: IConstructorElementProps;
+        API.getBurgerParts()
+            .then(({data, error}) => {
+                if (error) {
+                    console.warn(error);
+                } else {
+                    ingredients = data;
+
+                    // test only
+                    const buns = data.filter(i => i.type === 'bun');
+                    const notBuns = data.filter(i => i.type !== 'bun');
+                    selectedParts = [
+                        ...notBuns.map(i => mapBurgerItem(i))
+                    ];
+
+                    if (buns.length > 0) {
+                        selectedTop = {
+                            ...mapBurgerItem(buns[0], ' (верх)'),
+                            type: 'top',
+                            isLocked: true
+                        };
+                    }
+                    if (buns.length > 1) {
+                        selectedBottom = {
+                            ...mapBurgerItem(buns[1], ' (низ)'),
+                            type: 'bottom',
+                            isLocked: true
+                        };
+                    }
+
+                }
+                setState({
+                    ingredients,
+                    selectedTop,
+                    selectedParts,
+                    selectedBottom,
+                    loaded: true
+                });
+            });
+    });
+
+    const {ingredients, selectedParts, selectedBottom, selectedTop} = state;
+    return (
+        <div className={styles.App}>
+            <AppHeader/>
+            <main className={styles.content}>
+                <div className={styles.col_left}>
+                    <span className='text text_type_main-large'>Соберите бургер</span>
+                    <BurgerIngredients parts={ingredients}/>
+                </div>
+                <div className={styles.col_right}>
+                    <BurgerConstructor parts={selectedParts} bottom={selectedBottom} top={selectedTop}/>
+                </div>
+            </main>
+        </div>
+    );
 }
 
 export default App;

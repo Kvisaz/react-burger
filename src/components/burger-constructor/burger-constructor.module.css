@@ -1,0 +1,17 @@
+.main {
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.list {
+    display: flex;
+    overflow-y: scroll;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.sum {
+    align-self: flex-end;
+}
