@@ -13,7 +13,6 @@ import {IBurgerPart} from "./model/IBurgerPart";
 const API = new Api();
 
 interface IAppState {
-    loaded: boolean;
     ingredients: IBurgerPart[];
     selectedTop?: IConstructorElementProps;
     selectedParts: IConstructorElementProps[];
@@ -22,7 +21,6 @@ interface IAppState {
 
 function App() {
     const [state, setState] = useState<IAppState>({
-        loaded: false,
         ingredients: [],
         selectedTop: undefined,
         selectedParts: [],
@@ -30,7 +28,6 @@ function App() {
     });
 
     useEffect(() => {
-        if (state.loaded) return;
         let ingredients: IBurgerPart[] = [];
         let selectedParts: IConstructorElementProps[] = [];
         let selectedTop: IConstructorElementProps;
@@ -41,6 +38,7 @@ function App() {
                     console.warn(error);
                 } else {
                     ingredients = data;
+                    console.log('loaded ', ingredients);
 
                     // test only
                     const buns = data.filter(i => i.type === 'bun');
@@ -70,10 +68,9 @@ function App() {
                     selectedTop,
                     selectedParts,
                     selectedBottom,
-                    loaded: true
                 });
             });
-    });
+    }, []);
 
     const {ingredients, selectedParts, selectedBottom, selectedTop} = state;
     return (
