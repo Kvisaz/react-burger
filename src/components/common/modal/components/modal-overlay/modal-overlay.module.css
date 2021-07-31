@@ -9,11 +9,3 @@
     justify-content: center;
     background: rgba(0,0,0,0.5);
 }
-
-.window {
-    width: 720px;
-    box-sizing: border-box;
-    border-radius: 40px;
-    background: #1C1C21;
-    overflow: hidden;
-}

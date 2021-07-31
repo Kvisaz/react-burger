@@ -3,18 +3,20 @@ import ReactDom from 'react-dom';
 import styles from './modal-overlay.module.css';
 
 interface IModalOverlayProps {
+    visible?: boolean;
     children?: React.ReactNode
 }
 
-export function ModalOverlay({children}: IModalOverlayProps) {
-
+export function ModalOverlay({visible, children}: IModalOverlayProps) {
     return ReactDom.createPortal(
         (
-            <div className={styles.main}>
-                <div className={`pt-30 pb-30 pl-25 pr-25 ${styles.window}`}>
-                    {children}
-                </div>
-            </div>
+            <>
+                {visible && (
+                    <div className={styles.main}>
+                        {children}
+                    </div>
+                )}
+            </>
         ),
         document.body
     )
