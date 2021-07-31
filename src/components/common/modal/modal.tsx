@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {SyntheticEvent, useCallback, useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
 import styles from './modal.module.css';
 import {ModalOverlay} from './components/modal-overlay/modal-overlay';
@@ -27,6 +27,11 @@ export function Modal({title = '', visible = false, onHide, children}: IModalPro
         if (e.key === "Escape") hide();
     }, [visible, hide]);
 
+    const onWindowClick = useCallback((e: SyntheticEvent) => {
+        e.stopPropagation();
+    }, []);
+
+
     useEffect(() => {
         setState({visible});
     }, [visible]);
@@ -41,7 +46,7 @@ export function Modal({title = '', visible = false, onHide, children}: IModalPro
     return ReactDOM.createPortal(
         (
             state.visible && (<ModalOverlay onClick={hide}>
-                <div className={styles.window}>
+                <div className={styles.window} onClick={onWindowClick}>
                     <div>
                         <div className={`ml-10 mr-10 ${styles.head}`}>
                             <div className={`text text_type_main-large ${styles.title}`}>{title}</div>
