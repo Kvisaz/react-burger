@@ -1,0 +1,18 @@
+.window {
+    width: 720px;
+    box-sizing: border-box;
+    border-radius: 40px;
+    background: #1C1C21;
+    overflow: hidden;
+}
+
+.head{
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.content {
+
+}
