@@ -10,7 +10,8 @@ import {
 import {Api} from "./service/Api";
 import {IBurgerPart} from "./model/IBurgerPart";
 
-const API = new Api();
+const API_END_POINT = 'https://norma.nomoreparties.space/api/ingredients';
+const API = new Api(API_END_POINT);
 
 interface IAppState {
     ingredients: IBurgerPart[];
