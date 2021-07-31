@@ -71,7 +71,8 @@ function App() {
                     selectedParts,
                     selectedBottom,
                 })))
-            });
+            })
+            .catch(e=>console.error(e))
     }, []);
 
     const {ingredients, selectedParts, selectedBottom, selectedTop} = state;
