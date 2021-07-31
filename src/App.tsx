@@ -9,7 +9,6 @@ import {
 } from "./components/burger-constructor/burger-constructor";
 import {Api} from "./service/Api";
 import {IBurgerPart} from "./model/IBurgerPart";
-import {Modal} from './components/common/modal/modal';
 
 const API_END_POINT = 'https://norma.nomoreparties.space/api/ingredients';
 const API = new Api(API_END_POINT);
@@ -66,6 +65,7 @@ function App() {
 
                 }
                 setState({
+                    ...state,
                     ingredients,
                     selectedTop,
                     selectedParts,
@@ -87,7 +87,6 @@ function App() {
                     <BurgerConstructor parts={selectedParts} bottom={selectedBottom} top={selectedTop}/>
                 </div>
             </main>
-            <Modal title={'Детали ингредиента'} visible> Content Content <p>Content</p></Modal>
         </div>
     );
 }
