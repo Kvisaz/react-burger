@@ -5,7 +5,6 @@ import {BurgerIngredients} from "./components/burger-ingredients/burger-ingredie
 import {
     BurgerConstructor,
     IConstructorElementProps,
-    mapBurgerItem
 } from "./components/burger-constructor/burger-constructor";
 import {Api} from "./service/Api";
 import {IBurgerPart} from "./model/IBurgerPart";
@@ -18,6 +17,7 @@ interface IAppState {
     selectedTop?: IConstructorElementProps;
     selectedParts: IConstructorElementProps[];
     selectedBottom?: IConstructorElementProps;
+    orderId: number;
 }
 
 function App() {
@@ -26,6 +26,7 @@ function App() {
         selectedTop: undefined,
         selectedParts: [],
         selectedBottom: undefined,
+        orderId: 34536
     });
 
     useEffect(() => {
@@ -84,11 +85,18 @@ function App() {
                     <BurgerIngredients parts={ingredients}/>
                 </div>
                 <div className={styles.col_right}>
-                    <BurgerConstructor parts={selectedParts} bottom={selectedBottom} top={selectedTop}/>
+                    <BurgerConstructor parts={selectedParts} bottom={selectedBottom} top={selectedTop}
+                                       orderId={state.orderId}/>
                 </div>
             </main>
         </div>
     );
+}
+
+function mapBurgerItem(data: IBurgerPart, suffix = ''): IConstructorElementProps {
+    return {
+        _id: data._id, price: data.price, text: data.name + suffix, thumbnail: data.image
+    }
 }
 
 export default App;

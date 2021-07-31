@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import styles from './burger-constructor.module.css';
 import {BurgerConstructorOrder} from './components/burger-constructor-order/burger-constructor-order';
 import {ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components';
-import {IBurgerPart} from '../../model/IBurgerPart';
+import {Modal} from '../common/modal/modal';
+import {OrderDetails} from './components/order-details/order-details';
 
 export interface IConstructorElementProps {
     _id: string;
@@ -14,19 +15,26 @@ export interface IConstructorElementProps {
     price: number;
 }
 
-export function mapBurgerItem(data: IBurgerPart, suffix = ''): IConstructorElementProps {
-    return {
-        _id: data._id, price: data.price, text: data.name + suffix, thumbnail: data.image
-    }
-}
-
 interface IBurgerIngredientsProps {
+    orderId: number;
     top?: IConstructorElementProps,
     parts: IConstructorElementProps[],
     bottom?: IConstructorElementProps,
 }
 
-export function BurgerConstructor({top, parts, bottom}: IBurgerIngredientsProps) {
+export function BurgerConstructor({top, parts, bottom, orderId}: IBurgerIngredientsProps) {
+
+    const [modal, showModal] = useState(false);
+
+    const onShowClick = useCallback(() => {
+        if (modal) return;
+        showModal(true);
+    }, [modal]);
+
+    const onHideClick = useCallback(() => {
+        showModal(false);
+    }, []);
+
     return (
         <section className={`mt-4 mb-4 ${styles.main}`}>
             {top && <ConstructorElement key={top._id} {...top} />}
@@ -37,8 +45,11 @@ export function BurgerConstructor({top, parts, bottom}: IBurgerIngredientsProps)
             </div>
             {bottom && <ConstructorElement key={bottom._id} {...bottom} />}
             <div className={`mt-10 mb-10 ${styles.sum}`}>
-                <BurgerConstructorOrder sum={100}/>
+                <BurgerConstructorOrder sum={100} onClick={onShowClick}/>
             </div>
+            <Modal visible={modal} onHide={onHideClick}>
+                <OrderDetails orderId={orderId}/>
+            </Modal>
         </section>
     );
 }
