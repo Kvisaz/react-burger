@@ -1,22 +1,18 @@
-import React from 'react';
+import React, {SyntheticEvent} from 'react';
 import ReactDom from 'react-dom';
 import styles from './modal-overlay.module.css';
 
 interface IModalOverlayProps {
-    visible?: boolean;
+    onClick: (e:SyntheticEvent)=>void;
     children?: React.ReactNode
 }
 
-export function ModalOverlay({visible, children}: IModalOverlayProps) {
+export function ModalOverlay({onClick, children}: IModalOverlayProps) {
     return ReactDom.createPortal(
         (
-            <>
-                {visible && (
-                    <div className={styles.main}>
-                        {children}
-                    </div>
-                )}
-            </>
+            <div onClick={onClick} className={styles.main}>
+                {children}
+            </div>
         ),
         document.body
     )
