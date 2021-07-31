@@ -15,4 +15,5 @@
     box-sizing: border-box;
     border-radius: 40px;
     background: #1C1C21;
+    overflow: hidden;
 }
