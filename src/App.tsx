@@ -40,7 +40,6 @@ function App() {
                     console.warn(error);
                 } else {
                     ingredients = data;
-                    console.log('loaded ', ingredients);
 
                     // test only
                     const buns = data.filter(i => i.type === 'bun');
