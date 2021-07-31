@@ -64,13 +64,13 @@ function App() {
                     }
 
                 }
-                setState({
-                    ...state,
+                setState((prevState => ({
+                    ...prevState,
                     ingredients,
                     selectedTop,
                     selectedParts,
                     selectedBottom,
-                });
+                })))
             });
     }, []);
 

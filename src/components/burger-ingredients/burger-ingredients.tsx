@@ -34,7 +34,7 @@ export function BurgerIngredients({parts}: IBurgerConstructorProps) {
             showIngredient: true,
             selectedIngredient: {...part}
         })
-    }, [state.showIngredient, state.selectedIngredient])
+    }, [state.showIngredient])
 
     const buns: IBurgerPart[] = [];
     const fills: IBurgerPart[] = [];
