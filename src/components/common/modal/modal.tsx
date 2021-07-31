@@ -8,25 +8,27 @@ interface IModalProps {
     title?: string;
     visible?: boolean;
     children?: React.ReactNode
+    onHide: Function;
 }
 
 const KEY_DOWN = 'keydown';
 
-export function Modal({title = '', visible = true, children}: IModalProps) {
+export function Modal({title = '', visible = false, onHide, children}: IModalProps) {
 
     const [state, setState] = useState({visible});
 
-    const hide = () => {
+    const hide = useCallback(() => {
         setState({visible: false});
-    }
+        onHide();
+    }, [onHide]);
 
     const onKeyDown = useCallback((e: KeyboardEvent) => {
         if (!visible) return;
         if (e.key === "Escape") hide();
-    }, [visible]);
+    }, [visible, hide]);
 
     useEffect(() => {
-        setState({visible: true});
+        setState({visible});
     }, [visible]);
 
     useEffect(() => {
