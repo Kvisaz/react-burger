@@ -1,13 +1,20 @@
 import React from 'react';
 import styles from './burger-ingredients-section.module.css';
-import {IBurgerPart} from "../../../../model/IBurgerPart";
+import {IBurgerPart, IBurgerPartPropType} from "../../../../model/IBurgerPart";
 import {BurgerIngredientsItem} from '../burger-ingredients-item/burger-ingredients-item';
+import PropTypes from 'prop-types';
 
 export interface IBurgerConstructorSectionProps {
     title: string;
     parts: IBurgerPart[];
     onItemClick: (part: IBurgerPart) => void;
 }
+
+BurgerIngredientsSection.propTypes = {
+    title: PropTypes.string.isRequired,
+    parts: PropTypes.arrayOf(IBurgerPartPropType),
+    onItemClick: PropTypes.func
+};
 
 export function BurgerIngredientsSection({title, parts, onItemClick}: IBurgerConstructorSectionProps) {
     return (

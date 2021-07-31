@@ -4,6 +4,7 @@ import {BurgerConstructorOrder} from './components/burger-constructor-order/burg
 import {ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components';
 import {Modal} from '../common/modal/modal';
 import {OrderDetails} from './components/order-details/order-details';
+import PropTypes from 'prop-types';
 
 export interface IConstructorElementProps {
     _id: string;
@@ -21,6 +22,23 @@ interface IBurgerIngredientsProps {
     parts: IConstructorElementProps[],
     bottom?: IConstructorElementProps,
 }
+
+const IConstructorElementPropTypes = PropTypes.exact({
+    _id: PropTypes.string.isRequired,
+    type: PropTypes.oneOf(['top', 'bottom']),
+    isLocked: PropTypes.bool,
+    handleClose: PropTypes.func,
+    text: PropTypes.string.isRequired,
+    thumbnail: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired
+})
+
+BurgerConstructor.propTypes = {
+    orderId: PropTypes.number.isRequired,
+    top: IConstructorElementPropTypes,
+    parts: PropTypes.arrayOf(IConstructorElementPropTypes),
+    bottom: IConstructorElementPropTypes
+};
 
 export function BurgerConstructor({top, parts, bottom, orderId}: IBurgerIngredientsProps) {
 

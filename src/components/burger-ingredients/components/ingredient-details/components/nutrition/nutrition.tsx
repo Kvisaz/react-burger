@@ -1,10 +1,16 @@
 import React from 'react';
 import styles from './nutrition.module.css';
+import PropTypes from 'prop-types';
 
 interface INutritionProps {
     text: string;
     value: number;
 }
+
+Nutrition.propTypes = {
+    text: PropTypes.string.isRequired,
+    value: PropTypes.number.isRequired,
+};
 
 export function Nutrition({text, value}: INutritionProps) {
     return (

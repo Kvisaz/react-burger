@@ -2,13 +2,18 @@ import React, {useCallback, useState} from 'react';
 import styles from './burger-ingredients.module.css';
 import {BurgerIngredientsTabs} from "./components/burger-ingredients-tabs/burger-ingredients-tabs";
 import {BurgerIngredientsSection} from "./components/burger-ingredients-section/burger-ingredients-section";
-import {IBurgerPart} from "../../model/IBurgerPart";
+import {IBurgerPart, IBurgerPartPropType} from "../../model/IBurgerPart";
 import {IngredientDetails} from './components/ingredient-details/ingredient-details';
 import {Modal} from '../common/modal/modal';
+import PropTypes from 'prop-types';
 
 interface IBurgerConstructorProps {
     parts: IBurgerPart[]
 }
+
+BurgerIngredients.propTypes = {
+    parts: PropTypes.arrayOf(IBurgerPartPropType).isRequired
+};
 
 interface IState {
     showIngredient: boolean;

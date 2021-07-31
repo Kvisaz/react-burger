@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './ingredient-details.module.css';
 import {IBurgerPart} from '../../../../model/IBurgerPart';
 import {Nutrition} from './components/nutrition/nutrition';
+import PropTypes from 'prop-types';
 
 interface IDetailsProps extends IBurgerPart {
     image: string;
@@ -11,6 +12,16 @@ interface IDetailsProps extends IBurgerPart {
     fat: number;
     carbohydrates: number;
 }
+
+
+IngredientDetails.propTypes = {
+    image: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    calories: PropTypes.string.isRequired,
+    proteins: PropTypes.string.isRequired,
+    fat: PropTypes.string.isRequired,
+    carbohydrates: PropTypes.string.isRequired,
+};
 
 export function IngredientDetails({image, name, carbohydrates, fat, calories, proteins}: IDetailsProps) {
     return (

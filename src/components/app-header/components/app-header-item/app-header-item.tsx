@@ -1,6 +1,7 @@
 import React from "react";
 import {BurgerIcon, ListIcon, ProfileIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './app-header-item.module.css';
+import PropTypes from 'prop-types';
 
 export enum ICON {
     Burger,
@@ -19,6 +20,12 @@ interface IAppHeaderItemProps {
     icon: ICON;
     active?: boolean;
 }
+
+AppHeaderItem.propTypes = {
+    text: PropTypes.string.isRequired,
+    icon: PropTypes.number.isRequired,
+    active: PropTypes.bool,
+};
 
 export function AppHeaderItem({text, icon, active}: IAppHeaderItemProps) {
     const className = `${styles.item} p-5`;

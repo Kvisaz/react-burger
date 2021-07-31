@@ -1,11 +1,17 @@
 import React, {SyntheticEvent, useCallback} from 'react';
 import ReactDom from 'react-dom';
 import styles from './modal-overlay.module.css';
+import PropTypes from 'prop-types';
 
 interface IModalOverlayProps {
     onClick: () => void;
     children?: React.ReactNode
 }
+
+ModalOverlay.propTypes = {
+    onClick: PropTypes.func.isRequired,
+    children: PropTypes.element
+};
 
 export function ModalOverlay({onClick, children}: IModalOverlayProps) {
 

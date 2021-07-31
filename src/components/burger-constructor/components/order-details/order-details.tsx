@@ -1,10 +1,15 @@
 import React from 'react';
 import styles from './order-details.module.css';
 import {Assets} from '../../../../Assets';
+import PropTypes from 'prop-types';
 
 interface IOrderProps {
     orderId: number;
 }
+
+OrderDetails.propTypes = {
+    orderId: PropTypes.number.isRequired
+};
 
 const ICON_URL = Assets.images.orderDone;
 

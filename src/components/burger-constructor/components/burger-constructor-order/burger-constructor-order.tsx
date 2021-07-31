@@ -2,11 +2,18 @@ import React from 'react';
 import styles from './burger-constructor-order.module.css';
 import {Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import {MoneyCounter} from '../../../common/money-counter/money-counter';
+import PropTypes from 'prop-types';
 
 interface IBasketOrderProps {
     sum: number;
     onClick: ()=>void;
 }
+
+
+BurgerConstructorOrder.propTypes = {
+    sum: PropTypes.number.isRequired,
+    onClick: PropTypes.func.isRequired,
+};
 
 export function BurgerConstructorOrder({sum, onClick}: IBasketOrderProps) {
     return (

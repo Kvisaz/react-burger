@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import styles from './modal.module.css';
 import {ModalOverlay} from './components/modal-overlay/modal-overlay';
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 
 interface IModalProps {
     title?: string;
@@ -10,6 +11,13 @@ interface IModalProps {
     children?: React.ReactNode
     onHide: Function;
 }
+
+Modal.propTypes = {
+    title: PropTypes.string,
+    visible: PropTypes.bool,
+    children: PropTypes.element,
+    onHide: PropTypes.func.isRequired
+};
 
 const KEY_DOWN = 'keydown';
 
