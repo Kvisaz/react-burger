@@ -1,5 +1,4 @@
 import React, {SyntheticEvent, useCallback} from 'react';
-import ReactDom from 'react-dom';
 import styles from './modal-overlay.module.css';
 import PropTypes from 'prop-types';
 
@@ -20,12 +19,11 @@ export function ModalOverlay({onClick, children}: IModalOverlayProps) {
         onClick();
     }, [onClick])
 
-    return ReactDom.createPortal(
-        (
-            <div onClick={onClickHandler} className={styles.main}>
-                {children}
-            </div>
-        ),
-        document.body
+    return (
+
+        <div onClick={onClickHandler} className={styles.main}>
+            {children}
+        </div>
+
     )
 }
