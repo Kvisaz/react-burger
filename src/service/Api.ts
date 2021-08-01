@@ -7,25 +7,26 @@ export class Api {
     async getBurgerParts(): Promise<IBurgerPartsResponse> {
         const response: IBurgerPartsResponse = {
             data: [],
-            success: true,
         }
         try {
             const apiResponse = await fetch(this.endpoint);
             if (!apiResponse.ok) throw new Error('api error');
-            const data = await apiResponse.json() as IBurgerPartsResponse;
-            response.data = data.data;
-            response.success = data.success;
-            if (!data.success) throw new Error('data error');
+            const apiJson = await apiResponse.json() as IApiEndPointResponse;
+            if (!apiJson.success) throw new Error('apiJson error');
+            response.data = apiJson.data;
         } catch (e) {
-            response.success = false;
             response.error = e;
         }
         return response;
     }
 }
 
-export interface IBurgerPartsResponse {
+export interface IApiEndPointResponse {
     success: boolean;
+    data: IBurgerPart[];
+}
+
+export interface IBurgerPartsResponse {
     error?: string;
     data: IBurgerPart[];
 }
