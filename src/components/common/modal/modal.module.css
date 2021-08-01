@@ -1,4 +1,8 @@
 .window {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 720px;
     box-sizing: border-box;
     border-radius: 40px;
@@ -6,13 +10,9 @@
     overflow: hidden;
 }
 
-.head{
+.head {
     height: 120px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
-
-.content {
-
 }

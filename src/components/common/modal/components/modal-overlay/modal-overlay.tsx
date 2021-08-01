@@ -4,15 +4,13 @@ import PropTypes from 'prop-types';
 
 interface IModalOverlayProps {
     onClick: () => void;
-    children?: React.ReactNode
 }
 
 ModalOverlay.propTypes = {
     onClick: PropTypes.func.isRequired,
-    children: PropTypes.element
 };
 
-export function ModalOverlay({onClick, children}: IModalOverlayProps) {
+export function ModalOverlay({onClick}: IModalOverlayProps) {
 
     const onClickHandler = useCallback((e: SyntheticEvent) => {
         e.stopPropagation();
@@ -20,10 +18,7 @@ export function ModalOverlay({onClick, children}: IModalOverlayProps) {
     }, [onClick])
 
     return (
-
         <div onClick={onClickHandler} className={styles.main}>
-            {children}
         </div>
-
     )
 }

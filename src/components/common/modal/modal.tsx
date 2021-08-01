@@ -53,17 +53,20 @@ export function Modal({title = '', visible = false, onHide, children}: IModalPro
 
     return ReactDOM.createPortal(
         (
-            state.visible && (<ModalOverlay onClick={hide}>
-                <div className={styles.window} onClick={onWindowClick}>
-                    <div>
-                        <div className={`ml-10 mr-10 ${styles.head}`}>
-                            <div className={`text text_type_main-large ${styles.title}`}>{title}</div>
-                            <CloseIcon type={'primary'} onClick={hide}/>
+            state.visible && (
+                <div>
+                    <ModalOverlay onClick={hide}/>
+                    <div className={styles.window} onClick={onWindowClick}>
+                        <div>
+                            <div className={`ml-10 mr-10 ${styles.head}`}>
+                                <div className={`text text_type_main-large ${styles.title}`}>{title}</div>
+                                <CloseIcon type={'primary'} onClick={hide}/>
+                            </div>
+                            {children}
                         </div>
-                        <div className={`${styles.content} `}>{children}</div>
                     </div>
                 </div>
-            </ModalOverlay>)
+            )
         ),
         document.body
     )
