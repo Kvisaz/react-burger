@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import styles from './App.module.css';
 import {AppHeader} from "./components/app-header/app-header";
 import {BurgerIngredients} from "./components/burger-ingredients/burger-ingredients";
@@ -8,6 +8,9 @@ import {
 } from "./components/burger-constructor/burger-constructor";
 import {Api} from "./service/Api";
 import {IBurgerPart} from "./model/IBurgerPart";
+import {Modal} from './components/common/modal/modal';
+import {IngredientDetails} from './components/burger-ingredients/components/ingredient-details/ingredient-details';
+import {OrderDetails} from './components/burger-constructor/components/order-details/order-details';
 
 const API_END_POINT = 'https://norma.nomoreparties.space/api/ingredients';
 const API = new Api(API_END_POINT);
@@ -17,7 +20,10 @@ interface IAppState {
     selectedTop?: IConstructorElementProps;
     selectedParts: IConstructorElementProps[];
     selectedBottom?: IConstructorElementProps;
+    ingredient?: IBurgerPart;
+    isIngredientOpen?: boolean;
     orderId: number;
+    isOrderOpen?: boolean;
 }
 
 function App() {
@@ -28,6 +34,31 @@ function App() {
         selectedBottom: undefined,
         orderId: 34536
     });
+
+    const onOrderButtonClick = useCallback(() => {
+        if (state.isOrderOpen) return;
+        setState((prevState => ({
+            ...prevState,
+            isOrderOpen: true
+        })))
+    }, [state.isOrderOpen]);
+
+    const onIngredientClick = useCallback((i: IBurgerPart) => {
+        if (state.isIngredientOpen) return;
+        setState((prevState => ({
+            ...prevState,
+            isIngredientOpen: true,
+            ingredient: i
+        })))
+    }, [state.isIngredientOpen]);
+
+    const onModalHideClick = useCallback(() => {
+        setState((prevState => ({
+            ...prevState,
+            isIngredientOpen: false,
+            isOrderOpen: false,
+        })))
+    }, []);
 
     useEffect(() => {
         let ingredients: IBurgerPart[] = [];
@@ -72,7 +103,7 @@ function App() {
                     selectedBottom,
                 })))
             })
-            .catch(e=>console.error(e))
+            .catch(e => console.error(e))
     }, []);
 
     const {ingredients, selectedParts, selectedBottom, selectedTop} = state;
@@ -82,13 +113,27 @@ function App() {
             <main className={styles.content}>
                 <div className={styles.col_left}>
                     <span className='text text_type_main-large'>Соберите бургер</span>
-                    <BurgerIngredients parts={ingredients}/>
+                    <BurgerIngredients parts={ingredients} onIngredientClick={onIngredientClick}/>
                 </div>
                 <div className={styles.col_right}>
                     <BurgerConstructor parts={selectedParts} bottom={selectedBottom} top={selectedTop}
-                                       orderId={state.orderId}/>
+                                       onOrderButtonClick={onOrderButtonClick}/>
                 </div>
             </main>
+            {
+                state.isIngredientOpen && state.ingredient && (
+                    <Modal title={'Детали ингредиента'} onHide={onModalHideClick}>
+                        <IngredientDetails  {...state.ingredient} image={state.ingredient.image_large}/>
+                    </Modal>
+                )
+            }
+            {
+                state.isOrderOpen && state.orderId && (
+                    <Modal onHide={onModalHideClick}>
+                        <OrderDetails orderId={state.orderId}/>
+                    </Modal>
+                )
+            }
         </div>
     );
 }

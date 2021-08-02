@@ -1,9 +1,7 @@
-import React, {useCallback, useState} from 'react';
+import React from 'react';
 import styles from './burger-constructor.module.css';
 import {BurgerConstructorOrder} from './components/burger-constructor-order/burger-constructor-order';
 import {ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components';
-import {Modal} from '../common/modal/modal';
-import {OrderDetails} from './components/order-details/order-details';
 import PropTypes from 'prop-types';
 
 export interface IConstructorElementProps {
@@ -17,10 +15,10 @@ export interface IConstructorElementProps {
 }
 
 interface IBurgerIngredientsProps {
-    orderId: number;
-    top?: IConstructorElementProps,
-    parts: IConstructorElementProps[],
-    bottom?: IConstructorElementProps,
+    top?: IConstructorElementProps;
+    parts: IConstructorElementProps[];
+    bottom?: IConstructorElementProps;
+    onOrderButtonClick: ()=>void;
 }
 
 const IConstructorElementPropTypes = PropTypes.exact({
@@ -34,24 +32,13 @@ const IConstructorElementPropTypes = PropTypes.exact({
 })
 
 BurgerConstructor.propTypes = {
-    orderId: PropTypes.number.isRequired,
     top: IConstructorElementPropTypes,
     parts: PropTypes.arrayOf(IConstructorElementPropTypes),
-    bottom: IConstructorElementPropTypes
+    bottom: IConstructorElementPropTypes,
+    onOrderButtonClick: PropTypes.func
 };
 
-export function BurgerConstructor({top, parts, bottom, orderId}: IBurgerIngredientsProps) {
-
-    const [modal, showModal] = useState(false);
-
-    const onShowClick = useCallback(() => {
-        if (modal) return;
-        showModal(true);
-    }, [modal]);
-
-    const onHideClick = useCallback(() => {
-        showModal(false);
-    }, []);
+export function BurgerConstructor({top, parts, bottom, onOrderButtonClick}: IBurgerIngredientsProps) {
 
     return (
         <section className={`mt-4 mb-4 ${styles.main}`}>
@@ -63,11 +50,8 @@ export function BurgerConstructor({top, parts, bottom, orderId}: IBurgerIngredie
             </div>
             {bottom && <ConstructorElement key={bottom._id} {...bottom} />}
             <div className={`mt-10 mb-10 ${styles.sum}`}>
-                <BurgerConstructorOrder sum={100} onClick={onShowClick}/>
+                <BurgerConstructorOrder sum={100} onClick={onOrderButtonClick}/>
             </div>
-            <Modal visible={modal} onHide={onHideClick}>
-                <OrderDetails orderId={orderId}/>
-            </Modal>
         </section>
     );
 }
