@@ -15,7 +15,7 @@ export class Api {
             if (!apiJson.success) throw new Error('apiJson error');
             response.data = apiJson.data;
         } catch (e) {
-            response.error = e;
+            throw e;
         }
         return response;
     }
