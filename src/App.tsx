@@ -14,7 +14,6 @@ import {IAppState} from "./model/IAppState";
 
 const API = new Api();
 
-
 function App() {
     const [state, setState] = useState<IAppState>({
         loaded: false,
@@ -70,7 +69,6 @@ function App() {
             });
     });
 
-    const {ingredients, selectedParts, selectedBottom, selectedTop} = state;
     return (
         <AppContext.Provider value={state}>
             <div className={styles.App}>
@@ -78,10 +76,10 @@ function App() {
                 <main className={styles.content}>
                     <div className={styles.col_left}>
                         <span className='text text_type_main-large'>Соберите бургер</span>
-                        <BurgerIngredients parts={ingredients}/>
+                        <BurgerIngredients/>
                     </div>
                     <div className={styles.col_right}>
-                        <BurgerConstructor parts={selectedParts} bottom={selectedBottom} top={selectedTop}/>
+                        <BurgerConstructor/>
                     </div>
                 </main>
             </div>

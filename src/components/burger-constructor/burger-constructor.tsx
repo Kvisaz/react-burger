@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styles from './burger-constructor.module.css';
 import {BurgerConstructorOrder} from './components/burger-constructor-order/burger-constructor-order';
 import {ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components';
 import {IBurgerPart} from '../../model/IBurgerPart';
 import {IConstructorElementData} from "../../model/IConstructorElementData";
+import {IAppState} from "../../model/IAppState";
+import {AppContext} from "../../service/AppContext";
 
 export interface IConstructorElementProps extends IConstructorElementData {
     _id: string;
@@ -21,13 +23,8 @@ export function mapBurgerItem(data: IBurgerPart, suffix = ''): IConstructorEleme
     }
 }
 
-interface IBurgerIngredientsProps {
-    top?: IConstructorElementProps,
-    parts: IConstructorElementProps[],
-    bottom?: IConstructorElementProps,
-}
-
-export function BurgerConstructor({top, parts, bottom}: IBurgerIngredientsProps) {
+export function BurgerConstructor() {
+    const {selectedTop: top, selectedBottom: bottom, selectedParts: parts} = useContext<IAppState>(AppContext);
     return (
         <section className={`mt-4 mb-4 ${styles.main}`}>
             {top && <ConstructorElement key={top._id} {...top} />}

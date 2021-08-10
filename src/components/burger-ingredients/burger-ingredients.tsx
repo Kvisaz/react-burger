@@ -1,14 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styles from './burger-ingredients.module.css';
 import {BurgerIngredientsTabs} from "./components/burger-ingredients-tabs/burger-ingredients-tabs";
 import {BurgerIngredientsSection} from "./components/burger-ingredients-section/burger-ingredients-section";
 import {IBurgerPart} from "../../model/IBurgerPart";
+import {AppContext} from "../../service/AppContext";
 
-interface IBurgerConstructorProps {
-    parts: IBurgerPart[]
-}
 
-export function BurgerIngredients({parts}: IBurgerConstructorProps) {
+export function BurgerIngredients() {
+
+    const {ingredients: parts} = useContext(AppContext);
 
     const buns: IBurgerPart[] = [];
     const fills: IBurgerPart[] = [];
