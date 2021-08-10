@@ -4,7 +4,6 @@ import { AppHeader } from './components/app-header/app-header';
 import { BurgerIngredients } from './components/burger-ingredients/burger-ingredients';
 import { BurgerConstructor } from './components/burger-constructor/burger-constructor';
 import { Api } from './service/Api';
-import { IBurgerPart } from './model/IBurgerPart';
 import { Modal } from './components/common/modal/modal';
 import { IngredientDetails } from './components/burger-ingredients/components/ingredient-details/ingredient-details';
 import { OrderDetails } from './components/burger-constructor/components/order-details/order-details';
@@ -27,62 +26,19 @@ function App() {
 		orderId: 2,
 	}, undefined);
 
-/*	const onOrderButtonClick = useCallback(() => {
-		if (state.isModalOrderOpen) return;
-		dispatch({ type: IBurgerActionType.ORDER_CLICK });
-	}, [state.isModalOrderOpen]);*/
-
-/*	const onIngredientClick = useCallback((i: IBurgerPart) => {
-		if (state.isModalIngredientOpen) return;
-		dispatch({ type: IBurgerActionType.INGREDIENT_CLICK, payload: i });
-	}, [state.isModalIngredientOpen]);*/
 
 	const onModalHideClick = useCallback(() => {
 		dispatch({ type: IBurgerActionType.CLOSE_MODAL });
 	}, []);
 
 	useEffect(() => {
-		let ingredients: IBurgerPart[] = [];
-		// let letselectedParts: IConstructorElementData[] = [];
-		// let selectedBun: IConstructorElementData;
 		API.getBurgerParts()
-			.then(({ data, error }) => {
-					if (error) {
-						console.warn(error);
-					} else {
-						ingredients = data;
-						/*const buns = data.filter(i => i.type === 'bun');
-						const notBuns = data.filter(i => i.type !== 'bun');
-						selectedParts = [
-							...notBuns.map(i => mapBurgerItem(i)),
-						];
-
-						if (buns.length > 0) {
-							selectedBun = {
-								...mapBurgerItem(buns[0]),
-								isLocked: true,
-							};
-						}*/
-
-					}
-
-					// const sum = selectedBun.price * 2 + selectedParts.reduce((acc, next) => acc + next.price, 0);
-					dispatch({type: IBurgerActionType.DATA_LOADED, payload: ingredients})
-		/*			setState((prevState => ({
-						...prevState,
-						sum,
-						ingredients,
-						selectedParts,
-						selectedBun,
-						loaded: true,
-					})));*/
-				},
-			)
+			.then(({ data }) => dispatch({ type: IBurgerActionType.DATA_LOADED, payload: data }))
 			.catch(e => console.error(e));
 	}, []);
 
 	return (
-		<AppContext.Provider value={{state, dispatch}}>
+		<AppContext.Provider value={{ state, dispatch }}>
 			<div className={styles.App}>
 				<AppHeader />
 				<main className={styles.content}>

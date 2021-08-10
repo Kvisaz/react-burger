@@ -27,6 +27,5 @@ export interface IApiEndPointResponse {
 }
 
 export interface IBurgerPartsResponse {
-    error?: string;
     data: IBurgerPart[];
 }
