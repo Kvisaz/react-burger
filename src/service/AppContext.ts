@@ -11,6 +11,7 @@ export const AppContext = React.createContext<IReducerState>({
 	state: {
 		loaded: false,
 		ingredients: [],
+		ingredientAmountMap: {},
 		selectedParts: [],
 		sum: 0,
 	},

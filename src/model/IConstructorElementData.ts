@@ -1,5 +1,6 @@
 export interface IConstructorElementData {
-	_id: string;
+	ingredientId: string;
+	selectedId: string;
 	type?: IConstructorElementType;
 	isLocked?: boolean;
 	handleClose?: () => void;

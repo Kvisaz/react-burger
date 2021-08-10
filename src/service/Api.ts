@@ -1,4 +1,4 @@
-import {IBurgerPart} from "../model/IBurgerPart";
+import { IBurgerPart } from '../model/IBurgerPart';
 
 export class Api {
     constructor(private readonly endpoint: string) {

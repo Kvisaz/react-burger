@@ -21,6 +21,7 @@ function App() {
 		sum: 0,
 		loaded: false,
 		ingredients: [],
+		ingredientAmountMap: {},
 		selectedBun: undefined,
 		selectedParts: [],
 		orderId: 2,

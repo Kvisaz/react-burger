@@ -11,7 +11,7 @@ function mapBun(bun: IConstructorElementData, suffix: string, type: IConstructor
 		...bun,
 		text: `${bun.text} (${suffix})`,
 		type,
-		isLocked: true
+		isLocked: true,
 	};
 }
 
@@ -23,10 +23,10 @@ export function BurgerConstructor() {
 		<section className={`mt-4 mb-4 ${styles.main}`}>
 			{selectedBun && <ConstructorElement {...mapBun(selectedBun, 'верх', IConstructorElementType.TOP)} />}
 			<div className={`mt-4 mb-4 ${styles.list}`}>
-				{parts.map(props => (
-					<ConstructorElement key={props._id} {...props} handleClose={() => dispatch({
+				{parts.map(part => (
+					<ConstructorElement key={part.selectedId} {...part} handleClose={() => dispatch({
 						type: IBurgerActionType.INGREDIENT_REMOVE_CLICK,
-						payload: { id: props._id },
+						payload: { selectedId: part.selectedId, ingredientId: part.ingredientId },
 					})} />
 				))}
 			</div>

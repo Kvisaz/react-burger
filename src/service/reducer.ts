@@ -1,5 +1,5 @@
 import { IAppState } from '../model/IAppState';
-import { BurgerAction, IBurgerActionType } from '../model/IBurgerAction';
+import { BurgerAction, IBurgerActionType, IRemovePayLoad } from '../model/IBurgerAction';
 import { IBurgerPart } from '../model/IBurgerPart';
 import { IConstructorElementData } from '../model/IConstructorElementData';
 
@@ -8,13 +8,16 @@ export function reducer(state: IAppState, action: BurgerAction): IAppState {
 		case IBurgerActionType.DATA_LOADED:
 			return {
 				...state,
-				ingredients: action.payload,
+				ingredients: action.payload.map(i => ({
+					...i,
+					amount: 0,
+				})),
 				loaded: true,
 			};
 		case IBurgerActionType.ORDER_DATA_LOADED:
 			return {
 				...state,
-				orderId: action.payload,
+				orderId: action.payload.orderId,
 			};
 		case IBurgerActionType.CLOSE_MODAL:
 			return {
@@ -46,13 +49,16 @@ function onSelectAction(action: { type: IBurgerActionType.INGREDIENT_SELECT_CLIC
 	const selectedBun = isBun ? constructorItem : state.selectedBun;
 	const selectedParts = isBun
 		? state.selectedParts
-		: [...state.selectedParts.filter(p => p._id !== constructorItem._id), constructorItem];
-
+		: [...state.selectedParts, constructorItem];
+	
 	let sum = selectedParts.reduce((acc, next) => acc + next.price, 0);
 	if (selectedBun) sum += selectedBun.price * 2;
 
+	const ingredientAmountMap = updateAmounts(selectedParts, selectedBun);
+
 	return {
 		...state,
+		ingredientAmountMap,
 		isModalIngredientOpen: true,
 		selectedIngredient,
 		selectedBun,
@@ -61,24 +67,45 @@ function onSelectAction(action: { type: IBurgerActionType.INGREDIENT_SELECT_CLIC
 	};
 }
 
-function onRemoveAction(action: { type: IBurgerActionType.INGREDIENT_REMOVE_CLICK, payload: { id: string } }, state: IAppState): IAppState {
-	const { id } = action.payload;
-	const selectedParts = [...state.selectedParts.filter(p => p._id !== id)];
+function onRemoveAction(
+	action: { type: IBurgerActionType.INGREDIENT_REMOVE_CLICK, payload: IRemovePayLoad },
+	state: IAppState):
+	IAppState {
 
+	const { selectedId } = action.payload;
+	const selectedParts = [...state.selectedParts.filter(p => p.selectedId !== selectedId)];
 	const { selectedBun } = state;
-
-	const bunSum = selectedBun == undefined ? 0 : selectedBun.price * 2;
+	const bunSum = selectedBun === undefined ? 0 : selectedBun.price * 2;
 	const sum = bunSum + selectedParts.reduce((acc, next) => acc + next.price, 0);
+
+	const ingredientAmountMap = updateAmounts(selectedParts, selectedBun);
+
 	return {
 		...state,
 		selectedParts,
+		ingredientAmountMap,
 		sum,
 	};
+}
+
+function updateAmounts(selectedParts: IConstructorElementData[], bun?: IConstructorElementData): Record<string, number> {
+	const amountMap: Record<string, number> = {};
+	if (bun) {
+		const ingredientId = bun.ingredientId;
+		if (amountMap[ingredientId] === undefined) amountMap[ingredientId] = 0;
+		amountMap[ingredientId]++;
+	}
+	selectedParts.forEach(({ ingredientId }) => {
+		if (amountMap[ingredientId] === undefined) amountMap[ingredientId] = 0;
+		amountMap[ingredientId]++;
+	});
+	return amountMap;
 }
 
 
 function mapBurgerItem(data: IBurgerPart): IConstructorElementData {
 	return {
-		_id: data._id, price: data.price, text: data.name, thumbnail: data.image,
+		ingredientId: data._id, price: data.price, text: data.name, thumbnail: data.image,
+		selectedId: data._id + Date.now(),
 	};
 }
