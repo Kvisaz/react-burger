@@ -4,6 +4,7 @@ import { BurgerConstructorOrder } from './components/burger-constructor-order/bu
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { AppContext } from '../../service/AppContext';
 import { IConstructorElementData, IConstructorElementType } from '../../model/IConstructorElementData';
+import { IBurgerActionType } from '../../model/IBurgerAction';
 
 function mapBun(bun: IConstructorElementData, suffix: string, type: IConstructorElementType): IConstructorElementData {
 	return {
@@ -14,15 +15,19 @@ function mapBun(bun: IConstructorElementData, suffix: string, type: IConstructor
 }
 
 export function BurgerConstructor() {
-	const { state } = useContext(AppContext);
+	const { state, dispatch } = useContext(AppContext);
 	const { selectedBun, selectedParts: parts, sum } = state;
+
 
 	return (
 		<section className={`mt-4 mb-4 ${styles.main}`}>
 			{selectedBun && <ConstructorElement {...mapBun(selectedBun, 'верх', IConstructorElementType.TOP)} />}
 			<div className={`mt-4 mb-4 ${styles.list}`}>
 				{parts.map(props => (
-					<ConstructorElement key={props._id} {...props} />
+					<ConstructorElement key={props._id} {...props} handleClose={() => dispatch({
+						type: IBurgerActionType.INGREDIENT_REMOVE_CLICK,
+						payload: { id: props._id },
+					})} />
 				))}
 			</div>
 			{selectedBun && <ConstructorElement  {...mapBun(selectedBun, 'низ', IConstructorElementType.BOTTOM)} />}

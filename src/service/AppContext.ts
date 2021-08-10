@@ -1,10 +1,10 @@
 import React from 'react';
 import { IAppState } from '../model/IAppState';
-import { IBurgerAction } from '../model/IBurgerAction';
+import { BurgerAction } from '../model/IBurgerAction';
 
 interface IReducerState {
 	state: IAppState;
-	dispatch?: React.Dispatch<IBurgerAction>;
+	dispatch: React.Dispatch<BurgerAction>;
 }
 
 export const AppContext = React.createContext<IReducerState>({
@@ -14,4 +14,5 @@ export const AppContext = React.createContext<IReducerState>({
 		selectedParts: [],
 		sum: 0,
 	},
+	dispatch: () => {}
 });

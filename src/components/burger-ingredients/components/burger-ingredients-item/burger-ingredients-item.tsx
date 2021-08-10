@@ -21,9 +21,7 @@ export function BurgerIngredientsItem({ part, amount = 0 }: IBurgerConstructorIt
 
 	const { dispatch } = useContext(AppContext);
 	const onItemClick = useCallback((part: IBurgerPart) => {
-		if (dispatch) {
-			dispatch({ type: IBurgerActionType.INGREDIENT_CLICK, payload: part });
-		}
+		dispatch({ type: IBurgerActionType.INGREDIENT_SELECT_CLICK, payload: part });
 	}, [dispatch]);
 
 	const hasAmount = amount > 0;

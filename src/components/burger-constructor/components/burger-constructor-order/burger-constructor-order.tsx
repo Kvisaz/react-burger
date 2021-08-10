@@ -11,9 +11,7 @@ export function BurgerConstructorOrder() {
 	const { sum } = state;
 
 	const onOrderButtonClick = useCallback(() => {
-		if (dispatch) {
-			dispatch({ type: IBurgerActionType.ORDER_CLICK });
-		}
+		dispatch({ type: IBurgerActionType.ORDER_CLICK });
 	}, [dispatch]);
 
 	return (
