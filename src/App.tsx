@@ -11,6 +11,7 @@ import {Api} from "./service/Api";
 import {AppContext} from "./service/AppContext";
 import {IBurgerPart} from "./model/IBurgerPart";
 import {IAppState} from "./model/IAppState";
+import {IConstructorElementType} from "./model/IConstructorElementData";
 
 const API = new Api();
 
@@ -19,17 +20,15 @@ function App() {
         sum: 0,
         loaded: false,
         ingredients: [],
-        selectedTop: undefined,
+        selectedBun: undefined,
         selectedParts: [],
-        selectedBottom: undefined,
     });
 
     useEffect(() => {
         if (state.loaded) return;
         let ingredients: IBurgerPart[] = [];
         let selectedParts: IConstructorElementProps[] = [];
-        let selectedTop: IConstructorElementProps;
-        let selectedBottom: IConstructorElementProps;
+        let bun: IConstructorElementProps;
         API.getBurgerParts()
             .then(({data, error}) => {
                 if (error) {
@@ -45,32 +44,22 @@ function App() {
                     ];
 
                     if (buns.length > 0) {
-                        selectedTop = {
-                            ...mapBurgerItem(buns[0], ' (верх)'),
-                            type: 'top',
-                            isLocked: true
-                        };
-                    }
-                    if (buns.length > 1) {
-                        selectedBottom = {
-                            ...mapBurgerItem(buns[1], ' (низ)'),
-                            type: 'bottom',
+                        bun = {
+                            ...mapBurgerItem(buns[0]),
                             isLocked: true
                         };
                     }
 
                 }
 
-                const sum = selectedTop.price + selectedBottom.price
-                    + selectedParts.reduce((acc, next) => acc + next.price, 0);
+                const sum = bun.price * 2 + selectedParts.reduce((acc, next) => acc + next.price, 0);
 
                 setState(prevState => ({
                     ...prevState,
                     sum,
                     ingredients,
-                    selectedTop,
                     selectedParts,
-                    selectedBottom,
+                    selectedBun: bun,
                     loaded: true
                 }));
             });
