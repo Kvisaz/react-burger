@@ -1,27 +1,27 @@
-import React from 'react';
+import React, { useCallback, useContext } from 'react';
 import styles from './burger-constructor-order.module.css';
-import {Button} from '@ya.praktikum/react-developer-burger-ui-components';
-import {MoneyCounter} from '../../../common/money-counter/money-counter';
-import PropTypes from 'prop-types';
-
-interface IBasketOrderProps {
-    sum: number;
-    onClick: ()=>void;
-}
+import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { MoneyCounter } from '../../../common/money-counter/money-counter';
+import { AppContext } from '../../../../service/AppContext';
+import { IBurgerActionType } from '../../../../model/IBurgerAction';
 
 
-BurgerConstructorOrder.propTypes = {
-    sum: PropTypes.number.isRequired,
-    onClick: PropTypes.func.isRequired,
-};
+export function BurgerConstructorOrder() {
+	const { state, dispatch } = useContext(AppContext);
+	const { sum } = state;
 
-export function BurgerConstructorOrder({sum, onClick}: IBasketOrderProps) {
-    return (
-        <div className={`mr-4 ${styles.main}`}>
-            <div className='mr-10'><MoneyCounter sum={sum} big/></div>
-            <Button type="primary" size="large" onClick={onClick}>
-                Оформить заказ
-            </Button>
-        </div>
-    )
+	const onOrderButtonClick = useCallback(() => {
+		if (dispatch) {
+			dispatch({ type: IBurgerActionType.ORDER_CLICK });
+		}
+	}, [dispatch]);
+
+	return (
+		<div className={`mr-4 ${styles.main}`}>
+			<div className='mr-10'><MoneyCounter sum={sum} big /></div>
+			<Button type='primary' size='large' onClick={onOrderButtonClick}>
+				Оформить заказ
+			</Button>
+		</div>
+	);
 }

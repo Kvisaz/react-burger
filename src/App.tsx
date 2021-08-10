@@ -8,7 +8,6 @@ import { IBurgerPart } from './model/IBurgerPart';
 import { Modal } from './components/common/modal/modal';
 import { IngredientDetails } from './components/burger-ingredients/components/ingredient-details/ingredient-details';
 import { OrderDetails } from './components/burger-constructor/components/order-details/order-details';
-import { IConstructorElementData } from './model/IConstructorElementData';
 import { AppContext } from './service/AppContext';
 import { reducer } from './service/reducer';
 import { IBurgerActionType } from './model/IBurgerAction';
@@ -28,15 +27,15 @@ function App() {
 		orderId: 2,
 	}, undefined);
 
-	const onOrderButtonClick = useCallback(() => {
+/*	const onOrderButtonClick = useCallback(() => {
 		if (state.isModalOrderOpen) return;
 		dispatch({ type: IBurgerActionType.ORDER_CLICK });
-	}, [state.isModalOrderOpen]);
+	}, [state.isModalOrderOpen]);*/
 
-	const onIngredientClick = useCallback((i: IBurgerPart) => {
+/*	const onIngredientClick = useCallback((i: IBurgerPart) => {
 		if (state.isModalIngredientOpen) return;
 		dispatch({ type: IBurgerActionType.INGREDIENT_CLICK, payload: i });
-	}, [state.isModalIngredientOpen]);
+	}, [state.isModalIngredientOpen]);*/
 
 	const onModalHideClick = useCallback(() => {
 		dispatch({ type: IBurgerActionType.CLOSE_MODAL });
@@ -44,8 +43,8 @@ function App() {
 
 	useEffect(() => {
 		let ingredients: IBurgerPart[] = [];
-		let selectedParts: IConstructorElementData[] = [];
-		let selectedBun: IConstructorElementData;
+		// let letselectedParts: IConstructorElementData[] = [];
+		// let selectedBun: IConstructorElementData;
 		API.getBurgerParts()
 			.then(({ data, error }) => {
 					if (error) {
@@ -83,16 +82,16 @@ function App() {
 	}, []);
 
 	return (
-		<AppContext.Provider value={state}>
+		<AppContext.Provider value={{state, dispatch}}>
 			<div className={styles.App}>
 				<AppHeader />
 				<main className={styles.content}>
 					<div className={styles.col_left}>
 						<span className='text text_type_main-large'>Соберите бургер</span>
-						<BurgerIngredients onIngredientClick={onIngredientClick} />
+						<BurgerIngredients />
 					</div>
 					<div className={styles.col_right}>
-						<BurgerConstructor onOrderButtonClick={onOrderButtonClick} />
+						<BurgerConstructor />
 					</div>
 				</main>
 				{
@@ -113,12 +112,6 @@ function App() {
 			</div>
 		</AppContext.Provider>
 	);
-}
-
-function mapBurgerItem(data: IBurgerPart, suffix = ''): IConstructorElementData {
-	return {
-		_id: data._id, price: data.price, text: data.name + suffix, thumbnail: data.image,
-	};
 }
 
 export default App;

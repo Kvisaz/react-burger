@@ -1,5 +1,7 @@
 import { IAppState } from '../model/IAppState';
 import { IBurgerAction, IBurgerActionType } from '../model/IBurgerAction';
+import { IBurgerPart } from '../model/IBurgerPart';
+import { IConstructorElementData } from '../model/IConstructorElementData';
 
 export function reducer(state: IAppState, action: IBurgerAction): IAppState {
 	switch (action.type) {
@@ -26,10 +28,23 @@ export function reducer(state: IAppState, action: IBurgerAction): IAppState {
 				isModalOrderOpen: true,
 			};
 		case IBurgerActionType.INGREDIENT_CLICK:
+			const selectedIngredient = action.payload as IBurgerPart;
+			const isBun = selectedIngredient.type === 'bun';
+			const constructorItem = mapBurgerItem(selectedIngredient);
+
+			const selectedBun = isBun ? constructorItem : state.selectedBun;
+			const selectedParts = isBun ? state.selectedParts : [...state.selectedParts, constructorItem];
+
+			let sum = selectedParts.reduce((acc, next) => acc + next.price, 0);
+			if (selectedBun) sum += selectedBun.price * 2;
+
 			return {
 				...state,
 				isModalIngredientOpen: true,
-				selectedIngredient: action.payload,
+				selectedIngredient,
+				selectedBun,
+				selectedParts,
+				sum,
 			};
 		case IBurgerActionType.SELECT_ITEM:
 			return { ...state, selectedIngredient: action.payload };
@@ -37,4 +52,11 @@ export function reducer(state: IAppState, action: IBurgerAction): IAppState {
 			throw new Error(`reducer: unknown action ${action.type}`);
 
 	}
+}
+
+
+function mapBurgerItem(data: IBurgerPart): IConstructorElementData {
+	return {
+		_id: data._id, price: data.price, text: data.name, thumbnail: data.image,
+	};
 }
