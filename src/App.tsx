@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useReducer } from 'react';
 import styles from './App.module.css';
 import { AppHeader } from './components/app-header/app-header';
 import { BurgerIngredients } from './components/burger-ingredients/burger-ingredients';
@@ -8,48 +8,38 @@ import { IBurgerPart } from './model/IBurgerPart';
 import { Modal } from './components/common/modal/modal';
 import { IngredientDetails } from './components/burger-ingredients/components/ingredient-details/ingredient-details';
 import { OrderDetails } from './components/burger-constructor/components/order-details/order-details';
-import { IAppState } from './model/IAppState';
 import { IConstructorElementData } from './model/IConstructorElementData';
 import { AppContext } from './service/AppContext';
+import { reducer } from './service/reducer';
+import { IBurgerActionType } from './model/IBurgerAction';
 
 const API_END_POINT = 'https://norma.nomoreparties.space/api/ingredients';
 const API = new Api(API_END_POINT);
 
 
 function App() {
-	const [state, setState] = useState<IAppState>({
+
+	const [state, dispatch] = useReducer(reducer, {
 		sum: 0,
 		loaded: false,
 		ingredients: [],
 		selectedBun: undefined,
 		selectedParts: [],
-		orderId: 2
-	});
+		orderId: 2,
+	}, undefined);
 
 	const onOrderButtonClick = useCallback(() => {
-		console.log('onOrderButtonClick!');
 		if (state.isModalOrderOpen) return;
-		setState((prevState => ({
-			...prevState,
-			isModalOrderOpen: true,
-		})));
+		dispatch({ type: IBurgerActionType.ORDER_CLICK });
 	}, [state.isModalOrderOpen]);
 
 	const onIngredientClick = useCallback((i: IBurgerPart) => {
 		if (state.isModalIngredientOpen) return;
-		setState((prevState => ({
-			...prevState,
-			isModalIngredientOpen: true,
-			selectedIngredient: i,
-		})));
+		dispatch({ type: IBurgerActionType.INGREDIENT_CLICK, payload: i });
 	}, [state.isModalIngredientOpen]);
 
 	const onModalHideClick = useCallback(() => {
-		setState((prevState => ({
-			...prevState,
-			isModalIngredientOpen: false,
-			isModalOrderOpen: false,
-		})));
+		dispatch({ type: IBurgerActionType.CLOSE_MODAL });
 	}, []);
 
 	useEffect(() => {
@@ -62,7 +52,7 @@ function App() {
 						console.warn(error);
 					} else {
 						ingredients = data;
-						const buns = data.filter(i => i.type === 'bun');
+						/*const buns = data.filter(i => i.type === 'bun');
 						const notBuns = data.filter(i => i.type !== 'bun');
 						selectedParts = [
 							...notBuns.map(i => mapBurgerItem(i)),
@@ -73,19 +63,20 @@ function App() {
 								...mapBurgerItem(buns[0]),
 								isLocked: true,
 							};
-						}
+						}*/
 
 					}
 
-					const sum = selectedBun.price * 2 + selectedParts.reduce((acc, next) => acc + next.price, 0);
-					setState((prevState => ({
+					// const sum = selectedBun.price * 2 + selectedParts.reduce((acc, next) => acc + next.price, 0);
+					dispatch({type: IBurgerActionType.DATA_LOADED, payload: ingredients})
+		/*			setState((prevState => ({
 						...prevState,
 						sum,
 						ingredients,
 						selectedParts,
 						selectedBun,
 						loaded: true,
-					})));
+					})));*/
 				},
 			)
 			.catch(e => console.error(e));
@@ -113,7 +104,7 @@ function App() {
 					)
 				}
 				{
-					state.isModalOrderOpen && state.orderId && (
+					state.isModalOrderOpen && state.orderId != null && (
 						<Modal onHide={onModalHideClick}>
 							<OrderDetails orderId={state.orderId} />
 						</Modal>
