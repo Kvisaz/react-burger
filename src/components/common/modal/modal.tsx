@@ -37,9 +37,10 @@ export function Modal({ title = '', children }: IModalProps) {
 
 
 	useEffect(() => {
-		document.addEventListener(KEY_DOWN, onKeyDown);
+		const element = document.body;
+		element.addEventListener(KEY_DOWN, onKeyDown);
 		return () => {
-			document.body.removeEventListener(KEY_DOWN, onKeyDown);
+			element.removeEventListener(KEY_DOWN, onKeyDown);
 		};
 	}, [onKeyDown]);
 
@@ -59,6 +60,6 @@ export function Modal({ title = '', children }: IModalProps) {
 				</div>
 			</div>
 		),
-		modalElement
+		modalElement,
 	);
 }
