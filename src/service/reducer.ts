@@ -14,11 +14,6 @@ export function reducer(state: IAppState, action: BurgerAction): IAppState {
 				})),
 				loaded: true,
 			};
-		case IBurgerActionType.ORDER_DATA_LOADED:
-			return {
-				...state,
-				orderId: action.payload.orderId,
-			};
 		case IBurgerActionType.CLOSE_MODAL:
 			return {
 				...state,
@@ -28,7 +23,28 @@ export function reducer(state: IAppState, action: BurgerAction): IAppState {
 		case IBurgerActionType.ORDER_CLICK:
 			return {
 				...state,
+				isOrderClicked: true,
+			};
+		case IBurgerActionType.ORDER_WAITING:
+			return {
+				...state,
+				isOrderClicked: false,
+				isOrderWaiting: true,
+			};
+		case IBurgerActionType.ORDER_SUCCESS:
+			return {
+				...state,
+				isOrderClicked: false,
+				isOrderWaiting: false,
+				orderId: action.payload.orderId,
+				orderName: action.payload.name,
 				isModalOrderOpen: true,
+			};
+		case IBurgerActionType.ORDER_ERROR:
+			return {
+				...state,
+				isOrderClicked: false,
+				isOrderWaiting: false,
 			};
 		case IBurgerActionType.INGREDIENT_SELECT_CLICK:
 			return onSelectAction(action, state);
@@ -50,7 +66,7 @@ function onSelectAction(action: { type: IBurgerActionType.INGREDIENT_SELECT_CLIC
 	const selectedParts = isBun
 		? state.selectedParts
 		: [...state.selectedParts, constructorItem];
-	
+
 	let sum = selectedParts.reduce((acc, next) => acc + next.price, 0);
 	if (selectedBun) sum += selectedBun.price * 2;
 

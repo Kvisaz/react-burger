@@ -14,6 +14,8 @@ export const AppContext = React.createContext<IReducerState>({
 		ingredientAmountMap: {},
 		selectedParts: [],
 		sum: 0,
+		isOrderWaiting: false,
+		isOrderClicked: false
 	},
 	dispatch: () => {}
 });

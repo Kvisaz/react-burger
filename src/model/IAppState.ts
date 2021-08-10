@@ -13,5 +13,9 @@ export interface IAppState {
 	selectedIngredient?: IBurgerPart;
 	isModalIngredientOpen?: boolean;
 	orderId?: number;
+	orderName?: string;
 	isModalOrderOpen?: boolean;
+
+	isOrderClicked: boolean;
+	isOrderWaiting: boolean;
 }

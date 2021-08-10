@@ -11,8 +11,9 @@ import { AppContext } from './service/AppContext';
 import { reducer } from './service/reducer';
 import { IBurgerActionType } from './model/IBurgerAction';
 
-const API_END_POINT = 'https://norma.nomoreparties.space/api/ingredients';
-const API = new Api(API_END_POINT);
+const API_DATA_END_POINT = 'https://norma.nomoreparties.space/api/ingredients';
+const API_ORDER_END_POINT = 'https://norma.nomoreparties.space/api/orders';
+const API = new Api(API_DATA_END_POINT, API_ORDER_END_POINT);
 
 
 function App() {
@@ -25,6 +26,8 @@ function App() {
 		selectedBun: undefined,
 		selectedParts: [],
 		orderId: 2,
+		isOrderWaiting: false,
+		isOrderClicked: false,
 	}, undefined);
 
 	useEffect(() => {
@@ -32,6 +35,24 @@ function App() {
 			.then(({ data }) => dispatch({ type: IBurgerActionType.DATA_LOADED, payload: data }))
 			.catch(e => console.error(e));
 	}, []);
+
+
+	useEffect(()=>{
+		if (state.isOrderClicked && !state.isOrderWaiting) {
+			dispatch({ type: IBurgerActionType.ORDER_WAITING });
+			const { selectedParts, selectedBun } = state;
+			const selectedIds = selectedParts.map(i => i.ingredientId);
+			if (selectedBun) {
+				selectedIds.push(selectedBun.ingredientId);
+				selectedIds.push(selectedBun.ingredientId);
+			}
+			API.order(selectedIds)
+				.then((result) => dispatch({ type: IBurgerActionType.ORDER_SUCCESS, payload: result }))
+				.catch(e => console.error(e));
+		}
+	},[state.isOrderClicked, state.isOrderWaiting])
+
+
 
 	return (
 		<AppContext.Provider value={{ state, dispatch }}>
