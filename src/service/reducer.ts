@@ -108,8 +108,7 @@ function updateAmounts(selectedParts: IConstructorElementData[], bun?: IConstruc
 	const amountMap: Record<string, number> = {};
 	if (bun) {
 		const ingredientId = bun.ingredientId;
-		if (amountMap[ingredientId] === undefined) amountMap[ingredientId] = 0;
-		amountMap[ingredientId]++;
+		amountMap[ingredientId] = 2;
 	}
 	selectedParts.forEach(({ ingredientId }) => {
 		if (amountMap[ingredientId] === undefined) amountMap[ingredientId] = 0;
