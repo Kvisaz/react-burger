@@ -43,7 +43,8 @@ export function Modal({ title = '', children }: IModalProps) {
 		};
 	}, [onKeyDown]);
 
-	return ReactDOM.createPortal(
+	const modalElement = document.getElementById('modal');
+	return modalElement && ReactDOM.createPortal(
 		(
 			<div>
 				<ModalOverlay onClick={hide} />
@@ -58,6 +59,6 @@ export function Modal({ title = '', children }: IModalProps) {
 				</div>
 			</div>
 		),
-		document.body,
+		modalElement
 	);
 }
