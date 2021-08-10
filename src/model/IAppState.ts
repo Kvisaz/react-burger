@@ -7,4 +7,9 @@ export interface IAppState {
 	sum: number;
 	selectedBun?: IConstructorElementData;
 	selectedParts: IConstructorElementData[];
+
+	selectedIngredient?: IBurgerPart;
+	isModalIngredientOpen?: boolean;
+	orderId?: number;
+	isModalOrderOpen?: boolean;
 }

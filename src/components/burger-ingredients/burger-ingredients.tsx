@@ -1,22 +1,23 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styles from './burger-ingredients.module.css';
 import {BurgerIngredientsTabs} from "./components/burger-ingredients-tabs/burger-ingredients-tabs";
 import {BurgerIngredientsSection} from "./components/burger-ingredients-section/burger-ingredients-section";
-import {IBurgerPart, IBurgerPartPropType} from "../../model/IBurgerPart";
+import {IBurgerPart} from "../../model/IBurgerPart";
+import {AppContext} from "../../service/AppContext";
 import PropTypes from 'prop-types';
 
 interface IBurgerConstructorProps {
-    parts: IBurgerPart[];
     onIngredientClick: (part: IBurgerPart) => void;
 }
 
 BurgerIngredients.propTypes = {
-    parts: PropTypes.arrayOf(IBurgerPartPropType).isRequired,
     onIngredientClick: PropTypes.func.isRequired
 };
 
-export function BurgerIngredients({parts, onIngredientClick}: IBurgerConstructorProps) {
+export function BurgerIngredients({onIngredientClick}: IBurgerConstructorProps) {
 
+    const {ingredients: parts} = useContext(AppContext);
+    
     const buns: IBurgerPart[] = [];
     const fills: IBurgerPart[] = [];
     const sauces: IBurgerPart[] = [];
