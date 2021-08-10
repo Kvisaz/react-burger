@@ -47,7 +47,7 @@ export function Modal({ title = '', children }: IModalProps) {
 	const modalElement = document.getElementById('modal');
 	return modalElement && ReactDOM.createPortal(
 		(
-			<div>
+			<>
 				<ModalOverlay onClick={hide} />
 				<div className={styles.window} onClick={onWindowClick}>
 					<div>
@@ -58,7 +58,7 @@ export function Modal({ title = '', children }: IModalProps) {
 						{children}
 					</div>
 				</div>
-			</div>
+			</>
 		),
 		modalElement,
 	);
