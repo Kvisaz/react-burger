@@ -17,18 +17,26 @@ export function mapBurgerItem(data: IBurgerPart): IConstructorElementProps {
 	};
 }
 
+function mapBun(bun: IConstructorElementData, suffix: string, type: IConstructorElementType): IConstructorElementData {
+	return {
+		...bun,
+		text: `${bun.text} (${suffix})`,
+		type,
+	};
+}
+
 export function BurgerConstructor() {
 	const { selectedBun, selectedParts: parts, sum } = useContext<IAppState>(AppContext);
 
 	return (
 		<section className={`mt-4 mb-4 ${styles.main}`}>
-			{selectedBun && <ConstructorElement {...selectedBun} type={IConstructorElementType.TOP} />}
+			{selectedBun && <ConstructorElement {...mapBun(selectedBun, 'верх', IConstructorElementType.TOP)} />}
 			<div className={`mt-4 mb-4 ${styles.list}`}>
 				{parts.map(props => (
 					<ConstructorElement key={props._id} {...props} />
 				))}
 			</div>
-			{selectedBun && <ConstructorElement {...selectedBun} type={IConstructorElementType.BOTTOM} />}
+			{selectedBun && <ConstructorElement  {...mapBun(selectedBun, 'низ', IConstructorElementType.BOTTOM)} />}
 			{sum > 0 && (
 				<div className={`mt-10 mb-10 ${styles.sum}`}>
 					<BurgerConstructorOrder sum={sum} />
