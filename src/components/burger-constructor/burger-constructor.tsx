@@ -3,8 +3,9 @@ import styles from './burger-constructor.module.css';
 import {BurgerConstructorOrder} from './components/burger-constructor-order/burger-constructor-order';
 import {ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components';
 import {IBurgerPart} from '../../model/IBurgerPart';
+import {IConstructorElementData} from "../../model/IConstructorElementData";
 
-export interface IConstructorElementProps {
+export interface IConstructorElementProps extends IConstructorElementData {
     _id: string;
     type?: 'top' | 'bottom';
     isLocked?: boolean;

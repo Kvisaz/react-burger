@@ -8,17 +8,12 @@ import {
     mapBurgerItem
 } from "./components/burger-constructor/burger-constructor";
 import {Api} from "./service/Api";
+import {AppContext} from "./service/AppContext";
 import {IBurgerPart} from "./model/IBurgerPart";
+import {IAppState} from "./model/IAppState";
 
 const API = new Api();
 
-interface IAppState {
-    loaded: boolean;
-    ingredients: IBurgerPart[];
-    selectedTop?: IConstructorElementProps;
-    selectedParts: IConstructorElementProps[];
-    selectedBottom?: IConstructorElementProps;
-}
 
 function App() {
     const [state, setState] = useState<IAppState>({
@@ -77,18 +72,20 @@ function App() {
 
     const {ingredients, selectedParts, selectedBottom, selectedTop} = state;
     return (
-        <div className={styles.App}>
-            <AppHeader/>
-            <main className={styles.content}>
-                <div className={styles.col_left}>
-                    <span className='text text_type_main-large'>Соберите бургер</span>
-                    <BurgerIngredients parts={ingredients}/>
-                </div>
-                <div className={styles.col_right}>
-                    <BurgerConstructor parts={selectedParts} bottom={selectedBottom} top={selectedTop}/>
-                </div>
-            </main>
-        </div>
+        <AppContext.Provider value={state}>
+            <div className={styles.App}>
+                <AppHeader/>
+                <main className={styles.content}>
+                    <div className={styles.col_left}>
+                        <span className='text text_type_main-large'>Соберите бургер</span>
+                        <BurgerIngredients parts={ingredients}/>
+                    </div>
+                    <div className={styles.col_right}>
+                        <BurgerConstructor parts={selectedParts} bottom={selectedBottom} top={selectedTop}/>
+                    </div>
+                </main>
+            </div>
+        </AppContext.Provider>
     );
 }
 
