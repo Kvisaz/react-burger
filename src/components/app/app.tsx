@@ -34,14 +34,14 @@ function App() {
 		API.getBurgerParts()
 			.then(({ data }) => dispatch({ type: IBurgerActionType.DATA_LOADED, payload: data }))
 			.catch(e => console.error(e));
-	}, []);
+	}, [dispatch]);
 
 
 	useEffect(()=>{
 		if (state.isOrderClicked && !state.isOrderWaiting) {
 			dispatch({ type: IBurgerActionType.ORDER_WAITING });
-			const { selectedParts, selectedBun } = state;
-			const selectedIds = selectedParts.map(i => i.ingredientId);
+			const selectedBun = state.selectedBun;
+			const selectedIds = state.selectedParts.map(i => i.ingredientId);
 			if (selectedBun) {
 				selectedIds.push(selectedBun.ingredientId);
 				selectedIds.push(selectedBun.ingredientId);
@@ -50,7 +50,7 @@ function App() {
 				.then((result) => dispatch({ type: IBurgerActionType.ORDER_SUCCESS, payload: result }))
 				.catch(e => console.error(e));
 		}
-	},[state.isOrderClicked, state.isOrderWaiting])
+	},[state.isOrderClicked, state.isOrderWaiting, state.selectedParts, state.selectedBun])
 
 
 
