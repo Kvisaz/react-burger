@@ -39,6 +39,9 @@ export function reducer(state: IAppState, action: BurgerAction): IAppState {
 				orderId: action.payload.orderId,
 				orderName: action.payload.name,
 				isModalOrderOpen: true,
+				ingredientAmountMap: {},
+				selectedParts: [],
+				selectedBun: undefined
 			};
 		case IBurgerActionType.ORDER_ERROR:
 			return {
