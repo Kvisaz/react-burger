@@ -47,15 +47,14 @@ function App() {
 				</main>
 				{
 					state.isModalIngredientOpen && state.selectedIngredient && (
-						<Modal title={'Детали ингредиента'} >
-							<IngredientDetails  {...state.selectedIngredient}
-												image={state.selectedIngredient.image_large} />
+						<Modal title={'Детали ингредиента'}>
+							<IngredientDetails />
 						</Modal>
 					)
 				}
 				{
 					state.isModalOrderOpen && state.orderId != null && (
-						<Modal >
+						<Modal>
 							<OrderDetails />
 						</Modal>
 					)
