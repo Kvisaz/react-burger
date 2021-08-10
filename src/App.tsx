@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import styles from './App.module.css';
 import { AppHeader } from './components/app-header/app-header';
 import { BurgerIngredients } from './components/burger-ingredients/burger-ingredients';
@@ -26,11 +26,6 @@ function App() {
 		orderId: 2,
 	}, undefined);
 
-
-	const onModalHideClick = useCallback(() => {
-		dispatch({ type: IBurgerActionType.CLOSE_MODAL });
-	}, []);
-
 	useEffect(() => {
 		API.getBurgerParts()
 			.then(({ data }) => dispatch({ type: IBurgerActionType.DATA_LOADED, payload: data }))
@@ -52,7 +47,7 @@ function App() {
 				</main>
 				{
 					state.isModalIngredientOpen && state.selectedIngredient && (
-						<Modal title={'Детали ингредиента'} onHide={onModalHideClick}>
+						<Modal title={'Детали ингредиента'} >
 							<IngredientDetails  {...state.selectedIngredient}
 												image={state.selectedIngredient.image_large} />
 						</Modal>
@@ -60,7 +55,7 @@ function App() {
 				}
 				{
 					state.isModalOrderOpen && state.orderId != null && (
-						<Modal onHide={onModalHideClick}>
+						<Modal >
 							<OrderDetails />
 						</Modal>
 					)
