@@ -1,27 +1,32 @@
 import {IBurgerPart} from "../model/IBurgerPart";
-import MOCK_JSON from '../utils/data.json'
 
 export class Api {
+    constructor(private readonly endpoint: string) {
+    }
+
     async getBurgerParts(): Promise<IBurgerPartsResponse> {
         const response: IBurgerPartsResponse = {
-            data: []
+            data: [],
         }
-        // test purpose only
-        await delay(1000);
         try {
-            response.data = MOCK_JSON;
+            const apiResponse = await fetch(this.endpoint);
+            if (!apiResponse.ok) throw new Error('api error');
+            const apiJson = await apiResponse.json() as IApiEndPointResponse;
+            if (!apiJson.success) throw new Error('apiJson error');
+            response.data = apiJson.data;
         } catch (e) {
-            response.error = e;
+            throw e;
         }
         return response;
     }
 }
 
-export interface IBurgerPartsResponse {
-    error?: string;
+export interface IApiEndPointResponse {
+    success: boolean;
     data: IBurgerPart[];
 }
 
-function delay(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+export interface IBurgerPartsResponse {
+    error?: string;
+    data: IBurgerPart[];
 }

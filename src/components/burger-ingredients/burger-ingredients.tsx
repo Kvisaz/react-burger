@@ -2,13 +2,20 @@ import React from 'react';
 import styles from './burger-ingredients.module.css';
 import {BurgerIngredientsTabs} from "./components/burger-ingredients-tabs/burger-ingredients-tabs";
 import {BurgerIngredientsSection} from "./components/burger-ingredients-section/burger-ingredients-section";
-import {IBurgerPart} from "../../model/IBurgerPart";
+import {IBurgerPart, IBurgerPartPropType} from "../../model/IBurgerPart";
+import PropTypes from 'prop-types';
 
 interface IBurgerConstructorProps {
-    parts: IBurgerPart[]
+    parts: IBurgerPart[];
+    onIngredientClick: (part: IBurgerPart) => void;
 }
 
-export function BurgerIngredients({parts}: IBurgerConstructorProps) {
+BurgerIngredients.propTypes = {
+    parts: PropTypes.arrayOf(IBurgerPartPropType).isRequired,
+    onIngredientClick: PropTypes.func.isRequired
+};
+
+export function BurgerIngredients({parts, onIngredientClick}: IBurgerConstructorProps) {
 
     const buns: IBurgerPart[] = [];
     const fills: IBurgerPart[] = [];
@@ -27,13 +34,14 @@ export function BurgerIngredients({parts}: IBurgerConstructorProps) {
         }
     });
 
+
     return (
         <div className={`${styles.main}`}>
             <BurgerIngredientsTabs/>
             <div className={`mb-10 ${styles.list}`}>
-                <BurgerIngredientsSection title={'Булки'} parts={buns}/>
-                <BurgerIngredientsSection title={'Соусы'} parts={sauces}/>
-                <BurgerIngredientsSection title={'Начинки'} parts={fills}/>
+                <BurgerIngredientsSection title={'Булки'} parts={buns} onItemClick={onIngredientClick}/>
+                <BurgerIngredientsSection title={'Соусы'} parts={sauces} onItemClick={onIngredientClick}/>
+                <BurgerIngredientsSection title={'Начинки'} parts={fills} onItemClick={onIngredientClick}/>
             </div>
         </div>
     );
