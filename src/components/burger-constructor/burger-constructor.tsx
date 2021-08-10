@@ -11,13 +11,13 @@ function mapBun(bun: IConstructorElementData, suffix: string, type: IConstructor
 		...bun,
 		text: `${bun.text} (${suffix})`,
 		type,
+		isLocked: true
 	};
 }
 
 export function BurgerConstructor() {
 	const { state, dispatch } = useContext(AppContext);
 	const { selectedBun, selectedParts: parts, sum } = state;
-
 
 	return (
 		<section className={`mt-4 mb-4 ${styles.main}`}>

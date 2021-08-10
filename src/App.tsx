@@ -61,7 +61,7 @@ function App() {
 				{
 					state.isModalOrderOpen && state.orderId != null && (
 						<Modal onHide={onModalHideClick}>
-							<OrderDetails orderId={state.orderId} />
+							<OrderDetails />
 						</Modal>
 					)
 				}
