@@ -24,7 +24,7 @@ export function mapBurgerItem(data: IBurgerPart, suffix = ''): IConstructorEleme
 }
 
 export function BurgerConstructor() {
-    const {selectedTop: top, selectedBottom: bottom, selectedParts: parts} = useContext<IAppState>(AppContext);
+    const {selectedTop: top, selectedBottom: bottom, selectedParts: parts, sum} = useContext<IAppState>(AppContext);
     return (
         <section className={`mt-4 mb-4 ${styles.main}`}>
             {top && <ConstructorElement key={top._id} {...top} />}
@@ -34,9 +34,11 @@ export function BurgerConstructor() {
                 ))}
             </div>
             {bottom && <ConstructorElement key={bottom._id} {...bottom} />}
-            <div className={`mt-10 mb-10 ${styles.sum}`}>
-                <BurgerConstructorOrder sum={100}/>
-            </div>
+            {sum > 0 && (
+                <div className={`mt-10 mb-10 ${styles.sum}`}>
+                    <BurgerConstructorOrder sum={sum}/>
+                </div>
+            )}
         </section>
     );
 }

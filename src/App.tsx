@@ -16,6 +16,7 @@ const API = new Api();
 
 function App() {
     const [state, setState] = useState<IAppState>({
+        sum: 0,
         loaded: false,
         ingredients: [],
         selectedTop: undefined,
@@ -59,13 +60,19 @@ function App() {
                     }
 
                 }
-                setState({
+
+                const sum = selectedTop.price + selectedBottom.price
+                    + selectedParts.reduce((acc, next) => acc + next.price, 0);
+
+                setState(prevState => ({
+                    ...prevState,
+                    sum,
                     ingredients,
                     selectedTop,
                     selectedParts,
                     selectedBottom,
                     loaded: true
-                });
+                }));
             });
     });
 
