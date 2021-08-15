@@ -41,7 +41,6 @@ export function BurgerIngredients() {
 				Math.abs(sectionEl2.offsetTop - listPosition) - sectionEl2.clientHeight * 0.6,
 				Math.abs(sectionEl3.offsetTop - listPosition) - sectionEl3.clientHeight * 0.6,
 			];
-			console.log('deltas', deltas);
 			let nearestIndex = 0;
 			let min = deltas[0];
 			for (let i = 1; i < deltas.length; i++) {
