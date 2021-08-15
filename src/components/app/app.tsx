@@ -20,7 +20,7 @@ function App() {
 
 	const [state, dispatch] = useReducer(reducer, {
 		sum: 0,
-		loaded: false,
+		isIngredientsLoaded: false,
 		ingredients: [],
 		ingredientAmountMap: {},
 		selectedBun: undefined,
