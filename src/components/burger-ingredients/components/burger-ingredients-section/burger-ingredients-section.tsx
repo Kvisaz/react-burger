@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 export interface IBurgerConstructorSectionProps {
 	title: string;
 	parts: IBurgerPart[];
-	ref: React.MutableRefObject<any>
 }
 
 BurgerIngredientsSection.propTypes = {
