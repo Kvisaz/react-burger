@@ -2,7 +2,7 @@ import { IBurgerPart } from './IBurgerPart';
 import { IConstructorElementData } from './IConstructorElementData';
 
 export interface IAppState {
-	loaded: boolean;
+	isIngredientsLoaded: boolean;
 	ingredients: IBurgerPart[];
 	ingredientAmountMap: Record<string, number>;
 

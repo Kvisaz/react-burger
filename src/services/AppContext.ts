@@ -9,7 +9,7 @@ interface IReducerState {
 
 export const AppContext = React.createContext<IReducerState>({
 	state: {
-		loaded: false,
+		isIngredientsLoaded: false,
 		ingredients: [],
 		ingredientAmountMap: {},
 		selectedParts: [],

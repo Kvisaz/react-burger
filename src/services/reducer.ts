@@ -12,7 +12,7 @@ export function reducer(state: IAppState, action: BurgerAction): IAppState {
 					...i,
 					amount: 0,
 				})),
-				loaded: true,
+				isIngredientsLoaded: true,
 			};
 		case IBurgerActionType.CLOSE_MODAL:
 			return {
