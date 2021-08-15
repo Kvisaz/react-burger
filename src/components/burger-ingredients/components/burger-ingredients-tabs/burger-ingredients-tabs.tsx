@@ -1,39 +1,36 @@
 import React from 'react';
 import styles from './burger-ingredients-tabs.module.css';
-import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../../services/store';
+import { IAppState } from '../../../../model/IAppState';
+import { IBurgerActionType } from '../../../../services/actions';
 
-export interface IBurgerConstructorTabsProps {
-    onPageSelect?: (page: string) => void;
-}
-
-export enum ITabsPage {
-    buns = 'Булки',
-    sauces = 'Соусы',
-    fills = 'Начинки'
-}
 
 BurgerIngredientsTabs.propTypes = {
-    onPageSelect: PropTypes.func
+	onPageSelect: PropTypes.func,
 };
 
-export function BurgerIngredientsTabs({onPageSelect}: IBurgerConstructorTabsProps) {
-    const [current, setCurrent] = React.useState(Object.keys(ITabsPage)[0])
+export function BurgerIngredientsTabs() {
 
-    const onClick = (value: string) => {
-        setCurrent(value);
-        if (onPageSelect) onPageSelect(value);
-    }
+	const dispatch = useDispatch();
+	const { currentTabIndex, tabs } = useSelector<RootState>(state => ({...state})) as IAppState;
 
-    return (
-        <div className={`mt-5 ${styles.main}`}>
-            {
-                Object.entries(ITabsPage).map(([key, text], index) => (
-                    <Tab key={index} value={key} active={current === key} onClick={() => onClick(key)}>
-                        {text}
-                    </Tab>
-                ))
-            }
-        </div>
-    )
+	const onClick = (value: string) => {
+		console.log('value', value);
+		dispatch({ type: IBurgerActionType.TAB_SELECT, index: parseInt(value) });
+	};
+
+	return (
+		<div className={`mt-5 ${styles.main}`}>
+			{
+				tabs.map(({ name }, index) => (
+					<Tab key={index} value={index.toString()} active={currentTabIndex === index} onClick={onClick}>
+						{name}
+					</Tab>
+				))
+			}
+		</div>
+	);
 }

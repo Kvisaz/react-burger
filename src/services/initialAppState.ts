@@ -13,4 +13,16 @@ export const InitialAppState: IAppState = {
 	isOrderRequest: false,
 	isOrderFailed: false,
 	isOrderSuccess: false,
+	currentTabIndex: 0,
+	tabs: [
+		{
+			name: 'Булки',
+		},
+		{
+			name: 'Соусы',
+		},
+		{
+			name: 'Начинки',
+		},
+	],
 };

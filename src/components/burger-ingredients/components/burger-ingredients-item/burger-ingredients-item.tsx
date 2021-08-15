@@ -18,7 +18,7 @@ BurgerIngredientsItem.propTypes = {
 export function BurgerIngredientsItem({ part }: IBurgerConstructorItemProps) {
 
 	const dispatch = useDispatch();
-	const state = useSelector((state:RootState) => ({ ...state.main }));
+	const state = useSelector((state:RootState) => ({ ...state }));
 
 	const { ingredientAmountMap } = state;
 	const { price, name, image, _id } = part;

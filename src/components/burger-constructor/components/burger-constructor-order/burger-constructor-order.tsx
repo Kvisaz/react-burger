@@ -9,7 +9,7 @@ import { RootState } from '../../../../services/store';
 
 export function BurgerConstructorOrder() {
 	const dispatch = useDispatch();
-	const state = useSelector((state:RootState) => ({ ...state.main }));
+	const state = useSelector((state:RootState) => ({ ...state }));
 
 	const { sum } = state;
 

@@ -16,7 +16,7 @@ const scrollToRef = (ref: React.MutableRefObject<HTMLElement>) => {
 
 export function BurgerIngredients() {
 
-	const ingredients = useSelector<RootState>(store => store.main.ingredients) as IBurgerPart[]
+	const ingredients = useSelector<RootState>(store => store.ingredients) as IBurgerPart[]
 	const dispatch = useDispatch();
 
 	const bunRef = useRef(null);

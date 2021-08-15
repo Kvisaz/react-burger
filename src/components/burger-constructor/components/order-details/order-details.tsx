@@ -9,7 +9,7 @@ const ICON_URL = Assets.images.orderDone;
 
 export function OrderDetails() {
 
-	const state = useSelector((state:RootState) => ({ ...state.main }));
+	const state = useSelector((state:RootState) => ({ ...state }));
 
 	const { orderId, orderName } = state;
 

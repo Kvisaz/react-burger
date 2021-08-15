@@ -12,6 +12,7 @@ export type BurgerAction =
 	| { type: IBurgerActionType.ORDER_SUCCESS, payload: IOrderPayLoad }
 	| { type: IBurgerActionType.ORDER_FAILED }
 	| { type: IBurgerActionType.CLOSE_MODAL }
+	| { type: IBurgerActionType.TAB_SELECT, index: number }
 
 type IBurgerDispatch = (action: BurgerAction) => any;
 
@@ -25,7 +26,8 @@ export enum IBurgerActionType {
 	ORDER_REQUEST = 'ORDER_REQUEST',
 	ORDER_SUCCESS = 'ORDER_SUCCESS',
 	ORDER_FAILED = 'ORDER_FAILED',
-	CLOSE_MODAL = 'CLOSE_MODAL'
+	CLOSE_MODAL = 'CLOSE_MODAL',
+	TAB_SELECT = 'TAB_SELECT'
 }
 
 export interface IOrderPayLoad {

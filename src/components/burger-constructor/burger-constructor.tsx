@@ -18,7 +18,7 @@ function mapBun(bun: IConstructorElementData, suffix: string, type: IConstructor
 
 export function BurgerConstructor() {
 	const dispatch = useDispatch();
-	const state = useSelector((state:RootState) => ({ ...state.main }));
+	const state = useSelector((state:RootState) => ({ ...state }));
 
 	const { selectedBun, selectedParts: parts, sum } = state;
 

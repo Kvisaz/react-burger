@@ -6,7 +6,7 @@ import { RootState } from '../../../../services/store';
 
 
 export function IngredientDetails() {
-	const state = useSelector((state:RootState) => ({ ...state.main }));
+	const state = useSelector((state:RootState) => ({ ...state }));
 
 	const { selectedIngredient } = state;
 	if (selectedIngredient == null) return null;

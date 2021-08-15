@@ -11,7 +11,7 @@ import { RootState } from '../../services/store';
 
 
 function App() {
-	const state = useSelector((state:RootState) => ({ ...state.main }));
+	const state = useSelector((state:RootState) => ({ ...state }));
 	
 	return (
 		<div className={styles.App}>

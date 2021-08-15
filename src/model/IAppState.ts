@@ -21,4 +21,12 @@ export interface IAppState {
 	isOrderRequest: boolean;
 	isOrderSuccess: boolean;
 	isOrderFailed: boolean;
+
+	currentTabIndex: number;
+	tabs: ITab[];
+}
+
+
+interface ITab {
+	name: string;
 }
