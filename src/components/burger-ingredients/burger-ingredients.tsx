@@ -5,13 +5,12 @@ import { BurgerIngredientsSection } from './components/burger-ingredients-sectio
 import { IBurgerPart } from '../../model/IBurgerPart';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../services/store';
-import { IAppState } from '../../model/IAppState';
-import { fetchIngredientsAction } from '../../services/actions/api';
+import { fetchIngredientsAction } from '../../services/actions';
 
 
 export function BurgerIngredients() {
 
-	const { ingredients } = useSelector<RootState>(store => store.api) as IAppState;
+	const ingredients = useSelector<RootState>(store => store.ingredients) as IBurgerPart[];
 	const dispatch = useDispatch();
 
 	useEffect(() => {

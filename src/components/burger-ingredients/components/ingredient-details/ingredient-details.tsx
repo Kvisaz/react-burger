@@ -1,11 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styles from './ingredient-details.module.css';
 import { Nutrition } from './components/nutrition/nutrition';
-import { AppContext } from '../../../../services/AppContext';
+import { useSelector } from 'react-redux';
+import { IAppState } from '../../../../model/IAppState';
 
 
 export function IngredientDetails() {
-	const { state } = useContext(AppContext);
+	const state = useSelector(state => ({ ...state })) as IAppState;
+
 	const { selectedIngredient } = state;
 	if (selectedIngredient == null) return null;
 

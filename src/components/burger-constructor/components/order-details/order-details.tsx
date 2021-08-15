@@ -1,14 +1,16 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styles from './order-details.module.css';
 import { Assets } from '../../../../Assets';
-import { AppContext } from '../../../../services/AppContext';
+import { useSelector } from 'react-redux';
+import { IAppState } from '../../../../model/IAppState';
 
 
 const ICON_URL = Assets.images.orderDone;
 
 export function OrderDetails() {
 
-	const { state } = useContext(AppContext);
+	const state = useSelector(state => ({ ...state })) as IAppState;
+
 	const { orderId, orderName } = state;
 
 	const orderIdText = `${orderId}`.padStart(6, '0');

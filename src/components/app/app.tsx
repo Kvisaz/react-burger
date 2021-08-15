@@ -9,8 +9,8 @@ import { Modal } from '../common/modal/modal';
 import { IngredientDetails } from '../burger-ingredients/components/ingredient-details/ingredient-details';
 import { OrderDetails } from '../burger-constructor/components/order-details/order-details';
 import { AppContext } from '../../services/AppContext';
-import { reducer } from '../../services/reducer';
-import { IBurgerActionType } from '../../model/IBurgerAction';
+import { reducer } from '../../services/reducers/reducer';
+import { IBurgerActionType } from '../../services/actions';
 import { InitialAppState } from '../../services/initialAppState';
 
 const API_DATA_END_POINT = 'https://norma.nomoreparties.space/api/ingredients';

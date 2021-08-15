@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styles from './burger-constructor.module.css';
 import { BurgerConstructorOrder } from './components/burger-constructor-order/burger-constructor-order';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { AppContext } from '../../services/AppContext';
 import { IConstructorElementData, IConstructorElementType } from '../../model/IConstructorElementData';
-import { IBurgerActionType } from '../../model/IBurgerAction';
+import { IBurgerActionType } from '../../services/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { IAppState } from '../../model/IAppState';
 
 function mapBun(bun: IConstructorElementData, suffix: string, type: IConstructorElementType): IConstructorElementData {
 	return {
@@ -16,7 +17,9 @@ function mapBun(bun: IConstructorElementData, suffix: string, type: IConstructor
 }
 
 export function BurgerConstructor() {
-	const { state, dispatch } = useContext(AppContext);
+	const dispatch = useDispatch();
+	const state = useSelector(state => ({ ...state })) as IAppState;
+
 	const { selectedBun, selectedParts: parts, sum } = state;
 
 	return (

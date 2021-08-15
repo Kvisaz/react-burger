@@ -1,10 +1,11 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback } from 'react';
 import styles from './burger-ingredients-item.module.css';
 import { IBurgerPart, IBurgerPartPropType } from '../../../../model/IBurgerPart';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { MoneyCounter } from '../../../common/money-counter/money-counter';
-import { AppContext } from '../../../../services/AppContext';
-import { IBurgerActionType } from '../../../../model/IBurgerAction';
+import { useDispatch, useSelector } from 'react-redux';
+import { IBurgerActionType } from '../../../../services/actions';
+import { IAppState } from '../../../../model/IAppState';
 
 interface IBurgerConstructorItemProps {
 	part: IBurgerPart;
@@ -16,12 +17,15 @@ BurgerIngredientsItem.propTypes = {
 
 export function BurgerIngredientsItem({ part }: IBurgerConstructorItemProps) {
 
-	const { dispatch, state } = useContext(AppContext);
+	const dispatch = useDispatch();
+	const state = useSelector(state => ({ ...state })) as IAppState;
+
 	const { ingredientAmountMap } = state;
 	const { price, name, image, _id } = part;
 	const amount = ingredientAmountMap[_id] ?? 0;
-	const onItemClick = useCallback((part: IBurgerPart) => {
-		dispatch({ type: IBurgerActionType.INGREDIENT_SELECT_CLICK, payload: part });
+	const onItemClick = useCallback((ingredient: IBurgerPart) => {
+		console.log('onItemClick', ingredient);
+		dispatch({ type: IBurgerActionType.INGREDIENT_SELECT_CLICK, ingredient });
 	}, [dispatch]);
 
 	const hasAmount = amount > 0;

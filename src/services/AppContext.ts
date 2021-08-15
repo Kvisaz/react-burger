@@ -1,6 +1,6 @@
 import React from 'react';
 import { IAppState } from '../model/IAppState';
-import { BurgerAction } from '../model/IBurgerAction';
+import { BurgerAction } from './actions';
 import { InitialAppState } from './initialAppState';
 
 interface IReducerState {

@@ -1,14 +1,29 @@
-import { IAppState } from '../model/IAppState';
-import { BurgerAction, IBurgerActionType, IRemovePayLoad } from '../model/IBurgerAction';
-import { IBurgerPart } from '../model/IBurgerPart';
-import { IConstructorElementData } from '../model/IConstructorElementData';
+import { IAppState } from '../../model/IAppState';
+import { BurgerAction, IBurgerActionType, IRemovePayLoad } from '../actions';
+import { IBurgerPart } from '../../model/IBurgerPart';
+import { IConstructorElementData } from '../../model/IConstructorElementData';
+import { InitialAppState } from '../initialAppState';
 
-export function reducer(state: IAppState, action: BurgerAction): IAppState {
+export function reducer(state: IAppState = InitialAppState, action: BurgerAction): IAppState {
 	switch (action.type) {
+		case IBurgerActionType.DATA_REQUEST: {
+			return {
+				...state,
+				isIngredientsRequest: true,
+			};
+		}
+		case IBurgerActionType.DATA_FAILED : {
+			return {
+				...state,
+				isIngredientsRequest: false,
+				isIngredientsLoaded: false,
+				isIngredientsFailed: true,
+			};
+		}
 		case IBurgerActionType.DATA_LOADED:
 			return {
 				...state,
-				ingredients: action.payload.map(i => ({
+				ingredients: action.ingredients.map(i => ({
 					...i,
 					amount: 0,
 				})),
@@ -41,7 +56,7 @@ export function reducer(state: IAppState, action: BurgerAction): IAppState {
 				isModalOrderOpen: true,
 				ingredientAmountMap: {},
 				selectedParts: [],
-				selectedBun: undefined
+				selectedBun: undefined,
 			};
 		case IBurgerActionType.ORDER_ERROR:
 			return {
@@ -55,13 +70,15 @@ export function reducer(state: IAppState, action: BurgerAction): IAppState {
 			return onRemoveAction(action, state);
 		default:
 			console.warn(`unknown action`, action);
-			throw new Error(`reducer: unknown action`);
+			return {
+				...state,
+			};
 
 	}
 }
 
-function onSelectAction(action: { type: IBurgerActionType.INGREDIENT_SELECT_CLICK, payload: IBurgerPart }, state: IAppState): IAppState {
-	const selectedIngredient = action.payload as IBurgerPart;
+function onSelectAction(action: { type: IBurgerActionType.INGREDIENT_SELECT_CLICK, ingredient: IBurgerPart }, state: IAppState): IAppState {
+	const selectedIngredient = action.ingredient;
 	const isBun = selectedIngredient.type === 'bun';
 	const constructorItem = mapBurgerItem(selectedIngredient);
 
