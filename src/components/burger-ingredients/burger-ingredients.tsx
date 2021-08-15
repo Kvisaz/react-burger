@@ -5,7 +5,7 @@ import { BurgerIngredientsSection } from './components/burger-ingredients-sectio
 import { IBurgerPart } from '../../model/IBurgerPart';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../services/store';
-import { fetchIngredientsAction } from '../../services/actions';
+import { fetchIngredientsActionCreator } from '../../services/actions';
 
 
 export function BurgerIngredients() {
@@ -14,7 +14,7 @@ export function BurgerIngredients() {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(fetchIngredientsAction());
+		dispatch(fetchIngredientsActionCreator());
 	}, [dispatch]);
 
 	const buns: IBurgerPart[] = [];

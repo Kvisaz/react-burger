@@ -10,6 +10,7 @@ export const InitialAppState: IAppState = {
 	selectedBun: undefined,
 	selectedParts: [],
 	orderId: 2,
-	isOrderWaiting: false,
-	isOrderClicked: false,
+	isOrderRequest: false,
+	isOrderFailed: false,
+	isOrderSuccess: false,
 };

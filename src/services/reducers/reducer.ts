@@ -35,22 +35,16 @@ export function reducer(state: IAppState = InitialAppState, action: BurgerAction
 				isModalIngredientOpen: false,
 				isModalOrderOpen: false,
 			};
-		case IBurgerActionType.ORDER_CLICK:
+		case IBurgerActionType.ORDER_REQUEST:
 			return {
 				...state,
-				isOrderClicked: true,
-			};
-		case IBurgerActionType.ORDER_WAITING:
-			return {
-				...state,
-				isOrderClicked: false,
-				isOrderWaiting: true,
+				isOrderRequest: true,
 			};
 		case IBurgerActionType.ORDER_SUCCESS:
 			return {
 				...state,
-				isOrderClicked: false,
-				isOrderWaiting: false,
+				isOrderRequest: false,
+				isOrderSuccess: true,
 				orderId: action.payload.orderId,
 				orderName: action.payload.name,
 				isModalOrderOpen: true,
@@ -58,11 +52,11 @@ export function reducer(state: IAppState = InitialAppState, action: BurgerAction
 				selectedParts: [],
 				selectedBun: undefined,
 			};
-		case IBurgerActionType.ORDER_ERROR:
+		case IBurgerActionType.ORDER_FAILED:
 			return {
 				...state,
-				isOrderClicked: false,
-				isOrderWaiting: false,
+				isOrderRequest: false,
+				isOrderFailed: true,
 			};
 		case IBurgerActionType.INGREDIENT_SELECT_CLICK:
 			return onSelectAction(action, state);

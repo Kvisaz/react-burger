@@ -18,6 +18,7 @@ export interface IAppState {
 	orderName?: string;
 	isModalOrderOpen?: boolean;
 
-	isOrderClicked: boolean;
-	isOrderWaiting: boolean;
+	isOrderRequest: boolean;
+	isOrderSuccess: boolean;
+	isOrderFailed: boolean;
 }
