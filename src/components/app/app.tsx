@@ -8,23 +8,27 @@ import { IngredientDetails } from '../burger-ingredients/components/ingredient-d
 import { OrderDetails } from '../burger-constructor/components/order-details/order-details';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../services/store';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
 
 
 function App() {
-	const state = useSelector((state:RootState) => ({ ...state }));
-	
+	const state = useSelector((state: RootState) => ({ ...state }));
+
 	return (
 		<div className={styles.App}>
 			<AppHeader />
-			<main className={styles.content}>
-				<div className={styles.col_left}>
-					<span className='text text_type_main-large'>Соберите бургер</span>
-					<BurgerIngredients />
-				</div>
-				<div className={styles.col_right}>
-					<BurgerConstructor />
-				</div>
-			</main>
+			<DndProvider backend={HTML5Backend}>
+				<main className={styles.content}>
+					<div className={styles.col_left}>
+						<span className='text text_type_main-large'>Соберите бургер</span>
+						<BurgerIngredients />
+					</div>
+					<div className={styles.col_right}>
+						<BurgerConstructor />
+					</div>
+				</main>
+			</DndProvider>
 			{
 				state.isModalIngredientOpen && state.selectedIngredient && (
 					<Modal title={'Детали ингредиента'}>

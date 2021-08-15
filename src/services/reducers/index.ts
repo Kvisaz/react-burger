@@ -3,6 +3,7 @@ import { BurgerAction, IBurgerActionType, IRemovePayLoad } from '../actions';
 import { IBurgerPart } from '../../model/IBurgerPart';
 import { IConstructorElementData } from '../../model/IConstructorElementData';
 import { InitialAppState } from '../initialAppState';
+import { IdObject } from '../../model/IdObject';
 
 export function mainReducer(state: IAppState = InitialAppState, action: BurgerAction): IAppState {
 	switch (action.type) {
@@ -62,11 +63,19 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
 			return onSelectAction(action, state);
 		case IBurgerActionType.INGREDIENT_REMOVE_CLICK:
 			return onRemoveAction(action, state);
+		case IBurgerActionType.INGREDIENT_SHOW:
+			return {
+			...state,
+			isModalIngredientOpen: true,
+			selectedIngredient: action.ingredient
+		};
 		case IBurgerActionType.TAB_SELECT:
 			return {
 				...state,
 				currentTabIndex: action.index,
 			};
+		case IBurgerActionType.INGREDIENT_DROP:
+			return onDrop(state, action);
 		default:
 			console.warn(`unknown action`, action);
 			return {
@@ -94,8 +103,6 @@ function onSelectAction(action: { type: IBurgerActionType.INGREDIENT_SELECT_CLIC
 	return {
 		...state,
 		ingredientAmountMap,
-		isModalIngredientOpen: true,
-		selectedIngredient,
 		selectedBun,
 		selectedParts,
 		sum,
@@ -141,5 +148,18 @@ function mapBurgerItem(data: IBurgerPart): IConstructorElementData {
 	return {
 		ingredientId: data._id, price: data.price, text: data.name, thumbnail: data.image,
 		selectedId: data._id + Date.now(),
+	};
+}
+
+function onDrop(state: IAppState, action: IdObject): IAppState {
+	const { id } = action;
+	const { ingredients } = state;
+	const ingredient = ingredients.find(i => i._id === id);
+	if(ingredient){
+
+	}
+	console.log('onDrop');
+	return {
+		...state,
 	};
 }
