@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect } from 'react';
 import styles from './app.module.css';
 import { AppHeader } from '../app-header/app-header';
 import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
@@ -8,9 +8,9 @@ import { Api } from '../../services/Api';
 import { Modal } from '../common/modal/modal';
 import { IngredientDetails } from '../burger-ingredients/components/ingredient-details/ingredient-details';
 import { OrderDetails } from '../burger-constructor/components/order-details/order-details';
-import { reducer } from '../../services/reducers/reducer';
 import { IBurgerActionType } from '../../services/actions';
-import { InitialAppState } from '../../services/initialAppState';
+import { useDispatch, useSelector } from 'react-redux';
+import { IAppState } from '../../model/IAppState';
 
 const API_DATA_END_POINT = 'https://norma.nomoreparties.space/api/ingredients';
 const API_ORDER_END_POINT = 'https://norma.nomoreparties.space/api/orders';
@@ -18,8 +18,9 @@ const API = new Api(API_DATA_END_POINT, API_ORDER_END_POINT);
 
 
 function App() {
-	const [state, dispatch] = useReducer(reducer, InitialAppState, undefined);
-
+	const state = useSelector(state => ({ ...state })) as IAppState;
+	const dispatch = useDispatch();
+	
 	useEffect(() => {
 		if (state.isOrderClicked && !state.isOrderWaiting) {
 			dispatch({ type: IBurgerActionType.ORDER_WAITING });
