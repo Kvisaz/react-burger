@@ -4,7 +4,7 @@ import { IBurgerPart } from '../../model/IBurgerPart';
 import { IConstructorElementData } from '../../model/IConstructorElementData';
 import { InitialAppState } from '../initialAppState';
 
-export function reducer(state: IAppState = InitialAppState, action: BurgerAction): IAppState {
+export function mainReducer(state: IAppState = InitialAppState, action: BurgerAction): IAppState {
 	switch (action.type) {
 		case IBurgerActionType.DATA_REQUEST: {
 			return {

@@ -5,7 +5,7 @@ import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-comp
 import { IConstructorElementData, IConstructorElementType } from '../../model/IConstructorElementData';
 import { IBurgerActionType } from '../../services/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { IAppState } from '../../model/IAppState';
+import { RootState } from '../../services/store';
 
 function mapBun(bun: IConstructorElementData, suffix: string, type: IConstructorElementType): IConstructorElementData {
 	return {
@@ -18,7 +18,7 @@ function mapBun(bun: IConstructorElementData, suffix: string, type: IConstructor
 
 export function BurgerConstructor() {
 	const dispatch = useDispatch();
-	const state = useSelector(state => ({ ...state })) as IAppState;
+	const state = useSelector((state:RootState) => ({ ...state.main }));
 
 	const { selectedBun, selectedParts: parts, sum } = state;
 

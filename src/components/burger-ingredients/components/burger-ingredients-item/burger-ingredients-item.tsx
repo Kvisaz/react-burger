@@ -5,7 +5,7 @@ import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { MoneyCounter } from '../../../common/money-counter/money-counter';
 import { useDispatch, useSelector } from 'react-redux';
 import { IBurgerActionType } from '../../../../services/actions';
-import { IAppState } from '../../../../model/IAppState';
+import { RootState } from '../../../../services/store';
 
 interface IBurgerConstructorItemProps {
 	part: IBurgerPart;
@@ -18,7 +18,7 @@ BurgerIngredientsItem.propTypes = {
 export function BurgerIngredientsItem({ part }: IBurgerConstructorItemProps) {
 
 	const dispatch = useDispatch();
-	const state = useSelector(state => ({ ...state })) as IAppState;
+	const state = useSelector((state:RootState) => ({ ...state.main }));
 
 	const { ingredientAmountMap } = state;
 	const { price, name, image, _id } = part;

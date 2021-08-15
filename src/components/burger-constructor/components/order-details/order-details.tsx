@@ -2,14 +2,14 @@ import React from 'react';
 import styles from './order-details.module.css';
 import { Assets } from '../../../../Assets';
 import { useSelector } from 'react-redux';
-import { IAppState } from '../../../../model/IAppState';
+import { RootState } from '../../../../services/store';
 
 
 const ICON_URL = Assets.images.orderDone;
 
 export function OrderDetails() {
 
-	const state = useSelector(state => ({ ...state })) as IAppState;
+	const state = useSelector((state:RootState) => ({ ...state.main }));
 
 	const { orderId, orderName } = state;
 

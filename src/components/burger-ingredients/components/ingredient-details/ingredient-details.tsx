@@ -2,11 +2,11 @@ import React from 'react';
 import styles from './ingredient-details.module.css';
 import { Nutrition } from './components/nutrition/nutrition';
 import { useSelector } from 'react-redux';
-import { IAppState } from '../../../../model/IAppState';
+import { RootState } from '../../../../services/store';
 
 
 export function IngredientDetails() {
-	const state = useSelector(state => ({ ...state })) as IAppState;
+	const state = useSelector((state:RootState) => ({ ...state.main }));
 
 	const { selectedIngredient } = state;
 	if (selectedIngredient == null) return null;

@@ -7,11 +7,11 @@ import { Modal } from '../common/modal/modal';
 import { IngredientDetails } from '../burger-ingredients/components/ingredient-details/ingredient-details';
 import { OrderDetails } from '../burger-constructor/components/order-details/order-details';
 import { useSelector } from 'react-redux';
-import { IAppState } from '../../model/IAppState';
+import { RootState } from '../../services/store';
 
 
 function App() {
-	const state = useSelector(state => ({ ...state })) as IAppState;
+	const state = useSelector((state:RootState) => ({ ...state.main }));
 	
 	return (
 		<div className={styles.App}>

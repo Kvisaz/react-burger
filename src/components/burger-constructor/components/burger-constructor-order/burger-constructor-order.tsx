@@ -3,13 +3,13 @@ import styles from './burger-constructor-order.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { MoneyCounter } from '../../../common/money-counter/money-counter';
 import { useDispatch, useSelector } from 'react-redux';
-import { IAppState } from '../../../../model/IAppState';
 import { onOrderClickActionCreator } from '../../../../services/actions';
+import { RootState } from '../../../../services/store';
 
 
 export function BurgerConstructorOrder() {
 	const dispatch = useDispatch();
-	const state = useSelector(state => ({ ...state })) as IAppState;
+	const state = useSelector((state:RootState) => ({ ...state.main }));
 
 	const { sum } = state;
 

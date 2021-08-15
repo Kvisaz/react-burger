@@ -1,7 +1,7 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { IAppState } from '../model/IAppState';
-import { reducer } from './reducers/reducer';
+import { rootReducer } from './reducers';
 
 declare global {
 	interface Window {
@@ -12,7 +12,7 @@ declare global {
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const enhancer = composeEnhancers(applyMiddleware(thunk));
-export const AppStore = createStore(reducer, enhancer);
+export const AppStore = createStore(rootReducer, enhancer);
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof AppStore.getState>
