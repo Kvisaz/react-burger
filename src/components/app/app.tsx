@@ -3,12 +3,12 @@ import styles from './app.module.css';
 import { AppHeader } from '../app-header/app-header';
 import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
 import { BurgerConstructor } from '../burger-constructor/burger-constructor';
-import { Api } from '../../service/Api';
+import { Api } from '../../services/Api';
 import { Modal } from '../common/modal/modal';
 import { IngredientDetails } from '../burger-ingredients/components/ingredient-details/ingredient-details';
 import { OrderDetails } from '../burger-constructor/components/order-details/order-details';
-import { AppContext } from '../../service/AppContext';
-import { reducer } from '../../service/reducer';
+import { AppContext } from '../../services/AppContext';
+import { reducer } from '../../services/reducer';
 import { IBurgerActionType } from '../../model/IBurgerAction';
 
 const API_DATA_END_POINT = 'https://norma.nomoreparties.space/api/ingredients';

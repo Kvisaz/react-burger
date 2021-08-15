@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styles from './order-details.module.css';
 import { Assets } from '../../../../Assets';
-import { AppContext } from '../../../../service/AppContext';
+import { AppContext } from '../../../../services/AppContext';
 
 
 const ICON_URL = Assets.images.orderDone;

@@ -3,7 +3,7 @@ import styles from './burger-ingredients.module.css';
 import { BurgerIngredientsTabs } from './components/burger-ingredients-tabs/burger-ingredients-tabs';
 import { BurgerIngredientsSection } from './components/burger-ingredients-section/burger-ingredients-section';
 import { IBurgerPart } from '../../model/IBurgerPart';
-import { AppContext } from '../../service/AppContext';
+import { AppContext } from '../../services/AppContext';
 
 
 export function BurgerIngredients() {

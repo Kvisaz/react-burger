@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styles from './ingredient-details.module.css';
 import { Nutrition } from './components/nutrition/nutrition';
-import { AppContext } from '../../../../service/AppContext';
+import { AppContext } from '../../../../services/AppContext';
 
 
 export function IngredientDetails() {

@@ -3,7 +3,7 @@ import styles from './burger-ingredients-item.module.css';
 import { IBurgerPart, IBurgerPartPropType } from '../../../../model/IBurgerPart';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { MoneyCounter } from '../../../common/money-counter/money-counter';
-import { AppContext } from '../../../../service/AppContext';
+import { AppContext } from '../../../../services/AppContext';
 import { IBurgerActionType } from '../../../../model/IBurgerAction';
 
 interface IBurgerConstructorItemProps {

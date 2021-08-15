@@ -4,7 +4,7 @@ import styles from './modal.module.css';
 import { ModalOverlay } from './components/modal-overlay/modal-overlay';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { AppContext } from '../../../service/AppContext';
+import { AppContext } from '../../../services/AppContext';
 import { IBurgerActionType } from '../../../model/IBurgerAction';
 
 interface IModalProps {

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styles from './burger-constructor.module.css';
 import { BurgerConstructorOrder } from './components/burger-constructor-order/burger-constructor-order';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { AppContext } from '../../service/AppContext';
+import { AppContext } from '../../services/AppContext';
 import { IConstructorElementData, IConstructorElementType } from '../../model/IConstructorElementData';
 import { IBurgerActionType } from '../../model/IBurgerAction';
 

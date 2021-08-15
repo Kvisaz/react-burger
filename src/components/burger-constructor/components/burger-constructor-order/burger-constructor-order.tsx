@@ -2,7 +2,7 @@ import React, { useCallback, useContext } from 'react';
 import styles from './burger-constructor-order.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { MoneyCounter } from '../../../common/money-counter/money-counter';
-import { AppContext } from '../../../../service/AppContext';
+import { AppContext } from '../../../../services/AppContext';
 import { IBurgerActionType } from '../../../../model/IBurgerAction';
 
 
