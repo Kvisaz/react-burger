@@ -1,8 +1,8 @@
 import { IAppState } from '../../model/IAppState';
 import { InitialAppState } from '../initialAppState';
-import { BurgerAction } from '../../model/IBurgerAction';
+import { ApiAction } from '../actions/api';
 
-export function apiReducer(state: IAppState = InitialAppState, action: BurgerAction): IAppState {
+export function apiReducer(state: IAppState = InitialAppState, action: ApiAction): IAppState {
 	switch (action.type) {
 		case 'DATA_REQUEST': {
 			return {

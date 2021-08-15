@@ -24,7 +24,3 @@ export type AppDispatch = typeof AppStore.dispatch
 export interface IGetState {
 	(): IAppState
 }
-
-export interface IDispatch {
-	(action: BurgerAction):any
-}
