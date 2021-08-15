@@ -1,20 +1,27 @@
-import React, { useContext } from 'react';
+import React, { useEffect } from 'react';
 import styles from './burger-ingredients.module.css';
 import { BurgerIngredientsTabs } from './components/burger-ingredients-tabs/burger-ingredients-tabs';
 import { BurgerIngredientsSection } from './components/burger-ingredients-section/burger-ingredients-section';
 import { IBurgerPart } from '../../model/IBurgerPart';
-import { AppContext } from '../../services/AppContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../services/store';
+import { IAppState } from '../../model/IAppState';
+import { fetchIngredientsAction } from '../../services/actions/api';
 
 
 export function BurgerIngredients() {
 
-	const { state } = useContext(AppContext);
-	const { ingredients: parts } = state;
+	const { ingredients } = useSelector<RootState>(store => store.api) as IAppState;
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(fetchIngredientsAction());
+	}, [dispatch]);
 
 	const buns: IBurgerPart[] = [];
 	const fills: IBurgerPart[] = [];
 	const sauces: IBurgerPart[] = [];
-	parts.forEach((part) => {
+	ingredients.forEach((part) => {
 		switch (part.type) {
 			case 'bun':
 				buns.push(part);

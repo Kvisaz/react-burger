@@ -4,16 +4,16 @@ export class Api {
 	constructor(private readonly dataEndPoint: string, private readonly orderEndPoint: string) {
 	}
 
-	async getBurgerParts(): Promise<IBurgerPartsResponse> {
-		const response: IBurgerPartsResponse = {
-			data: [],
+	async getBurgerParts(): Promise<IngredientsResponse> {
+		const response: IngredientsResponse = {
+			ingredients: [],
 		};
 		try {
 			const apiResponse = await fetch(this.dataEndPoint);
 			if (!apiResponse.ok) throw new Error('api error');
 			const apiJson = await apiResponse.json() as IApiEndPointResponse;
 			if (!apiJson.success) throw new Error('apiJson error');
-			response.data = apiJson.data;
+			response.ingredients = apiJson.data;
 		} catch (e) {
 			throw e;
 		}
@@ -57,8 +57,8 @@ export interface IApiEndPointResponse {
 }
 
 
-export interface IBurgerPartsResponse {
-	data: IBurgerPart[];
+export interface IngredientsResponse {
+	ingredients: IBurgerPart[];
 }
 
 export interface IApiOrderConfig {

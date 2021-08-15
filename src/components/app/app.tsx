@@ -3,6 +3,7 @@ import styles from './app.module.css';
 import { AppHeader } from '../app-header/app-header';
 import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
 import { BurgerConstructor } from '../burger-constructor/burger-constructor';
+
 import { Api } from '../../services/Api';
 import { Modal } from '../common/modal/modal';
 import { IngredientDetails } from '../burger-ingredients/components/ingredient-details/ingredient-details';
@@ -10,6 +11,7 @@ import { OrderDetails } from '../burger-constructor/components/order-details/ord
 import { AppContext } from '../../services/AppContext';
 import { reducer } from '../../services/reducer';
 import { IBurgerActionType } from '../../model/IBurgerAction';
+import { InitialAppState } from '../../services/initialAppState';
 
 const API_DATA_END_POINT = 'https://norma.nomoreparties.space/api/ingredients';
 const API_ORDER_END_POINT = 'https://norma.nomoreparties.space/api/orders';
@@ -17,25 +19,7 @@ const API = new Api(API_DATA_END_POINT, API_ORDER_END_POINT);
 
 
 function App() {
-
-	const [state, dispatch] = useReducer(reducer, {
-		sum: 0,
-		isIngredientsLoaded: false,
-		ingredients: [],
-		ingredientAmountMap: {},
-		selectedBun: undefined,
-		selectedParts: [],
-		orderId: 2,
-		isOrderWaiting: false,
-		isOrderClicked: false,
-	}, undefined);
-
-	useEffect(() => {
-		API.getBurgerParts()
-			.then(({ data }) => dispatch({ type: IBurgerActionType.DATA_LOADED, payload: data }))
-			.catch(e => console.error(e));
-	}, [dispatch]);
-
+	const [state, dispatch] = useReducer(reducer, InitialAppState, undefined);
 
 	useEffect(()=>{
 		if (state.isOrderClicked && !state.isOrderWaiting) {

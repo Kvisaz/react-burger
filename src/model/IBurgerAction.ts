@@ -1,7 +1,9 @@
 import { IBurgerPart } from './IBurgerPart';
 
 export type BurgerAction =
+	| { type: IBurgerActionType.DATA_REQUEST }
 	| { type: IBurgerActionType.DATA_LOADED, payload: IBurgerPart[] }
+	| { type: IBurgerActionType.DATA_FAILED, message: string }
 	| { type: IBurgerActionType.INGREDIENT_SELECT_CLICK, payload: IBurgerPart }
 	| { type: IBurgerActionType.INGREDIENT_REMOVE_CLICK, payload: IRemovePayLoad }
 	| { type: IBurgerActionType.ORDER_CLICK }
@@ -12,7 +14,9 @@ export type BurgerAction =
 
 
 export enum IBurgerActionType {
+	DATA_REQUEST='DATA_REQUEST',
 	DATA_LOADED = 'DATA_LOADED',
+	DATA_FAILED='DATA_FAILED',
 	INGREDIENT_SELECT_CLICK = 'INGREDIENT_SELECT_CLICK',
 	INGREDIENT_REMOVE_CLICK = 'INGREDIENT_REMOVE_CLICK',
 	ORDER_CLICK = 'ORDER_CLICK',
