@@ -1,12 +1,12 @@
 import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useDrag } from 'react-dnd';
+import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients-item.module.css';
 import { IBurgerPart, IBurgerPartPropType } from '../../../../model/IBurgerPart';
-import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { MoneyCounter } from '../../../common/money-counter/money-counter';
-import { useDispatch, useSelector } from 'react-redux';
 import { onIngredientClickActionCreator } from '../../../../services/actions';
 import { RootState } from '../../../../services/store';
-import { useDrag } from 'react-dnd';
 
 
 interface IBurgerConstructorItemProps {

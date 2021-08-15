@@ -1,13 +1,14 @@
 import React from 'react';
 import styles from './burger-constructor.module.css';
 import { BurgerConstructorOrder } from './components/burger-constructor-order/burger-constructor-order';
-import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IConstructorElementData, IConstructorElementType } from '../../model/IConstructorElementData';
-import { IBurgerActionType, onIngredientDropActionCreator } from '../../services/actions';
+import { onIngredientDropActionCreator } from '../../services/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../services/store';
 import { useDrop } from 'react-dnd';
-import { IdObject } from '../../model/IdObject';
+import { IDragItem } from '../../model/IdObject';
+import { DraggableBurgerConstructorItem } from './components/draggable-burger-constructor-item/draggable-burger-constructor-item';
+import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function mapBun(bun: IConstructorElementData, suffix: string, type: IConstructorElementType): IConstructorElementData {
 	return {
@@ -24,27 +25,23 @@ export function BurgerConstructor() {
 
 	const { selectedBun, selectedParts: parts, sum } = state;
 
-	const [{}, dropTargetRef] = useDrop({
-		accept: 'item', // обязательное обозначение типа из drag
+	const [_, dropTargetRef] = useDrop({
+		accept: 'item',
 		drop(item) {
-			const { id } = item as IdObject;
-			dispatch(onIngredientDropActionCreator(id));
-		}
+			const { id, isBasketItem } = item as IDragItem;
+			if (isBasketItem) {
+			} else dispatch(onIngredientDropActionCreator(id));
+		},
 	}, [dispatch]);
-
 
 	return (
 		<section className={`mt-4 mb-4 ${styles.main}`} ref={dropTargetRef}>
 			{selectedBun && <ConstructorElement {...mapBun(selectedBun, 'верх', IConstructorElementType.TOP)} />}
 			<div className={`mt-4 mb-4 ${styles.list}`}>
-				{parts.map(part => (
-					<ConstructorElement key={part.selectedId} {...part} handleClose={() => dispatch({
-						type: IBurgerActionType.INGREDIENT_REMOVE_CLICK,
-						payload: { selectedId: part.selectedId, ingredientId: part.ingredientId },
-					})} />
-				))}
+				{parts.map((part, orderIndex) => (
+					<DraggableBurgerConstructorItem orderIndex={orderIndex} key={part.selectedId} {...part} />))}
 			</div>
-			{selectedBun && <ConstructorElement  {...mapBun(selectedBun, 'низ', IConstructorElementType.BOTTOM)} />}
+			{selectedBun && <ConstructorElement {...mapBun(selectedBun, 'низ', IConstructorElementType.BOTTOM)} />}
 			{sum > 0 && selectedBun && (
 				<div className={`mt-10 mb-10 ${styles.sum}`}>
 					<BurgerConstructorOrder />

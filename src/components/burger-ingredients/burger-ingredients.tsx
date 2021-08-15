@@ -8,13 +8,6 @@ import { RootState } from '../../services/store';
 import { fetchIngredientsActionCreator, IBurgerActionType } from '../../services/actions';
 import { IAppState } from '../../model/IAppState';
 
-const scrollToRef = (ref: React.MutableRefObject<HTMLElement>) => {
-	const el = ref.current;
-	const toY = el.offsetTop;
-	window.scrollTo(0, toY);
-};
-
-
 export function BurgerIngredients() {
 
 	const { ingredients } = useSelector<RootState>(store => ({ ...store })) as IAppState;
@@ -60,7 +53,7 @@ export function BurgerIngredients() {
 		return () => {
 			current?.removeEventListener('scroll', handleScroll);
 		};
-	}, [listRef]);
+	}, [listRef, handleScroll]);
 
 	const buns: IBurgerPart[] = [];
 	const fills: IBurgerPart[] = [];
