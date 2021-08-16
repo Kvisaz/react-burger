@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import styles from './draggable-burger-constructor-item.module.css';
 import { IBurgerActionType } from '../../../../services/actions';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd';
+import { DragSourceMonitor, DropTargetMonitor, useDrag, useDrop } from 'react-dnd';
 
 interface IBurgerConstructorItemProps {
 	ingredientId: string;
@@ -47,7 +47,7 @@ export function DraggableBurgerConstructorItem(props: IBurgerConstructorItemProp
 	const [{ isDragging }, dragRef] = useDrag({
 		type: BASKET_DRAGGABLE_TYPE,
 		item: () => ({ orderIndex }),
-		collect: (monitor: any) => ({
+		collect: (monitor: DragSourceMonitor) => ({
 			isDragging: monitor.isDragging(),
 		}),
 	}, [selectedId]);
@@ -75,7 +75,7 @@ export function DraggableBurgerConstructorItem(props: IBurgerConstructorItemProp
 
 			const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 			const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-			
+
 			if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
 				return;
 			}
