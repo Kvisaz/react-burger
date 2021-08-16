@@ -74,7 +74,6 @@ export const onIngredientClickActionCreator = (id: string) => (dispatch: IBurger
 	const { ingredients } = getState();
 	const ingredient = ingredients.find(i => i._id === id);
 	if (ingredient) {
-		dispatch({ type: IBurgerActionType.INGREDIENT_ADD_TO_BASKET, ingredient });
 		dispatch({ type: IBurgerActionType.INGREDIENT_SHOW, ingredient });
 	}
 };
