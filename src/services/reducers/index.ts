@@ -58,9 +58,9 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
 				isOrderRequest: false,
 				isOrderFailed: true,
 			};
-		case IBurgerActionType.INGREDIENT_SELECT_CLICK:
+		case IBurgerActionType.INGREDIENT_ADD_TO_BASKET:
 			return onSelectAction(action, state);
-		case IBurgerActionType.INGREDIENT_REMOVE_CLICK:
+		case IBurgerActionType.INGREDIENT_REMOVE_FROM_BASKET:
 			return onRemoveAction(action, state);
 		case IBurgerActionType.INGREDIENT_SHOW:
 			return {
@@ -84,7 +84,7 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
 	}
 }
 
-function onSelectAction(action: { type: IBurgerActionType.INGREDIENT_SELECT_CLICK, ingredient: IBurgerPart }, state: IAppState): IAppState {
+function onSelectAction(action: { type: IBurgerActionType.INGREDIENT_ADD_TO_BASKET, ingredient: IBurgerPart }, state: IAppState): IAppState {
 	const selectedIngredient = action.ingredient;
 	const isBun = selectedIngredient.type === 'bun';
 	const constructorItem = mapBurgerItem(selectedIngredient);
@@ -109,7 +109,7 @@ function onSelectAction(action: { type: IBurgerActionType.INGREDIENT_SELECT_CLIC
 }
 
 function onRemoveAction(
-	action: { type: IBurgerActionType.INGREDIENT_REMOVE_CLICK, payload: IRemovePayLoad },
+	action: { type: IBurgerActionType.INGREDIENT_REMOVE_FROM_BASKET, payload: IRemovePayLoad },
 	state: IAppState):
 	IAppState {
 

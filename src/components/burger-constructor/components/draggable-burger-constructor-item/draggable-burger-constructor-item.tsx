@@ -92,7 +92,7 @@ export function DraggableBurgerConstructorItem(props: IBurgerConstructorItemProp
 	return (
 		<div className={styles.basketItem} ref={ref} style={{ opacity }}>
 			<ConstructorElement {...props} handleClose={() => dispatch({
-				type: IBurgerActionType.INGREDIENT_REMOVE_CLICK,
+				type: IBurgerActionType.INGREDIENT_REMOVE_FROM_BASKET,
 				payload: { selectedId, ingredientId },
 			})} />
 		</div>

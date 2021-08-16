@@ -6,9 +6,9 @@ export type BurgerAction =
 	| { type: IBurgerActionType.DATA_REQUEST }
 	| { type: IBurgerActionType.DATA_LOADED, ingredients: IBurgerPart[] }
 	| { type: IBurgerActionType.DATA_FAILED, message: string }
-	| { type: IBurgerActionType.INGREDIENT_SELECT_CLICK, ingredient: IBurgerPart }
+	| { type: IBurgerActionType.INGREDIENT_ADD_TO_BASKET, ingredient: IBurgerPart }
 	| { type: IBurgerActionType.INGREDIENT_SHOW, ingredient: IBurgerPart }
-	| { type: IBurgerActionType.INGREDIENT_REMOVE_CLICK, payload: IRemovePayLoad }
+	| { type: IBurgerActionType.INGREDIENT_REMOVE_FROM_BASKET, payload: IRemovePayLoad }
 	| { type: IBurgerActionType.ORDER_REQUEST }
 	| { type: IBurgerActionType.ORDER_SUCCESS, payload: IOrderPayLoad }
 	| { type: IBurgerActionType.ORDER_FAILED }
@@ -23,9 +23,9 @@ export enum IBurgerActionType {
 	DATA_REQUEST = 'DATA_REQUEST',
 	DATA_LOADED = 'DATA_LOADED',
 	DATA_FAILED = 'DATA_FAILED',
-	INGREDIENT_SELECT_CLICK = 'INGREDIENT_SELECT_CLICK',
+	INGREDIENT_ADD_TO_BASKET = 'INGREDIENT_ADD_TO_BASKET',
 	INGREDIENT_SHOW = 'INGREDIENT_SHOW',
-	INGREDIENT_REMOVE_CLICK = 'INGREDIENT_REMOVE_CLICK',
+	INGREDIENT_REMOVE_FROM_BASKET = 'INGREDIENT_REMOVE_FROM_BASKET',
 	ORDER_REQUEST = 'ORDER_REQUEST',
 	ORDER_SUCCESS = 'ORDER_SUCCESS',
 	ORDER_FAILED = 'ORDER_FAILED',
@@ -74,7 +74,7 @@ export const onIngredientClickActionCreator = (id: string) => (dispatch: IBurger
 	const { ingredients } = getState();
 	const ingredient = ingredients.find(i => i._id === id);
 	if (ingredient) {
-		dispatch({ type: IBurgerActionType.INGREDIENT_SELECT_CLICK, ingredient });
+		dispatch({ type: IBurgerActionType.INGREDIENT_ADD_TO_BASKET, ingredient });
 		dispatch({ type: IBurgerActionType.INGREDIENT_SHOW, ingredient });
 	}
 };
@@ -83,6 +83,6 @@ export const onIngredientDropActionCreator = (id: string) => (dispatch: IBurgerD
 	const { ingredients } = getState();
 	const ingredient = ingredients.find(i => i._id === id);
 	if (ingredient) {
-		dispatch({ type: IBurgerActionType.INGREDIENT_SELECT_CLICK, ingredient });
+		dispatch({ type: IBurgerActionType.INGREDIENT_ADD_TO_BASKET, ingredient });
 	}
 };
