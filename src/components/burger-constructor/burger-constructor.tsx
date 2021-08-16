@@ -6,7 +6,7 @@ import { onIngredientDropActionCreator } from '../../services/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../services/store';
 import { useDrop } from 'react-dnd';
-import { IDragItem } from '../../model/IdObject';
+import { IdObject } from '../../model/IdObject';
 import { DraggableBurgerConstructorItem } from './components/draggable-burger-constructor-item/draggable-burger-constructor-item';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -28,9 +28,8 @@ export function BurgerConstructor() {
 	const [_, dropTargetRef] = useDrop({
 		accept: 'item',
 		drop(item) {
-			const { id, isBasketItem } = item as IDragItem;
-			if (isBasketItem) {
-			} else dispatch(onIngredientDropActionCreator(id));
+			const { id } = item as IdObject;
+			dispatch(onIngredientDropActionCreator(id));
 		},
 	}, [dispatch]);
 
