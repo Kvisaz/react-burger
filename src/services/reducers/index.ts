@@ -3,6 +3,8 @@ import { BurgerAction, IBurgerActionType, IRemovePayLoad } from '../actions';
 import { IBurgerPart } from '../../model/IBurgerPart';
 import { IConstructorElementData } from '../../model/IConstructorElementData';
 import { InitialAppState } from '../initialAppState';
+import { nanoid } from 'nanoid';
+
 
 export function mainReducer(state: IAppState = InitialAppState, action: BurgerAction): IAppState {
 	switch (action.type) {
@@ -144,12 +146,18 @@ function updateAmounts(selectedParts: IConstructorElementData[], bun?: IConstruc
 
 
 function mapBurgerItem(data: IBurgerPart): IConstructorElementData {
-	return {
+	return setUniqueSelectorId({
 		ingredientId: data._id, price: data.price, text: data.name, thumbnail: data.image,
-		selectedId: data._id + Date.now(),
-	};
+		selectedId: data._id,
+	});
 }
 
+function setUniqueSelectorId(data: IConstructorElementData): IConstructorElementData {
+	return {
+		...data,
+		selectedId: nanoid(),
+	};
+}
 
 function onBasketItemDrag(
 	action: { type: IBurgerActionType.BASKET_ITEM_DRAG, dragIndex: number, hoverIndex: number },
