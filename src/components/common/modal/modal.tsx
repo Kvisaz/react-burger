@@ -1,11 +1,11 @@
-import React, { SyntheticEvent, useCallback, useContext, useEffect } from 'react';
+import React, { SyntheticEvent, useCallback, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import styles from './modal.module.css';
 import { ModalOverlay } from './components/modal-overlay/modal-overlay';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { AppContext } from '../../../service/AppContext';
-import { IBurgerActionType } from '../../../model/IBurgerAction';
+import { IBurgerActionType } from '../../../services/actions';
+import { useDispatch } from 'react-redux';
 
 interface IModalProps {
 	title?: string;
@@ -21,7 +21,7 @@ const KEY_DOWN = 'keydown';
 
 export function Modal({ title = '', children }: IModalProps) {
 
-	const { dispatch } = useContext(AppContext);
+	const dispatch = useDispatch();
 
 	const hide = useCallback(() => {
 		dispatch({ type: IBurgerActionType.CLOSE_MODAL });

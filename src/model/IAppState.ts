@@ -2,7 +2,9 @@ import { IBurgerPart } from './IBurgerPart';
 import { IConstructorElementData } from './IConstructorElementData';
 
 export interface IAppState {
-	loaded: boolean;
+	isIngredientsRequest: boolean;
+	isIngredientsLoaded: boolean;
+	isIngredientsFailed: boolean;
 	ingredients: IBurgerPart[];
 	ingredientAmountMap: Record<string, number>;
 
@@ -16,6 +18,15 @@ export interface IAppState {
 	orderName?: string;
 	isModalOrderOpen?: boolean;
 
-	isOrderClicked: boolean;
-	isOrderWaiting: boolean;
+	isOrderRequest: boolean;
+	isOrderSuccess: boolean;
+	isOrderFailed: boolean;
+
+	currentTabIndex: number;
+	tabs: ITab[];
+}
+
+
+interface ITab {
+	name: string;
 }

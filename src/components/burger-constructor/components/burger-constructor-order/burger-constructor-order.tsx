@@ -1,17 +1,20 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback } from 'react';
 import styles from './burger-constructor-order.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { MoneyCounter } from '../../../common/money-counter/money-counter';
-import { AppContext } from '../../../../service/AppContext';
-import { IBurgerActionType } from '../../../../model/IBurgerAction';
+import { useDispatch, useSelector } from 'react-redux';
+import { onOrderClickActionCreator } from '../../../../services/actions';
+import { RootState } from '../../../../services/store';
 
 
 export function BurgerConstructorOrder() {
-	const { state, dispatch } = useContext(AppContext);
+	const dispatch = useDispatch();
+	const state = useSelector((state:RootState) => ({ ...state }));
+
 	const { sum } = state;
 
 	const onOrderButtonClick = useCallback(() => {
-		dispatch({ type: IBurgerActionType.ORDER_CLICK });
+		dispatch(onOrderClickActionCreator());
 	}, [dispatch]);
 
 	return (
