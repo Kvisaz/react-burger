@@ -75,8 +75,8 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
 				...state,
 				currentTabIndex: action.index,
 			};
-		case IBurgerActionType.BASKET_ITEM_DRAG:
-			return onBasketItemDrag(action, state);
+		case IBurgerActionType.BASKET_ITEM_SWAP:
+			return onBasketItemSwap(action, state);
 		default:
 			console.warn(`unknown action`, action);
 			return {
@@ -159,17 +159,21 @@ function setUniqueSelectorId(data: IConstructorElementData): IConstructorElement
 	};
 }
 
-function onBasketItemDrag(
-	action: { type: IBurgerActionType.BASKET_ITEM_DRAG, dragIndex: number, hoverIndex: number },
+function onBasketItemSwap(
+	action: { type: IBurgerActionType.BASKET_ITEM_SWAP, selectedId1: string, selectedId2: string },
 	state: IAppState,
 ): IAppState {
-	const { dragIndex, hoverIndex } = action;
+	const { selectedId1, selectedId2 } = action;
 	const { selectedParts } = state;
 	const results = selectedParts.slice();
-	const dragged = selectedParts[dragIndex];
-	results[dragIndex] = selectedParts[hoverIndex];
-	results[hoverIndex] = dragged;
-
+	const item1index = selectedParts.findIndex(item => item.selectedId === selectedId1);
+	const item2index = selectedParts.findIndex(item => item.selectedId === selectedId2);
+	if (item1index > -1 && item2index > -1) {
+		results[item2index] = selectedParts[item1index];
+		results[item1index] = selectedParts[item2index];
+	} else {
+		console.warn(`cannot find ${selectedId1}, ${selectedId2} in `, selectedParts);
+	}
 	return {
 		...state,
 		selectedParts: results,

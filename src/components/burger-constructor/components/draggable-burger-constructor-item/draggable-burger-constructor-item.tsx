@@ -4,12 +4,11 @@ import { useDispatch } from 'react-redux';
 import styles from './draggable-burger-constructor-item.module.css';
 import { IBurgerActionType } from '../../../../services/actions';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { DragSourceMonitor, DropTargetMonitor, useDrag, useDrop } from 'react-dnd';
+import { DragSourceMonitor, useDrag, useDrop } from 'react-dnd';
 
 interface IBurgerConstructorItemProps {
 	ingredientId: string;
 	selectedId: string;
-	orderIndex: number;
 	type?: 'top' | 'bottom';
 	isLocked?: boolean;
 	handleClose?: () => void;
@@ -21,7 +20,6 @@ interface IBurgerConstructorItemProps {
 DraggableBurgerConstructorItem.propTypes = {
 	ingredientId: PropTypes.string.isRequired,
 	selectedId: PropTypes.string.isRequired,
-	orderIndex: PropTypes.number.isRequired,
 	type: PropTypes.string,
 	isLocked: PropTypes.bool,
 	handleClose: PropTypes.func,
@@ -33,20 +31,21 @@ DraggableBurgerConstructorItem.propTypes = {
 const BASKET_DRAGGABLE_TYPE = 'BASKET_DRAGGABLE_TYPE';
 
 interface DragItem {
-	orderIndex: number
-	id: string
-	type: string
+	orderIndex: number;
+	selectedId: string;
+	id: string;
+	type: string;
 }
 
 export function DraggableBurgerConstructorItem(props: IBurgerConstructorItemProps) {
-	const { selectedId, ingredientId, orderIndex } = props;
+	const { selectedId, ingredientId } = props;
 	const dispatch = useDispatch();
 
 	const ref = useRef<HTMLDivElement>(null);
 
 	const [{ isDragging }, dragRef] = useDrag({
 		type: BASKET_DRAGGABLE_TYPE,
-		item: () => ({ orderIndex }),
+		item: () => ({ selectedId }),
 		collect: (monitor: DragSourceMonitor) => ({
 			isDragging: monitor.isDragging(),
 		}),
@@ -56,34 +55,15 @@ export function DraggableBurgerConstructorItem(props: IBurgerConstructorItemProp
 		accept: BASKET_DRAGGABLE_TYPE,
 		collect(monitor) {
 			return {
-				handlerId: monitor.getHandlerId(),
+				isHover: monitor.isOver(),
 			};
 		},
-		hover(item: DragItem, monitor: DropTargetMonitor) {
-			const dragIndex = item.orderIndex;
-			const hoverIndex = orderIndex;
-			console.log('dragIndex', dragIndex);
-			console.log('hoverIndex', hoverIndex);
-
-			if (dragIndex === hoverIndex) {
-				return;
+		hover(item: DragItem) {
+			const selectedId1 = item.selectedId;
+			const selectedId2 = selectedId;
+			if (selectedId1 !== selectedId2) {
+				dispatch({ type: IBurgerActionType.BASKET_ITEM_SWAP, selectedId1, selectedId2 });
 			}
-
-			const hoverBoundingRect = ref.current?.getBoundingClientRect();
-			const clientOffset = monitor.getClientOffset();
-			if (hoverBoundingRect === undefined || clientOffset === null) return;
-
-			const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-			const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-
-			if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-				return;
-			}
-			if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-				return;
-			}
-
-			dispatch({ type: IBurgerActionType.BASKET_ITEM_DRAG, dragIndex, hoverIndex });
 		},
 	}, [selectedId, dispatch]);
 

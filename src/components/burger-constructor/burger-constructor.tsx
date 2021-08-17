@@ -37,8 +37,8 @@ export function BurgerConstructor() {
 		<section className={`mt-4 mb-4 ${styles.main}`} ref={dropTargetRef}>
 			{selectedBun && <ConstructorElement {...mapBun(selectedBun, 'верх', IConstructorElementType.TOP)} />}
 			<div className={`mt-4 mb-4 ${styles.list}`}>
-				{parts.map((part, orderIndex) => (
-					<DraggableBurgerConstructorItem orderIndex={orderIndex} key={part.selectedId} {...part} />))}
+				{parts.map(part => (
+					<DraggableBurgerConstructorItem key={part.selectedId} {...part} />))}
 			</div>
 			{selectedBun && <ConstructorElement {...mapBun(selectedBun, 'низ', IConstructorElementType.BOTTOM)} />}
 			{sum > 0 && selectedBun && (
