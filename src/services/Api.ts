@@ -6,7 +6,7 @@ export class Api {
 
 	async getBurgerParts(): Promise<IngredientsResponse> {
 		const response: IngredientsResponse = {
-			ingredients: [],
+			ingredient: [],
 		};
 		try {
 			const apiResponse = await fetch(this.dataEndPoint);
@@ -22,7 +22,7 @@ export class Api {
 
 	async order(selectedIds: string[]): Promise<IApiOrderResult> {
 		const orderConfig: IApiOrderConfig = {
-			ingredients: selectedIds,
+			ingredient: selectedIds,
 		};
 
 		const response: IApiOrderResult = {

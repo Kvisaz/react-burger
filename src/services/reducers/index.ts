@@ -25,7 +25,7 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
 		case IBurgerActionType.DATA_LOADED:
 			return {
 				...state,
-				ingredients: action.ingredients.map(i => ({
+				ingredient: action.ingredients.map(i => ({
 					...i,
 					amount: 0,
 				})),

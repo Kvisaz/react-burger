@@ -51,7 +51,7 @@ const API = new Api(API_DATA_END_POINT, API_ORDER_END_POINT);
 export const fetchIngredientsActionCreator = () => async (dispatch: IBurgerDispatch) => {
 	dispatch({ type: IBurgerActionType.DATA_REQUEST });
 	API.getBurgerParts()
-		.then(({ ingredients }) => dispatch({ type: IBurgerActionType.DATA_LOADED, ingredients }))
+		.then(({ ingredients }) => dispatch({ type: IBurgerActionType.DATA_LOADED, ingredients: ingredient }))
 		.catch((e: Error | string) => dispatch({ type: IBurgerActionType.DATA_FAILED, message: e.toString() }));
 };
 
