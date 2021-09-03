@@ -5,7 +5,7 @@ export const InitialAppState: IAppState = {
 	isIngredientsRequest: false,
 	isIngredientsFailed: false,
 	isIngredientsLoaded: false,
-	ingredient: [],
+	ingredients: [],
 	ingredientAmountMap: {},
 	selectedBun: undefined,
 	selectedParts: [],
