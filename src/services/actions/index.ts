@@ -1,6 +1,6 @@
 import { IBurgerPart } from '../../model/IBurgerPart';
 import { IGetState } from '../store';
-import { Api } from '../Api';
+import {Api, IApiEndpoints} from '../Api';
 
 export type BurgerAction =
 	| { type: IBurgerActionType.DATA_REQUEST }
@@ -44,12 +44,22 @@ export interface IRemovePayLoad {
 	ingredientId: string
 }
 
-const API_DATA_END_POINT = 'https://norma.nomoreparties.space/api/ingredients';
-const API_ORDER_END_POINT = 'https://norma.nomoreparties.space/api/orders';
-const API = new Api(API_DATA_END_POINT, API_ORDER_END_POINT);
+const END_POINTS: IApiEndpoints = {
+	ingredients: 'https://norma.nomoreparties.space/api/ingredients',
+	order: 'https://norma.nomoreparties.space/api/orders',
+	registerUser: 'https://norma.nomoreparties.space/api/auth/register',
+	restorePassword: 'https://norma.nomoreparties.space/api/password-reset',
+	resetPassword: 'https://norma.nomoreparties.space/api/password-reset/reset',
+}
+
+const API = new Api(END_POINTS);
 
 export const fetchIngredientsActionCreator = () => async (dispatch: IBurgerDispatch) => {
 	dispatch({ type: IBurgerActionType.DATA_REQUEST });
+	API.restorePassword({email: 'test@yandex.ru'})
+		.then(()=>console.log('reset pass success'))
+		.catch((e)=>console.warn(`reset pass error ${e}`))
+
 	API.getBurgerParts()
 		.then(({ ingredients }) => dispatch({ type: IBurgerActionType.DATA_LOADED, ingredients }))
 		.catch((e: Error | string) => dispatch({ type: IBurgerActionType.DATA_FAILED, message: e.toString() }));
