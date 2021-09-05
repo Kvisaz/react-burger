@@ -227,7 +227,7 @@ export interface IApiResetPasswordResponse {
 }
 
 export interface IApiLoginData {
-    login: string;
+    email: string;
     password: string;
 }
 

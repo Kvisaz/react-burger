@@ -323,7 +323,7 @@ function onLoginPageChange(
 ): IAppState {
     return {
         ...state,
-        loginPageEmail: action.data.login,
+        loginPageEmail: action.data.email,
         loginPagePassword: action.data.password
     }
 }

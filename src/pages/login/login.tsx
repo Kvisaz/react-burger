@@ -11,7 +11,7 @@ export function Login() {
 
     const dispatch = useDispatch();
     const {
-        loginPageEmail: login = '',
+        loginPageEmail: email = '',
         loginPagePassword: password = '',
         isUserLogged,
         urlAfterLogging = Routes.main
@@ -23,7 +23,7 @@ export function Login() {
         dispatch({
             type: IBurgerActionType.LOGIN_PAGE_CHANGE, data: {
                 password,
-                login: e.target.value
+                email: e.target.value
             }
         })
     }, [dispatch, password])
@@ -32,17 +32,17 @@ export function Login() {
         e.persist();  // deprecated since React 17
         dispatch({
             type: IBurgerActionType.LOGIN_PAGE_CHANGE, data: {
-                login,
+                email,
                 password: e.target.value
             }
         })
-    }, [dispatch, login])
+    }, [dispatch, email])
 
     const onButtonClick = useCallback(() => {
         dispatch(loginActionCreator({
-            login, password
+            email, password
         }));
-    }, [dispatch, login, password])
+    }, [dispatch, email, password])
 
     return (<div className={styles.wrap}>
         {isUserLogged
@@ -50,7 +50,7 @@ export function Login() {
             : (
                 <div className={styles.content}>
                     <div className={`text text_type_main-medium ${styles.label}`}>Вход</div>
-                    <Input type={'email'} placeholder={'Email'} value={login} onChange={onLoginChange}/>
+                    <Input type={'email'} placeholder={'Email'} value={email} onChange={onLoginChange}/>
                     <PasswordInput name={'password'} value={password} onChange={onPasswordChange}/>
                     <Button onClick={onButtonClick} size={'medium'} type={'primary'}>Войти</Button>
                     <div className={`text text_type_main-small ${styles.about}`}>
