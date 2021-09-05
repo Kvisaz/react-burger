@@ -9,3 +9,9 @@ export const Routes = {
     ingredient: '/ingredients/:id',
     ingredientLinkCreator: (id: string) => `/ingredients/${id}`
 }
+
+
+export interface LocationState {
+    modalIngredient?: string;
+    backTo: string;
+}

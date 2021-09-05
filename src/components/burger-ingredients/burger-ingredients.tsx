@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 import styles from './burger-ingredients.module.css';
-import { BurgerIngredientsTabs } from './components/burger-ingredients-tabs/burger-ingredients-tabs';
-import { BurgerIngredientsSection } from './components/burger-ingredients-section/burger-ingredients-section';
-import { IBurgerPart } from '../../model/IBurgerPart';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../services/store';
-import { fetchIngredientsActionCreator, IBurgerActionType } from '../../services/actions';
-import { IAppState } from '../../model/IAppState';
+import {BurgerIngredientsTabs} from './components/burger-ingredients-tabs/burger-ingredients-tabs';
+import {BurgerIngredientsSection} from './components/burger-ingredients-section/burger-ingredients-section';
+import {IBurgerPart} from '../../model/IBurgerPart';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from '../../services/store';
+import {IBurgerActionType} from '../../services/actions';
+import {IAppState} from '../../model/IAppState';
 
 export function BurgerIngredients() {
 
@@ -17,10 +17,6 @@ export function BurgerIngredients() {
 	const ref1 = useRef<HTMLDivElement>(null);
 	const ref2 = useRef<HTMLDivElement>(null);
 	const ref3 = useRef<HTMLDivElement>(null);
-
-	useEffect(() => {
-		dispatch(fetchIngredientsActionCreator());
-	}, [dispatch]);
 
 	const handleScroll: EventListener = useCallback((ev: Event) => {
 		const listEl = ev.currentTarget as HTMLDivElement;
