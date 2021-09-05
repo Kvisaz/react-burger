@@ -56,9 +56,6 @@ const API = new Api(END_POINTS);
 
 export const fetchIngredientsActionCreator = () => async (dispatch: IBurgerDispatch) => {
 	dispatch({ type: IBurgerActionType.DATA_REQUEST });
-	API.restorePassword({email: 'test@yandex.ru'})
-		.then(()=>console.log('reset pass success'))
-		.catch((e)=>console.warn(`reset pass error ${e}`))
 
 	API.getBurgerParts()
 		.then(({ ingredients }) => dispatch({ type: IBurgerActionType.DATA_LOADED, ingredients }))
