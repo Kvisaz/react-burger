@@ -17,8 +17,8 @@ function App() {
 
     return (
         <div className={styles.App}>
-            <AppHeader/>
             <Router>
+                <AppHeader/>
                 <Switch>
                     <Route path={Routes.main} exact={true}><Main/></Route>
                     <Route path={Routes.login} exact={true}><Login/></Route>
