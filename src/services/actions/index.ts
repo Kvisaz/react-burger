@@ -3,10 +3,10 @@ import {IGetState} from '../store';
 import {
     Api,
     IApiEndpoints,
-    IApiLoginData,
+    IApiLoginData, IApiLogoutData, IApiLogoutResponse,
     IApiRegisterUserData,
     IApiResetPasswordData,
-    IApiRestorePasswordData
+    IApiRestorePasswordData, IApiTokenData, IApiTokenResponse
 } from '../Api';
 
 export type BurgerAction =
@@ -34,6 +34,12 @@ export type BurgerAction =
     | { type: IBurgerActionType.LOGIN_REQUEST, data: IApiLoginData }
     | { type: IBurgerActionType.LOGIN_SUCCESS }
     | { type: IBurgerActionType.LOGIN_FAIL }
+    | { type: IBurgerActionType.LOGOUT_REQUEST, data: IApiLogoutData }
+    | { type: IBurgerActionType.LOGOUT_SUCCESS, data: IApiLogoutResponse }
+    | { type: IBurgerActionType.LOGOUT_FAIL }
+    | { type: IBurgerActionType.TOKEN_REFRESH_REQUEST, data: IApiTokenData }
+    | { type: IBurgerActionType.TOKEN_REFRESH_SUCCESS, data: IApiTokenResponse }
+    | { type: IBurgerActionType.TOKEN_REFRESH_FAIL }
 
 type IBurgerDispatch = (action: BurgerAction) => any;
 
@@ -68,6 +74,14 @@ export enum IBurgerActionType {
     LOGIN_SUCCESS = 'LOGIN_SUCCESS',
     LOGIN_FAIL = 'LOGIN_FAIL',
 
+    LOGOUT_REQUEST = 'LOGOUT_REQUEST',
+    LOGOUT_SUCCESS = 'LOGOUT_SUCCESS',
+    LOGOUT_FAIL = 'LOGOUT_FAIL',
+
+    TOKEN_REFRESH_REQUEST = 'TOKEN_REFRESH_REQUEST',
+    TOKEN_REFRESH_SUCCESS = 'TOKEN_REFRESH_SUCCESS',
+    TOKEN_REFRESH_FAIL = 'TOKEN_REFRESH_FAIL',
+
 }
 
 export interface IOrderPayLoad {
@@ -83,7 +97,9 @@ export interface IRemovePayLoad {
 const END_POINTS: IApiEndpoints = {
     ingredients: 'https://norma.nomoreparties.space/api/ingredients',
     order: 'https://norma.nomoreparties.space/api/orders',
-    login: 'https://norma.nomoreparties.space/api/password-reset/login',
+    login: 'https://norma.nomoreparties.space/api/auth/login',
+    logout: 'https://norma.nomoreparties.space/api/auth/logout',
+    token: 'https://norma.nomoreparties.space/api/auth/token',
     registerUser: 'https://norma.nomoreparties.space/api/auth/register',
     restorePassword: 'https://norma.nomoreparties.space/api/password-reset',
     resetPassword: 'https://norma.nomoreparties.space/api/password-reset/reset',
@@ -146,6 +162,13 @@ export const loginActionCreator = (data: IApiLoginData) => async (dispatch: IBur
         .catch(() => dispatch({type: IBurgerActionType.LOGIN_FAIL}));
 }
 
+export const logoutActionCreator = (data: IApiLogoutData) => async (dispatch: IBurgerDispatch) => {
+    dispatch({type: IBurgerActionType.LOGOUT_REQUEST, data});
+
+    API.logout(data)
+        .then((response) => dispatch({type: IBurgerActionType.LOGOUT_SUCCESS, data: response}))
+        .catch(() => dispatch({type: IBurgerActionType.LOGOUT_FAIL}));
+}
 
 export const restorePassActionCreator = (data: IApiRestorePasswordData) => async (dispatch: IBurgerDispatch) => {
     dispatch({type: IBurgerActionType.RESTORE_PASS_REQUEST, data});
@@ -161,4 +184,12 @@ export const resetPassActionCreator = (data: IApiResetPasswordData) => async (di
     API.resetPassword(data)
         .then(() => dispatch({type: IBurgerActionType.RESET_PASS_SUCCESS}))
         .catch(() => dispatch({type: IBurgerActionType.RESET_PASS_FAIL}));
+}
+
+export const refreshTokenActionCreator = (data: IApiTokenData) => async (dispatch: IBurgerDispatch) => {
+    dispatch({type: IBurgerActionType.TOKEN_REFRESH_REQUEST, data});
+
+    API.refreshToken(data)
+        .then((response) => dispatch({type: IBurgerActionType.TOKEN_REFRESH_SUCCESS, data: response}))
+        .catch(() => dispatch({type: IBurgerActionType.TOKEN_REFRESH_FAIL}));
 }

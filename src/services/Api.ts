@@ -46,6 +46,16 @@ export class Api {
             .then(() => true);
     }
 
+    async logout(data: IApiLogoutData): Promise<IApiLogoutResponse> {
+        return this
+            .fetch<IApiLogoutData, IApiLogoutResponse>(this.endpoints.login, data)
+    }
+
+    async refreshToken(data: IApiTokenData): Promise<IApiTokenResponse> {
+        return this
+            .fetch<IApiTokenData, IApiTokenResponse>(this.endpoints.token, data)
+    }
+
     private async fetch<Data, Response extends IApiResponse>(endPoint: string, data?: Data): Promise<Response> {
         const fetchOptions = data == null
             ? {}
@@ -79,6 +89,8 @@ export interface IApiEndpoints extends Record<string, string> {
     restorePassword: string;
     resetPassword: string;
     login: string;
+    token: string;
+    logout: string;
 }
 
 export interface IApiResponse {
@@ -117,6 +129,22 @@ export interface IApiRegisterUserData {
 
 export interface IApiRegisterUserResponse {
     success: boolean;
+    user: {
+        email: string;
+        name: string;
+    };
+    accessToken: string; // "Bearer ...",
+    refreshToken: string;
+}
+
+export interface IApiTokenData {
+    token: string; // {{refreshToken}}
+}
+
+export interface IApiTokenResponse {
+    success: boolean;
+    accessToken: string; // "Bearer ...",
+    refreshToken: string;
 }
 
 export interface IApiRestorePasswordData {
@@ -147,4 +175,14 @@ export interface IApiLoginData {
 export interface IApiLoginResponse {
     success: boolean;
     message: string; // "Password successfully reset"
+}
+
+
+export interface IApiLogoutData {
+    token: string;
+}
+
+export interface IApiLogoutResponse {
+    success: boolean;
+    message: string; // "Successful logout"
 }

@@ -3,6 +3,8 @@ import styles from './forgot-password.module.css';
 import {Button, Input} from '@ya.praktikum/react-developer-burger-ui-components';
 import {Link} from 'react-router-dom';
 import {Routes} from '../../services/Routes';
+import {useDispatch} from 'react-redux';
+import {restorePassActionCreator} from '../../services/actions';
 
 interface IForgotPageState {
     email: string;
@@ -14,6 +16,8 @@ export function ForgotPassword() {
         email: ''
     })
 
+    const dispatch = useDispatch();
+
     const onEmailChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         e.persist(); // deprecated since React 17
         setState(prevState => ({
@@ -23,8 +27,8 @@ export function ForgotPassword() {
     }, [])
 
     const onButtonClick = useCallback(() => {
-        console.log('onButtonClick');
-    }, [])
+        dispatch(restorePassActionCreator(state))
+    }, [dispatch, state])
 
     return (<div className={styles.wrap}>
         <div className={styles.content}>

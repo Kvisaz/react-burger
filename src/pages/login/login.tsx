@@ -3,6 +3,8 @@ import {Button, Input, PasswordInput} from '@ya.praktikum/react-developer-burger
 import {Link} from 'react-router-dom';
 import styles from './login.module.css';
 import {Routes} from '../../services/Routes';
+import {useDispatch} from 'react-redux';
+import {loginActionCreator} from '../../services/actions';
 
 interface ILoginPageState {
     password: string;
@@ -14,6 +16,8 @@ export function Login() {
         password: '',
         login: ''
     })
+
+    const dispatch = useDispatch();
 
     const onLoginChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         e.persist();  // deprecated since React 17
@@ -32,8 +36,8 @@ export function Login() {
     }, [])
 
     const onButtonClick = useCallback(() => {
-        console.log('onButtonClick');
-    }, [])
+        dispatch(loginActionCreator(state));
+    }, [dispatch, state])
 
     return (<div className={styles.wrap}>
         <div className={styles.content}>
