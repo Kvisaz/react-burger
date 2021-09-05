@@ -1,61 +1,77 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback} from 'react';
 import styles from './register.module.css';
 import {Button, Input, PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import {Routes} from '../../services/Routes';
-
-interface IRegisterPageState {
-    email: string;
-    name: string;
-    password: string;
-}
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from '../../services/store';
+import {IBurgerActionType, registerActionCreator} from '../../services/actions';
 
 export function Register() {
 
-    const [state, setState] = useState<IRegisterPageState>({
-        email: '',
-        name: '',
-        password: ''
-    })
+    const dispatch = useDispatch();
+    const {
+        userRegisterEmail: email = '',
+        userRegisterName: name = '',
+        userRegisterPassword: password = '',
+        isUserLogged
+    } = useSelector((state: RootState) => ({...state}));
+
 
     const onNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         e.persist(); // deprecated since React 17
-        setState(prevState => ({
-            ...prevState,
-            name: e.target.value
-        }))
-    }, [])
+        dispatch({
+            type: IBurgerActionType.REGISTRATION_PAGE_CHANGE,
+            data: {
+                email, password,
+                name: e.target.value
+            }
+        })
+    }, [dispatch, email, password])
 
     const onLoginChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         e.persist(); // deprecated since React 17
-        setState(prevState => ({
-            ...prevState,
-            email: e.target.value
-        }))
-    }, [])
+        dispatch({
+            type: IBurgerActionType.REGISTRATION_PAGE_CHANGE,
+            data: {
+                password, name,
+                email: e.target.value
+            }
+        })
+    }, [dispatch, password, name])
 
     const onPasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         e.persist(); // deprecated since React 17
-        setState(prevState => ({
-            ...prevState,
-            password: e.target.value
-        }))
-    }, [])
+        dispatch({
+            type: IBurgerActionType.REGISTRATION_PAGE_CHANGE,
+            data: {
+                email, name,
+                password: e.target.value
+            }
+        })
+    }, [dispatch, email, name])
 
     const onButtonClick = useCallback(() => {
-        console.log('onButtonClick');
-    }, [])
+        dispatch(registerActionCreator({
+            email, name, password
+        }))
+    }, [email, name, password, dispatch])
 
     return (<div className={styles.wrap}>
-        <div className={styles.content}>
-            <div className={`text text_type_main-medium ${styles.label}`}>Регистрация</div>
-            <Input type={'text'} placeholder={'Имя'} value={state.name} onChange={onNameChange} size={'default'}/>
-            <Input type={'email'} placeholder={'Email'} value={state.email} onChange={onLoginChange}/>
-            <PasswordInput name={'password'} value={state.password} onChange={onPasswordChange}/>
-            <Button onClick={onButtonClick} size={'medium'} type={'primary'}>Зарегистрироваться</Button>
-            <div className={`text text_type_main-small ${styles.about}`}>
-                <div>Уже зарегистрированы? <Link to={Routes.login}>Войти</Link></div>
-            </div>
-        </div>
+        {isUserLogged
+            ? (<Redirect to={Routes.main}/>)
+            : (
+                <div className={styles.content}>
+                    <div className={`text text_type_main-medium ${styles.label}`}>Регистрация</div>
+                    <Input type={'text'} placeholder={'Имя'} value={name} onChange={onNameChange} size={'default'}/>
+                    <Input type={'email'} placeholder={'Email'} value={email} onChange={onLoginChange}/>
+                    <PasswordInput name={'password'} value={password} onChange={onPasswordChange}/>
+                    <Button onClick={onButtonClick} size={'medium'} type={'primary'}>Зарегистрироваться</Button>
+                    <div className={`text text_type_main-small ${styles.about}`}>
+                        <div>Уже зарегистрированы? <Link to={Routes.login}>Войти</Link></div>
+                    </div>
+                </div>
+            )
+        }
     </div>)
 }

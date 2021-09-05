@@ -1,5 +1,5 @@
 import {IBurgerPart} from '../model/IBurgerPart';
-import {getCookie} from './cookie';
+import {getCookie, setCookie} from './cookie';
 
 const TOKEN_COOKIE = 'token';
 const TOKEN_REFRESH_COOKIE = 'tokenRefresh';
@@ -29,11 +29,21 @@ export class Api {
 
     async registerUser(data: IApiRegisterUserData): Promise<IApiRegisterUserResponse> {
         return this
-            .fetchPost<IApiRegisterUserData, IApiRegisterUserResponse>(this.endpoints.registerUser, data);
+            .fetchPost<IApiRegisterUserData, IApiRegisterUserResponse>(this.endpoints.registerUser, data)
+            .then(response => {
+                const {accessToken, refreshToken} = response;
+                setCookie(TOKEN_COOKIE, accessToken.split(' ')[1]);
+                setCookie(TOKEN_REFRESH_COOKIE, refreshToken?.split(' ')[1]);
+                return response;
+            })
+            .catch(e => {
+                console.warn(e);
+                return Promise.reject(e);
+            })
     }
 
     async restorePassword(data: IApiRestorePasswordData): Promise<IApiRestorePasswordResponse> {
-        return fetch(this.endpoints.userData, {
+        return fetch(this.endpoints.restorePassword, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',

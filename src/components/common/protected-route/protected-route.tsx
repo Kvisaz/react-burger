@@ -1,10 +1,18 @@
 import React from 'react';
 import {RouteProps} from 'react-router';
-import {Route} from 'react-router-dom';
+import {Redirect, Route} from 'react-router-dom';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../../services/store';
+import {Routes} from '../../../services/Routes';
 
 interface IProtectedRouteProps extends RouteProps {
 }
 
-export function ProtectedRoute(props: IProtectedRouteProps) {
-    return (<Route {...props}>{props.children}</Route>)
+export function ProtectedRoute({children, ...rest}: IProtectedRouteProps) {
+    const {isUserLogged} = useSelector((state: RootState) => ({...state}));
+    return (<Route {...rest} render={() =>
+        isUserLogged === true
+            ? (children)
+            : (<Redirect to={Routes.login}/>)
+    }/>)
 }

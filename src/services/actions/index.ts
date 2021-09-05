@@ -4,7 +4,7 @@ import {
     Api,
     IApiEndpoints,
     IApiLoginData, IApiLogoutData, IApiLogoutResponse,
-    IApiRegisterUserData,
+    IApiRegisterUserData, IApiRegisterUserResponse,
     IApiResetPasswordData,
     IApiRestorePasswordData, IApiTokenData, IApiTokenResponse
 } from '../Api';
@@ -87,7 +87,6 @@ export enum IBurgerActionType {
     TOKEN_REFRESH_REQUEST = 'TOKEN_REFRESH_REQUEST',
     TOKEN_REFRESH_SUCCESS = 'TOKEN_REFRESH_SUCCESS',
     TOKEN_REFRESH_FAIL = 'TOKEN_REFRESH_FAIL',
-
 }
 
 export interface IOrderPayLoad {

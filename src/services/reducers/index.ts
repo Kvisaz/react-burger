@@ -4,6 +4,7 @@ import {IBurgerPart} from '../../model/IBurgerPart';
 import {IConstructorElementData} from '../../model/IConstructorElementData';
 import {InitialAppState} from '../initialAppState';
 import {nanoid} from 'nanoid';
+import {IApiRegisterUserData} from '../Api';
 
 
 export function mainReducer(state: IAppState = InitialAppState, action: BurgerAction): IAppState {
@@ -67,6 +68,75 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
             };
         case IBurgerActionType.BASKET_ITEM_SWAP:
             return onBasketItemSwap(action, state);
+        case IBurgerActionType.REGISTRATION_PAGE_CHANGE:
+            return onRegisterPageChange(action, state);
+        case IBurgerActionType.REGISTRATION_USER_REQUEST:
+            return {
+                ...state,
+                isRegisterRequest: true,
+                isRegisterSuccess: false,
+                isRegisterFailed: false,
+            };
+        case IBurgerActionType.REGISTRATION_USER_SUCCESS:
+            return {
+                ...state,
+                isRegisterRequest: false,
+                isRegisterSuccess: true,
+                isRegisterFailed: false,
+                isUserLogged: true
+            };
+        case IBurgerActionType.REGISTRATION_USER_FAIL:
+            return {
+                ...state,
+                isRegisterRequest: false,
+                isRegisterSuccess: false,
+                isRegisterFailed: true,
+            };
+        case IBurgerActionType.LOGIN_REQUEST:
+            return {
+                ...state,
+                isLoginRequest: true,
+                isLoginSuccess: false,
+                isLoginFailed: false,
+            };
+        case IBurgerActionType.LOGIN_SUCCESS:
+            return {
+                ...state,
+                isLoginRequest: false,
+                isLoginSuccess: true,
+                isLoginFailed: false,
+                isUserLogged: true,
+            };
+        case IBurgerActionType.LOGIN_FAIL:
+            return {
+                ...state,
+                isLoginRequest: false,
+                isLoginSuccess: false,
+                isLoginFailed: true,
+                isUserLogged: false,
+            };
+        case IBurgerActionType.LOGOUT_REQUEST:
+            return {
+                ...state,
+                isLogoutRequest: true,
+                isLogoutSuccess: false,
+                isLogoutFailed: false,
+            };
+        case IBurgerActionType.LOGOUT_SUCCESS:
+            return {
+                ...state,
+                isLogoutRequest: false,
+                isLogoutSuccess: true,
+                isLogoutFailed: false,
+                isUserLogged: false,
+            };
+        case IBurgerActionType.LOGOUT_FAIL:
+            return {
+                ...state,
+                isLogoutRequest: false,
+                isLogoutSuccess: false,
+                isLogoutFailed: true,
+            };
         case IBurgerActionType.RESTORE_PAGE_CHANGE:
             return onRestorePageChange(action, state);
         case IBurgerActionType.RESTORE_PASS_REQUEST:
@@ -210,6 +280,18 @@ function onBasketItemSwap(
         ...state,
         selectedParts: results,
     };
+}
+
+function onRegisterPageChange(
+    action: { type: IBurgerActionType.REGISTRATION_PAGE_CHANGE, data: IApiRegisterUserData },
+    state: IAppState
+): IAppState {
+    return {
+        ...state,
+        userRegisterEmail: action.data.email,
+        userRegisterName: action.data.name,
+        userRegisterPassword: action.data.password,
+    }
 }
 
 function onRestorePageChange(

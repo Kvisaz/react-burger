@@ -4,8 +4,7 @@ interface ICookieProps {
     [key: string]: any;
 }
 
-export function setCookie(name: string, value: string, props: ICookieProps) {
-    props = props || {};
+export function setCookie(name: string, value: string, props: ICookieProps = {}) {
     if (props.expires) {
         const d = new Date();
         d.setTime(d.getTime() + props.expires * 1000);

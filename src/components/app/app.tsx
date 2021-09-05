@@ -6,12 +6,11 @@ import {IngredientDetails} from '../burger-ingredients/components/ingredient-det
 import {OrderDetails} from '../burger-constructor/components/order-details/order-details';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../services/store';
-import {Route, Switch, useHistory} from 'react-router-dom';
+import {Route, Switch, useHistory, useLocation} from 'react-router-dom';
 import {LocationState, Routes} from '../../services/Routes';
 import {ProtectedRoute} from '../common/protected-route/protected-route';
 import {ForgotPassword, Login, Main, Orders, Page404, Profile, Register, ResetPassword} from '../../pages';
 import {fetchIngredientsActionCreator} from '../../services/actions';
-import {useLocation} from 'react-router-dom'
 import {Loading} from '../loading/loading';
 
 
@@ -25,7 +24,11 @@ function App() {
         isForgotRequest,
         isIngredientsRequest,
         isOrderRequest,
-        isResetRequest
+        isResetRequest,
+        isRegisterRequest,
+        isRegisterFailed,
+        isLoginRequest,
+        isLoginSuccess
     } = useSelector((state: RootState) => ({...state}));
     const {state: locationState} = useLocation<LocationState>();
     const history = useHistory();
@@ -34,9 +37,14 @@ function App() {
         || isRestoreRequest
         || isForgotRequest
         || isResetRequest
-        || isOrderRequest, [
-        isIngredientsRequest, isOrderRequest, isResetRequest, isForgotRequest, isRestoreRequest
-    ])
+        || isOrderRequest
+        || isRegisterRequest
+        || isLoginRequest
+        , [
+            isIngredientsRequest, isOrderRequest, isResetRequest,
+            isForgotRequest, isRestoreRequest, isRegisterRequest,
+            isLoginRequest,
+        ])
 
     const modalIngredient = locationState?.modalIngredient === true;
     const modalOrder = locationState?.modalOrder === true;
@@ -53,6 +61,15 @@ function App() {
         if (needAuthorization) {
             history.replace({
                 pathname: Routes.login,
+                state: {}
+            });
+            return;
+        }
+
+        if (isLoginSuccess) {
+            console.log('isLoginSuccess', isLoginSuccess)
+            history.replace({
+                pathname: Routes.main,
                 state: {}
             });
             return;
@@ -77,7 +94,9 @@ function App() {
             });
             return;
         }
-    }, [history, orders, isOrderSuccess, needAuthorization, isRestoreSuccess]);
+    }, [history, orders, isOrderSuccess, needAuthorization,
+        isRestoreSuccess, isLoginSuccess, isRegisterFailed
+    ]);
 
     const mainIngredientPath = modalIngredient ? Routes.ingredient : null;
     const mainOrderPath = modalOrder ? Routes.orderPage : null
