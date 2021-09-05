@@ -6,7 +6,7 @@ import styles from './burger-ingredients-item.module.css';
 import {IBurgerPart, IBurgerPartPropType} from '../../../../model/IBurgerPart';
 import {MoneyCounter} from '../../../common/money-counter/money-counter';
 import {RootState} from '../../../../services/store';
-import {useHistory, useRouteMatch} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import {LocationState, Routes} from '../../../../services/Routes';
 
 interface IBurgerConstructorItemProps {
@@ -31,18 +31,17 @@ export function BurgerIngredientsItem({part}: IBurgerConstructorItemProps) {
     const amount = ingredientAmountMap[_id] ?? 0;
 
     const history = useHistory();
-    const {url} = useRouteMatch();
 
     const onItemClick = useCallback((ingredient: IBurgerPart) => {
         const locationState: LocationState = {
-            modalIngredient: url,
+            modalIngredient: true,
             backTo: Routes.main
         }
         history.replace({
-            pathname: Routes.ingredientLinkCreator(_id),
+            pathname: Routes.ingredientLinkCreator(ingredient._id),
             state: locationState
         })
-    }, [_id, history, url]);
+    }, [history]);
 
     const hasAmount = amount > 0;
     const counter = hasAmount ? (<Counter count={amount} size='default'/>) : null;

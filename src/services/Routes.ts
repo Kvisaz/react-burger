@@ -12,6 +12,6 @@ export const Routes = {
 
 
 export interface LocationState {
-    modalIngredient?: string;
+    modalIngredient?: boolean;
     backTo: string;
 }

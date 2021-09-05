@@ -18,7 +18,7 @@ function App() {
     const state = useSelector((state: RootState) => ({...state}));
     const {state: locationState} = useLocation<LocationState>();
 
-    const modalIngredient = locationState?.modalIngredient != null;
+    const modalIngredient = locationState?.modalIngredient === true;
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -30,7 +30,7 @@ function App() {
         <div className={styles.App}>
             <AppHeader/>
             <Switch>
-                <Route path={Routes.main} exact={true}><Main/></Route>
+                <Route path={modalIngredient ? Routes.ingredient : Routes.main} exact={true}><Main/></Route>
                 <Route path={Routes.login} exact={true}><Login/></Route>
                 <Route path={Routes.register} exact={true}><Register/></Route>
                 <Route path={Routes.forgotPassword} exact={true}><ForgotPassword/></Route>
