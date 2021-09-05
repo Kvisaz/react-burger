@@ -26,8 +26,8 @@ export function Profile() {
             <div className={styles.col_left}>
                 <div className={`text text_type_main-medium ${styles.links}`}>
                     <span>Профиль</span>
-                    <Link to={Routes.orders}>История заказов</Link>
-                    <Link to={Routes.main}>Выход</Link>
+                    <Link to={Routes.orders} className='text_color_inactive'>История заказов</Link>
+                    <Link to={Routes.main} className='text_color_inactive'>Выход</Link>
                 </div>
 
                 <div className='text text_type_main-small text_color_inactive'>В этом разделе вы можете<br/>
