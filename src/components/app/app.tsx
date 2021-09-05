@@ -15,7 +15,7 @@ import {useLocation} from 'react-router-dom'
 
 
 function App() {
-    const {isOrderSuccess, orderId} = useSelector((state: RootState) => ({...state}));
+    const {isOrderSuccess, orders} = useSelector((state: RootState) => ({...state}));
     const {state: locationState} = useLocation<LocationState>();
     const history = useHistory();
 
@@ -28,7 +28,8 @@ function App() {
     }, [dispatch]);
 
     useEffect(() => {
-        if (isOrderSuccess && orderId) {
+        if (isOrderSuccess && orders && orders.length > 0) {
+            const {orderId} = orders[orders.length - 1];
             history.replace({
                 pathname: Routes.orderPageLinkCreator(orderId),
                 state: {
@@ -37,7 +38,7 @@ function App() {
                 }
             })
         }
-    }, [history, orderId, isOrderSuccess]);
+    }, [history, orders, isOrderSuccess]);
 
     const mainIngredientPath = modalIngredient ? Routes.ingredient : null;
     const mainOrderPath = modalOrder ? Routes.orderPage : null

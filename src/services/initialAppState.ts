@@ -9,7 +9,6 @@ export const InitialAppState: IAppState = {
 	ingredientAmountMap: {},
 	selectedBun: undefined,
 	selectedParts: [],
-	orderId: 2,
 	orders: [],
 	isOrderRequest: false,
 	isOrderFailed: false,

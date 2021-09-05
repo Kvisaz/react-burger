@@ -14,12 +14,10 @@ export type BurgerAction =
     | { type: IBurgerActionType.DATA_LOADED, ingredients: IBurgerPart[] }
     | { type: IBurgerActionType.DATA_FAILED, message: string }
     | { type: IBurgerActionType.INGREDIENT_ADD_TO_BASKET, ingredient: IBurgerPart }
-    | { type: IBurgerActionType.INGREDIENT_SHOW, ingredient: IBurgerPart }
     | { type: IBurgerActionType.INGREDIENT_REMOVE_FROM_BASKET, payload: IRemovePayLoad }
     | { type: IBurgerActionType.ORDER_REQUEST }
     | { type: IBurgerActionType.ORDER_SUCCESS, payload: IOrderPayLoad }
     | { type: IBurgerActionType.ORDER_FAILED }
-    | { type: IBurgerActionType.CLOSE_MODAL }
     | { type: IBurgerActionType.TAB_SELECT, index: number }
     | { type: IBurgerActionType.BASKET_ITEM_SWAP, selectedId1: string, selectedId2: string }
     | { type: IBurgerActionType.REGISTRATION_USER_REQUEST, data: IApiRegisterUserData }
@@ -49,12 +47,11 @@ export enum IBurgerActionType {
     DATA_LOADED = 'DATA_LOADED',
     DATA_FAILED = 'DATA_FAILED',
     INGREDIENT_ADD_TO_BASKET = 'INGREDIENT_ADD_TO_BASKET',
-    INGREDIENT_SHOW = 'INGREDIENT_SHOW',
+
     INGREDIENT_REMOVE_FROM_BASKET = 'INGREDIENT_REMOVE_FROM_BASKET',
     ORDER_REQUEST = 'ORDER_REQUEST',
     ORDER_SUCCESS = 'ORDER_SUCCESS',
     ORDER_FAILED = 'ORDER_FAILED',
-    CLOSE_MODAL = 'CLOSE_MODAL',
     TAB_SELECT = 'TAB_SELECT',
     BASKET_ITEM_SWAP = 'BASKET_ITEM_SWAP',
 
@@ -128,14 +125,6 @@ export const onOrderClickActionCreator = () => async (dispatch: IBurgerDispatch,
     API.order(selectedIds)
         .then((result) => dispatch({type: IBurgerActionType.ORDER_SUCCESS, payload: result}))
         .catch(e => console.error(e));
-};
-
-export const onIngredientClickActionCreator = (id: string) => (dispatch: IBurgerDispatch, getState: IGetState) => {
-    const {ingredients} = getState();
-    const ingredient = ingredients.find(i => i._id === id);
-    if (ingredient) {
-        dispatch({type: IBurgerActionType.INGREDIENT_SHOW, ingredient});
-    }
 };
 
 export const onIngredientDropActionCreator = (id: string) => (dispatch: IBurgerDispatch, getState: IGetState) => {

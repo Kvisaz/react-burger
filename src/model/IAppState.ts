@@ -14,11 +14,7 @@ export interface IAppState {
 	selectedParts: IConstructorElementData[];
 
 	selectedIngredient?: IBurgerPart;
-	isModalIngredientOpen?: boolean;
-	orderId?: number;
-	orderName?: string;
 	orders: IApiOrderResult[];
-	isModalOrderOpen?: boolean;
 
 	isOrderRequest: boolean;
 	isOrderSuccess: boolean;

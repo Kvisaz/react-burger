@@ -31,12 +31,6 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
 				})),
 				isIngredientsLoaded: true,
 			};
-		case IBurgerActionType.CLOSE_MODAL:
-			return {
-				...state,
-				isModalIngredientOpen: false,
-				isModalOrderOpen: false,
-			};
 		case IBurgerActionType.ORDER_REQUEST:
 			return {
 				...state,
@@ -51,9 +45,6 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
 				],
 				isOrderRequest: false,
 				isOrderSuccess: true,
-				orderId: action.payload.orderId,
-				orderName: action.payload.name,
-				isModalOrderOpen: true,
 				ingredientAmountMap: {},
 				selectedParts: [],
 				selectedBun: undefined,
@@ -68,12 +59,6 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
 			return onSelectAction(action, state);
 		case IBurgerActionType.INGREDIENT_REMOVE_FROM_BASKET:
 			return onRemoveAction(action, state);
-		case IBurgerActionType.INGREDIENT_SHOW:
-			return {
-				...state,
-				isModalIngredientOpen: true,
-				selectedIngredient: action.ingredient,
-			};
 		case IBurgerActionType.TAB_SELECT:
 			return {
 				...state,
