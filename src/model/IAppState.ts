@@ -22,6 +22,13 @@ export interface IAppState {
 
 	currentTabIndex: number;
 	tabs: ITab[];
+
+	userEmail?: string;
+	userName?: string;
+	userPassword?: string;
+	userTokenAuth?: string;
+	userTokenRefresh?: string;
+	needAuthorization: boolean;
 }
 
 

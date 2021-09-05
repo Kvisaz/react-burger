@@ -1,12 +1,17 @@
 import {IBurgerPart} from '../model/IBurgerPart';
+import {getCookie} from './cookie';
+
+const TOKEN_COOKIE = 'token';
+const TOKEN_REFRESH_COOKIE = 'tokenRefresh';
 
 export class Api {
     constructor(private readonly endpoints: IApiEndpoints) {
     }
 
     async getBurgerParts(): Promise<IngredientsResponse> {
-        return this.fetch<any, IApiIngredientsResponse>(this.endpoints.ingredients)
-            .then(data => ({
+        return fetch(this.endpoints.ingredients)
+            .then(apiResponse => this.checkResponse<IApiIngredientsResponse>(apiResponse))
+            .then((data: IApiIngredientsResponse) => ({
                 ingredients: data.data
             }))
     }
@@ -15,70 +20,90 @@ export class Api {
         const data: IApiOrderConfig = {
             ingredients: selectedIds,
         };
-        return this.fetch<IApiOrderConfig, IApiOrderResponse>(this.endpoints.order, data)
+        return this.fetchPost<IApiOrderConfig, IApiOrderResponse>(this.endpoints.order, data)
             .then(data => ({
                 name: data.name,
                 orderId: data.order.number
             }));
     }
 
-    async registerUser(data: IApiRegisterUserData): Promise<boolean> {
+    async registerUser(data: IApiRegisterUserData): Promise<IApiRegisterUserResponse> {
         return this
-            .fetch<IApiRegisterUserData, IApiRegisterUserResponse>(this.endpoints.registerUser, data)
-            .then(() => true);
+            .fetchPost<IApiRegisterUserData, IApiRegisterUserResponse>(this.endpoints.registerUser, data);
     }
 
-    async restorePassword(data: IApiRestorePasswordData): Promise<boolean> {
+    async restorePassword(data: IApiRestorePasswordData): Promise<IApiRestorePasswordResponse> {
         return this
-            .fetch<IApiRestorePasswordData, IApiRestorePasswordResponse>(this.endpoints.restorePassword, data)
-            .then(() => true);
+            .fetchPost<IApiRestorePasswordData, IApiRestorePasswordResponse>(this.endpoints.restorePassword, data);
     }
 
-    async resetPassword(data: IApiResetPasswordData): Promise<boolean> {
+    async resetPassword(data: IApiResetPasswordData): Promise<IApiResetPasswordResponse> {
         return this
-            .fetch<IApiResetPasswordData, IApiResetPasswordResponse>(this.endpoints.resetPassword, data)
-            .then(() => true);
+            .fetchPost<IApiResetPasswordData, IApiResetPasswordResponse>(this.endpoints.resetPassword, data);
     }
 
-    async login(data: IApiLoginData): Promise<boolean> {
-        return this
-            .fetch<IApiLoginData, IApiLoginResponse>(this.endpoints.login, data)
-            .then(() => true);
+    async login(data: IApiLoginData): Promise<IApiLoginResponse> {
+        return this.fetchPost<IApiLoginData, IApiLoginResponse>(this.endpoints.login, data);
     }
 
     async logout(data: IApiLogoutData): Promise<IApiLogoutResponse> {
-        return this
-            .fetch<IApiLogoutData, IApiLogoutResponse>(this.endpoints.login, data)
+        return this.fetchPost<IApiLogoutData, IApiLogoutResponse>(this.endpoints.login, data)
     }
 
     async refreshToken(data: IApiTokenData): Promise<IApiTokenResponse> {
-        return this
-            .fetch<IApiTokenData, IApiTokenResponse>(this.endpoints.token, data)
+        return this.fetchPost<IApiTokenData, IApiTokenResponse>(this.endpoints.token, data);
     }
 
-    private async fetch<Data, Response extends IApiResponse>(endPoint: string, data?: Data): Promise<Response> {
-        const fetchOptions = data == null
-            ? {}
-            : {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            }
+    async getUserData(): Promise<IApiUserProfileResponse> {
+        return fetch(this.endpoints.userData, {
+            method: 'GET',
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
+                'Content-type': 'application/json',
+                Authorization: 'Bearer ' + getCookie(TOKEN_COOKIE)
+            },
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer'
+        }).then(apiResponse => this.checkResponse<IApiUserProfileResponse>(apiResponse));
+    }
 
-        return fetch(endPoint, fetchOptions)
-            .then(apiResponse => {
-                if (apiResponse.ok) {
-                    return apiResponse.json()
-                } else {
-                    return Promise.reject('apiResponse not ok')
-                }
-            })
-            .then((data: Response) => {
+    async patchUserData(data: IApiUserProfilePatchData): Promise<IApiUserProfileResponse> {
+        return fetch(this.endpoints.userData, {
+            method: 'PATCH',
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
+                'Content-type': 'application/json',
+                Authorization: 'Bearer ' + getCookie(TOKEN_COOKIE)
+            },
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer',
+            body: JSON.stringify(data),
+        }).then(apiResponse => this.checkResponse<IApiUserProfileResponse>(apiResponse));
+    }
+
+    private async fetchPost<Data, Response extends IApiResponse>(endPoint: string, data: Data): Promise<Response> {
+        return fetch(endPoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then(apiResponse => this.checkResponse(apiResponse));
+    }
+
+    private async checkResponse<T extends IApiResponse>(apiResponse: Response): Promise<T> {
+        if (!apiResponse.ok) return Promise.reject('apiResponse not ok');
+
+        return apiResponse.json()
+            .then((data: T) => {
                 if (data.success) return data;
-                else return Promise.reject('data is not success');
-            })
+                else return Promise.reject('apiResponse data is not success');
+            });
     }
 }
 
@@ -89,8 +114,9 @@ export interface IApiEndpoints extends Record<string, string> {
     restorePassword: string;
     resetPassword: string;
     login: string;
-    token: string;
     logout: string;
+    token: string;
+    userData: string;
 }
 
 export interface IApiResponse {
@@ -145,6 +171,20 @@ export interface IApiTokenResponse {
     success: boolean;
     accessToken: string; // "Bearer ...",
     refreshToken: string;
+}
+
+export interface IApiUserProfileResponse {
+    success: boolean;
+    user: {
+        name: string;
+        email: string;
+    }
+}
+
+export interface IApiUserProfilePatchData {
+    email: string;
+    password: string;
+    name: string;
 }
 
 export interface IApiRestorePasswordData {

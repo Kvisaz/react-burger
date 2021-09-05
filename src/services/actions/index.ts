@@ -40,6 +40,7 @@ export type BurgerAction =
     | { type: IBurgerActionType.TOKEN_REFRESH_FAIL }
 
 type IBurgerDispatch = (action: BurgerAction) => any;
+type IBurgerThunkDispatch = Function;
 
 
 export enum IBurgerActionType {
@@ -100,6 +101,7 @@ const END_POINTS: IApiEndpoints = {
     registerUser: 'https://norma.nomoreparties.space/api/auth/register',
     restorePassword: 'https://norma.nomoreparties.space/api/password-reset',
     resetPassword: 'https://norma.nomoreparties.space/api/password-reset/reset',
+    userData: 'https://norma.nomoreparties.space/api/auth/user',
 }
 
 const API = new Api(END_POINTS);
@@ -112,7 +114,31 @@ export const fetchIngredientsActionCreator = () => async (dispatch: IBurgerDispa
         .catch((e: Error | string) => dispatch({type: IBurgerActionType.DATA_FAILED, message: e.toString()}));
 };
 
-export const onOrderClickActionCreator = () => async (dispatch: IBurgerDispatch, getState: IGetState) => {
+export const onOrderClickActionCreator = () => async (dispatch: IBurgerThunkDispatch, getState: IGetState) => {
+    const {userTokenAuth} = getState();
+    if (userTokenAuth != null) {
+        dispatch(orderAuthorizedActionCreator());
+    } else {
+        dispatch(orderUnAuthorizedActionCreator());
+    }
+};
+
+export const orderUnAuthorizedActionCreator = () => async (dispatch: IBurgerDispatch, getState: IGetState) => {
+    dispatch({type: IBurgerActionType.ORDER_REQUEST});
+    const state = getState();
+
+    const selectedBun = state.selectedBun;
+    const selectedIds = state.selectedParts.map(i => i.ingredientId);
+    if (selectedBun) {
+        selectedIds.push(selectedBun.ingredientId);
+        selectedIds.push(selectedBun.ingredientId);
+    }
+    API.order(selectedIds)
+        .then((result) => dispatch({type: IBurgerActionType.ORDER_SUCCESS, payload: result}))
+        .catch(e => console.error(e));
+};
+
+export const orderAuthorizedActionCreator = () => async (dispatch: IBurgerDispatch, getState: IGetState) => {
     dispatch({type: IBurgerActionType.ORDER_REQUEST});
     const state = getState();
 

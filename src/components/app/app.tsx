@@ -15,7 +15,7 @@ import {useLocation} from 'react-router-dom'
 
 
 function App() {
-    const {isOrderSuccess, orders} = useSelector((state: RootState) => ({...state}));
+    const {isOrderSuccess, orders, needAuthorization} = useSelector((state: RootState) => ({...state}));
     const {state: locationState} = useLocation<LocationState>();
     const history = useHistory();
 
@@ -27,7 +27,18 @@ function App() {
         dispatch(fetchIngredientsActionCreator());
     }, [dispatch]);
 
+    /**
+     *  redirector
+     */
     useEffect(() => {
+        if (needAuthorization) {
+            history.replace({
+                pathname: Routes.login,
+                state: {}
+            });
+            return;
+        }
+
         if (isOrderSuccess && orders && orders.length > 0) {
             const {orderId} = orders[orders.length - 1];
             history.replace({
@@ -36,9 +47,10 @@ function App() {
                     modalOrder: true,
                     backTo: Routes.main
                 }
-            })
+            });
+            return;
         }
-    }, [history, orders, isOrderSuccess]);
+    }, [history, orders, isOrderSuccess, needAuthorization]);
 
     const mainIngredientPath = modalIngredient ? Routes.ingredient : null;
     const mainOrderPath = modalOrder ? Routes.orderPage : null
