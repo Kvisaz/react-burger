@@ -1,5 +1,6 @@
-import { IBurgerPart } from './IBurgerPart';
-import { IConstructorElementData } from './IConstructorElementData';
+import {IBurgerPart} from './IBurgerPart';
+import {IConstructorElementData} from './IConstructorElementData';
+import {IApiOrderResult} from '../services/Api';
 
 export interface IAppState {
 	isIngredientsRequest: boolean;
@@ -16,6 +17,7 @@ export interface IAppState {
 	isModalIngredientOpen?: boolean;
 	orderId?: number;
 	orderName?: string;
+	orders: IApiOrderResult[];
 	isModalOrderOpen?: boolean;
 
 	isOrderRequest: boolean;

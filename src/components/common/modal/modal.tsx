@@ -26,7 +26,7 @@ export function Modal({title = '', children}: IModalProps) {
     const backToUrl = locationState?.backTo ?? Routes.main;
 
     const hide = useCallback(() => {
-        history.replace({pathname: backToUrl});
+        history.replace({pathname: backToUrl, state: null});
     }, [history, backToUrl]);
 
     const onKeyDown = useCallback((e: KeyboardEvent) => {

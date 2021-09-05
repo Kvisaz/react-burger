@@ -45,6 +45,10 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
 		case IBurgerActionType.ORDER_SUCCESS:
 			return {
 				...state,
+				orders: [
+					...state.orders,
+					action.payload
+				],
 				isOrderRequest: false,
 				isOrderSuccess: true,
 				orderId: action.payload.orderId,
