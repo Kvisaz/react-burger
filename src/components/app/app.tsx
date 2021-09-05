@@ -38,8 +38,6 @@ function App() {
         isIngredientsRequest, isOrderRequest, isResetRequest, isForgotRequest, isRestoreRequest
     ])
 
-    console.log('isLoading', isLoading)
-
     const modalIngredient = locationState?.modalIngredient === true;
     const modalOrder = locationState?.modalOrder === true;
 
