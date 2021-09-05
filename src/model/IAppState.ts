@@ -25,10 +25,36 @@ export interface IAppState {
 
 	userEmail?: string;
 	userName?: string;
+	userForgotEmail?: string;
+	isForgotRequest?: boolean;
+	isForgotSuccess?: boolean;
+	isForgotFailed?: boolean;
+
+	userRestoreEmail?: string;
+	isRestoreRequest?: boolean;
+	isRestoreSuccess?: boolean;
+	isRestoreFailed?: boolean;
+
+	userResetCode?: string;
+	userResetPassword?: string;
+	isResetRequest?: boolean;
+	isResetSuccess?: boolean;
+	isResetFailed?: boolean;
+
 	userPassword?: string;
 	userTokenAuth?: string;
+	isTokenAuthRequest?: boolean;
+	isTokenAuthSuccess?: boolean;
+	isTokenAuthFailed?: boolean;
+
 	userTokenRefresh?: string;
-	needAuthorization: boolean;
+	isTokenRefreshRequest?: boolean;
+	isTokenRefreshSuccess?: boolean;
+	isTokenRefreshFailed?: boolean;
+
+	needAuthorization?: boolean;
+	needResetPassword?: boolean;
+	needBackToMainPage?: boolean;
 }
 
 

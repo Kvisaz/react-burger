@@ -15,7 +15,12 @@ import {useLocation} from 'react-router-dom'
 
 
 function App() {
-    const {isOrderSuccess, orders, needAuthorization} = useSelector((state: RootState) => ({...state}));
+    const {
+        isOrderSuccess,
+        orders,
+        needAuthorization,
+        needResetPassword
+    } = useSelector((state: RootState) => ({...state}));
     const {state: locationState} = useLocation<LocationState>();
     const history = useHistory();
 
@@ -39,6 +44,14 @@ function App() {
             return;
         }
 
+        if (needResetPassword) {
+            history.replace({
+                pathname: Routes.resetPassword,
+                state: {}
+            });
+            return;
+        }
+
         if (isOrderSuccess && orders && orders.length > 0) {
             const {orderId} = orders[orders.length - 1];
             history.replace({
@@ -50,7 +63,7 @@ function App() {
             });
             return;
         }
-    }, [history, orders, isOrderSuccess, needAuthorization]);
+    }, [history, orders, isOrderSuccess, needAuthorization, needResetPassword]);
 
     const mainIngredientPath = modalIngredient ? Routes.ingredient : null;
     const mainOrderPath = modalOrder ? Routes.orderPage : null

@@ -20,15 +20,19 @@ export type BurgerAction =
     | { type: IBurgerActionType.ORDER_FAILED }
     | { type: IBurgerActionType.TAB_SELECT, index: number }
     | { type: IBurgerActionType.BASKET_ITEM_SWAP, selectedId1: string, selectedId2: string }
+    | { type: IBurgerActionType.REGISTRATION_PAGE_CHANGE, data: IApiRegisterUserData }
     | { type: IBurgerActionType.REGISTRATION_USER_REQUEST, data: IApiRegisterUserData }
     | { type: IBurgerActionType.REGISTRATION_USER_SUCCESS }
     | { type: IBurgerActionType.REGISTRATION_USER_FAIL }
+    | { type: IBurgerActionType.RESTORE_PAGE_CHANGE, email: string }
     | { type: IBurgerActionType.RESTORE_PASS_REQUEST, data: IApiRestorePasswordData }
     | { type: IBurgerActionType.RESTORE_PASS_SUCCESS }
     | { type: IBurgerActionType.RESTORE_PASS_FAIL }
-    | { type: IBurgerActionType.RESET_PASS_REQUEST, data: IApiResetPasswordData }
+    | { type: IBurgerActionType.RESET_PAGE_CHANGE, code: string, password: string }
+    | { type: IBurgerActionType.RESET_PASS_REQUEST }
     | { type: IBurgerActionType.RESET_PASS_SUCCESS }
     | { type: IBurgerActionType.RESET_PASS_FAIL }
+    | { type: IBurgerActionType.LOGIN_PAGE_CHANGE, email: string, password: string }
     | { type: IBurgerActionType.LOGIN_REQUEST, data: IApiLoginData }
     | { type: IBurgerActionType.LOGIN_SUCCESS }
     | { type: IBurgerActionType.LOGIN_FAIL }
@@ -56,18 +60,22 @@ export enum IBurgerActionType {
     TAB_SELECT = 'TAB_SELECT',
     BASKET_ITEM_SWAP = 'BASKET_ITEM_SWAP',
 
+    REGISTRATION_PAGE_CHANGE = 'REGISTRATION_PAGE_CHANGE',
     REGISTRATION_USER_REQUEST = 'REGISTRATION_USER_REQUEST',
     REGISTRATION_USER_SUCCESS = 'REGISTRATION_USER_SUCCESS',
     REGISTRATION_USER_FAIL = 'REGISTRATION_USER_FAIL',
 
+    RESTORE_PAGE_CHANGE = 'RESTORE_PAGE_CHANGE',
     RESTORE_PASS_REQUEST = 'RESTORE_PASS_REQUEST',
     RESTORE_PASS_SUCCESS = 'RESTORE_PASS_SUCCESS',
     RESTORE_PASS_FAIL = 'RESTORE_PASS_FAIL',
 
+    RESET_PAGE_CHANGE = 'RESET_PAGE_CHANGE',
     RESET_PASS_REQUEST = 'RESET_PASS_REQUEST',
     RESET_PASS_SUCCESS = 'RESET_PASS_SUCCESS',
     RESET_PASS_FAIL = 'RESET_PASS_FAIL',
 
+    LOGIN_PAGE_CHANGE = 'LOGIN_PAGE_CHANGE',
     LOGIN_REQUEST = 'LOGIN_REQUEST',
     LOGIN_SUCCESS = 'LOGIN_SUCCESS',
     LOGIN_FAIL = 'LOGIN_FAIL',
@@ -185,21 +193,29 @@ export const logoutActionCreator = (data: IApiLogoutData) => async (dispatch: IB
         .catch(() => dispatch({type: IBurgerActionType.LOGOUT_FAIL}));
 }
 
-export const restorePassActionCreator = (data: IApiRestorePasswordData) => async (dispatch: IBurgerDispatch) => {
-    dispatch({type: IBurgerActionType.RESTORE_PASS_REQUEST, data});
+export const restorePassActionCreator = (data: IApiRestorePasswordData) =>
+    async (dispatch: IBurgerDispatch, getState: IGetState) => {
 
-    API.restorePassword(data)
-        .then(() => dispatch({type: IBurgerActionType.RESTORE_PASS_SUCCESS}))
-        .catch(() => dispatch({type: IBurgerActionType.RESTORE_PASS_FAIL}));
-}
+        dispatch({type: IBurgerActionType.RESTORE_PASS_REQUEST, data});
 
-export const resetPassActionCreator = (data: IApiResetPasswordData) => async (dispatch: IBurgerDispatch) => {
-    dispatch({type: IBurgerActionType.RESET_PASS_REQUEST, data});
+        API.restorePassword(data)
+            .then(() => dispatch({type: IBurgerActionType.RESTORE_PASS_SUCCESS}))
+            .catch(() => dispatch({type: IBurgerActionType.RESTORE_PASS_FAIL}));
+    }
 
-    API.resetPassword(data)
-        .then(() => dispatch({type: IBurgerActionType.RESET_PASS_SUCCESS}))
-        .catch(() => dispatch({type: IBurgerActionType.RESET_PASS_FAIL}));
-}
+export const resetPassActionCreator = () =>
+    async (dispatch: IBurgerDispatch, getState: IGetState) => {
+        const {userResetCode: token = '', userResetPassword: password = ''} = getState();
+        const data: IApiResetPasswordData = {
+            password, token
+        }
+
+        dispatch({type: IBurgerActionType.RESET_PASS_REQUEST});
+
+        API.resetPassword(data)
+            .then(() => dispatch({type: IBurgerActionType.RESET_PASS_SUCCESS}))
+            .catch(() => dispatch({type: IBurgerActionType.RESET_PASS_FAIL}));
+    }
 
 export const refreshTokenActionCreator = (data: IApiTokenData) => async (dispatch: IBurgerDispatch) => {
     dispatch({type: IBurgerActionType.TOKEN_REFRESH_REQUEST, data});
