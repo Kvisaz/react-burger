@@ -24,7 +24,7 @@ export function Register() {
 
     return (<div className={styles.wrap}>
         <div className={styles.content}>
-            <div className={`text text_type_main-medium ${styles.label}`}>Вход</div>
+            <div className={`text text_type_main-medium ${styles.label}`}>Регистрация</div>
             <Input placeholder={'Имя'} value={''} onChange={onNameChange} size={'default'}/>
             <Input placeholder={'Email'} value={''} onChange={onLoginChange}/>
             <PasswordInput name={'password'} value={''} onChange={onPasswordChange}/>

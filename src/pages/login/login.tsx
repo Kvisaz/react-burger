@@ -22,7 +22,7 @@ export function Login() {
             <div className={`text text_type_main-medium ${styles.label}`}>Вход</div>
             <Input placeholder={'Email'} value={''} onChange={onLoginChange}/>
             <PasswordInput name={'password'} value={''} onChange={onPasswordChange}/>
-            <Button onClick={onButtonClick} size={'medium'} type={'primary'}>Нажми на меня</Button>
+            <Button onClick={onButtonClick} size={'medium'} type={'primary'}>Войти</Button>
             <div className={`text text_type_main-small ${styles.about}`}>
                 <div>Вы новый пользователь? <Link to={Routes.register}>Зарегистрироваться</Link></div>
                 <div>Забыли пароль? <Link to={Routes.forgotPassword}>Восстановить пароль</Link></div>
