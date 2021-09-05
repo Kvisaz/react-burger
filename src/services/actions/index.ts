@@ -32,7 +32,7 @@ export type BurgerAction =
     | { type: IBurgerActionType.RESET_PASS_REQUEST }
     | { type: IBurgerActionType.RESET_PASS_SUCCESS }
     | { type: IBurgerActionType.RESET_PASS_FAIL }
-    | { type: IBurgerActionType.LOGIN_PAGE_CHANGE, email: string, password: string }
+    | { type: IBurgerActionType.LOGIN_PAGE_CHANGE, data: IApiLoginData }
     | { type: IBurgerActionType.LOGIN_REQUEST, data: IApiLoginData }
     | { type: IBurgerActionType.LOGIN_SUCCESS }
     | { type: IBurgerActionType.LOGIN_FAIL }

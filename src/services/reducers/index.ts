@@ -4,7 +4,7 @@ import {IBurgerPart} from '../../model/IBurgerPart';
 import {IConstructorElementData} from '../../model/IConstructorElementData';
 import {InitialAppState} from '../initialAppState';
 import {nanoid} from 'nanoid';
-import {IApiRegisterUserData} from '../Api';
+import {IApiLoginData, IApiRegisterUserData} from '../Api';
 
 
 export function mainReducer(state: IAppState = InitialAppState, action: BurgerAction): IAppState {
@@ -92,6 +92,8 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
                 isRegisterSuccess: false,
                 isRegisterFailed: true,
             };
+        case IBurgerActionType.LOGIN_PAGE_CHANGE:
+            return onLoginPageChange(action, state);
         case IBurgerActionType.LOGIN_REQUEST:
             return {
                 ...state,
@@ -312,5 +314,16 @@ function onResetPageChange(
         ...state,
         userResetCode: action.code,
         userResetPassword: action.password
+    }
+}
+
+function onLoginPageChange(
+    action: { type: IBurgerActionType.LOGIN_PAGE_CHANGE, data: IApiLoginData },
+    state: IAppState
+): IAppState {
+    return {
+        ...state,
+        loginPageEmail: action.data.login,
+        loginPagePassword: action.data.password
     }
 }
