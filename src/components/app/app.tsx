@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import styles from './app.module.css';
 import {AppHeader} from '../app-header/app-header';
 import {Modal} from '../common/modal/modal';
@@ -12,6 +12,7 @@ import {ProtectedRoute} from '../common/protected-route/protected-route';
 import {ForgotPassword, Login, Main, Orders, Page404, Profile, Register, ResetPassword} from '../../pages';
 import {fetchIngredientsActionCreator} from '../../services/actions';
 import {useLocation} from 'react-router-dom'
+import {Loading} from '../loading/loading';
 
 
 function App() {
@@ -19,10 +20,25 @@ function App() {
         isOrderSuccess,
         orders,
         needAuthorization,
-        needResetPassword
+        isRestoreSuccess,
+        isRestoreRequest,
+        isForgotRequest,
+        isIngredientsRequest,
+        isOrderRequest,
+        isResetRequest
     } = useSelector((state: RootState) => ({...state}));
     const {state: locationState} = useLocation<LocationState>();
     const history = useHistory();
+
+    const isLoading = useMemo(() => isIngredientsRequest
+        || isRestoreRequest
+        || isForgotRequest
+        || isResetRequest
+        || isOrderRequest, [
+        isIngredientsRequest, isOrderRequest, isResetRequest, isForgotRequest, isRestoreRequest
+    ])
+
+    console.log('isLoading', isLoading)
 
     const modalIngredient = locationState?.modalIngredient === true;
     const modalOrder = locationState?.modalOrder === true;
@@ -44,7 +60,7 @@ function App() {
             return;
         }
 
-        if (needResetPassword) {
+        if (isRestoreSuccess) {
             history.replace({
                 pathname: Routes.resetPassword,
                 state: {}
@@ -63,7 +79,7 @@ function App() {
             });
             return;
         }
-    }, [history, orders, isOrderSuccess, needAuthorization, needResetPassword]);
+    }, [history, orders, isOrderSuccess, needAuthorization, isRestoreSuccess]);
 
     const mainIngredientPath = modalIngredient ? Routes.ingredient : null;
     const mainOrderPath = modalOrder ? Routes.orderPage : null
@@ -72,30 +88,34 @@ function App() {
     return (
         <div className={styles.App}>
             <AppHeader/>
-            <Switch>
-                <Route path={mainPath} exact={true}><Main/></Route>
-                <Route path={Routes.login} exact={true}><Login/></Route>
-                <Route path={Routes.register} exact={true}><Register/></Route>
-                <Route path={Routes.forgotPassword} exact={true}><ForgotPassword/></Route>
-                <Route path={Routes.resetPassword} exact={true}><ResetPassword/></Route>
-                <ProtectedRoute path={Routes.profile} exact={true}><Profile/></ProtectedRoute>
-                <ProtectedRoute path={Routes.orders} exact={true}><Orders/></ProtectedRoute>
-                {
-                    !modalIngredient && (
-                        <Route path={Routes.ingredient} exact={true}>
-                            <IngredientDetails/>
-                        </Route>
-                    )
-                }
-                {
-                    !modalOrder && (
-                        <Route path={Routes.orderPage} exact={true}>
-                            <OrderDetails/>
-                        </Route>
-                    )
-                }
-                <Route><Page404/></Route>
-            </Switch>
+            {isLoading
+                ? (<Loading/>)
+                : (<Switch>
+                    <Route path={mainPath} exact={true}><Main/></Route>
+                    <Route path={Routes.login} exact={true}><Login/></Route>
+                    <Route path={Routes.register} exact={true}><Register/></Route>
+                    <Route path={Routes.forgotPassword} exact={true}><ForgotPassword/></Route>
+                    <Route path={Routes.resetPassword} exact={true}><ResetPassword/></Route>
+                    <ProtectedRoute path={Routes.profile} exact={true}><Profile/></ProtectedRoute>
+                    <ProtectedRoute path={Routes.orders} exact={true}><Orders/></ProtectedRoute>
+                    {
+                        !modalIngredient && (
+                            <Route path={Routes.ingredient} exact={true}>
+                                <IngredientDetails/>
+                            </Route>
+                        )
+                    }
+                    {
+                        !modalOrder && (
+                            <Route path={Routes.orderPage} exact={true}>
+                                <OrderDetails/>
+                            </Route>
+                        )
+                    }
+                    <Route><Page404/></Route>
+                </Switch>)
+            }
+
             {
                 modalIngredient && (
                     <Route path={Routes.ingredient} exact={true}>
@@ -114,13 +134,6 @@ function App() {
                     </Route>
                 )
             }
-            {/* {
-                state.isModalOrderOpen && state.orderId != null && (
-                    <Modal>
-                        <OrderDetails/>
-                    </Modal>
-                )
-            }*/}
         </div>
     );
 }

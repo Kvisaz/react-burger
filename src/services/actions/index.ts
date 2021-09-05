@@ -194,10 +194,8 @@ export const logoutActionCreator = (data: IApiLogoutData) => async (dispatch: IB
 }
 
 export const restorePassActionCreator = (data: IApiRestorePasswordData) =>
-    async (dispatch: IBurgerDispatch, getState: IGetState) => {
-
+    async (dispatch: IBurgerDispatch) => {
         dispatch({type: IBurgerActionType.RESTORE_PASS_REQUEST, data});
-
         API.restorePassword(data)
             .then(() => dispatch({type: IBurgerActionType.RESTORE_PASS_SUCCESS}))
             .catch(() => dispatch({type: IBurgerActionType.RESTORE_PASS_FAIL}));

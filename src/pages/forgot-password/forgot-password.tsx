@@ -1,39 +1,31 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback} from 'react';
 import styles from './forgot-password.module.css';
 import {Button, Input} from '@ya.praktikum/react-developer-burger-ui-components';
 import {Link} from 'react-router-dom';
 import {Routes} from '../../services/Routes';
-import {useDispatch} from 'react-redux';
-import {restorePassActionCreator} from '../../services/actions';
-
-interface IForgotPageState {
-    email: string;
-}
+import {useDispatch, useSelector} from 'react-redux';
+import {IBurgerActionType, restorePassActionCreator} from '../../services/actions';
+import {RootState} from '../../services/store';
 
 export function ForgotPassword() {
 
-    const [state, setState] = useState<IForgotPageState>({
-        email: ''
-    })
+    const {userForgotEmail: email = ''} = useSelector((state: RootState) => ({...state}));
 
     const dispatch = useDispatch();
 
     const onEmailChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         e.persist(); // deprecated since React 17
-        setState(prevState => ({
-            ...prevState,
-            email: e.target.value
-        }))
-    }, [])
+        dispatch({type: IBurgerActionType.RESTORE_PAGE_CHANGE, email: e.target.value})
+    }, [dispatch])
 
     const onButtonClick = useCallback(() => {
-        dispatch(restorePassActionCreator(state))
-    }, [dispatch, state])
+        dispatch(restorePassActionCreator({email}))
+    }, [dispatch, email])
 
     return (<div className={styles.wrap}>
         <div className={styles.content}>
             <div className={`text text_type_main-medium ${styles.label}`}>Восстановление пароля</div>
-            <Input type={'email'} placeholder={'Укажите email'} value={state.email} onChange={onEmailChange}/>
+            <Input type={'email'} placeholder={'Укажите email'} value={email} onChange={onEmailChange}/>
             <Button onClick={onButtonClick} size={'medium'} type={'primary'}>Восстановить</Button>
             <div className={`text text_type_main-small ${styles.about}`}>
                 <div>Вспомнили пароль? <Link to={Routes.login}>Войти</Link></div>

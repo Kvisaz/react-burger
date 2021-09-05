@@ -30,6 +30,7 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
                     amount: 0,
                 })),
                 isIngredientsLoaded: true,
+                isIngredientsRequest: false,
             };
         case IBurgerActionType.ORDER_REQUEST:
             return {
@@ -66,11 +67,27 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
             };
         case IBurgerActionType.BASKET_ITEM_SWAP:
             return onBasketItemSwap(action, state);
+        case IBurgerActionType.RESTORE_PAGE_CHANGE:
+            return onRestorePageChange(action, state);
+        case IBurgerActionType.RESTORE_PASS_REQUEST:
+            return {
+                ...state,
+                isRestoreRequest: true
+            };
         case IBurgerActionType.RESTORE_PASS_SUCCESS:
             return {
                 ...state,
-                needResetPassword: true
-            }
+                isRestoreRequest: false,
+                isRestoreSuccess: true,
+                isRestoreFailed: false,
+            };
+        case IBurgerActionType.RESTORE_PASS_FAIL:
+            return {
+                ...state,
+                isRestoreRequest: false,
+                isRestoreSuccess: false,
+                isRestoreFailed: true,
+            };
         case IBurgerActionType.RESET_PAGE_CHANGE:
             return onResetPageChange(action, state);
         case IBurgerActionType.RESET_PASS_REQUEST:

@@ -53,7 +53,6 @@ export interface IAppState {
 	isTokenRefreshFailed?: boolean;
 
 	needAuthorization?: boolean;
-	needResetPassword?: boolean;
 	needBackToMainPage?: boolean;
 }
 
