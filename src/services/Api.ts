@@ -33,8 +33,14 @@ export class Api {
     }
 
     async restorePassword(data: IApiRestorePasswordData): Promise<IApiRestorePasswordResponse> {
-        return this
-            .fetchPost<IApiRestorePasswordData, IApiRestorePasswordResponse>(this.endpoints.restorePassword, data);
+        return fetch(this.endpoints.userData, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+                Authorization: 'Bearer ' + getCookie(TOKEN_COOKIE)
+            },
+            body: JSON.stringify(data)
+        }).then(apiResponse => this.checkResponse<IApiRestorePasswordResponse>(apiResponse));
     }
 
     async resetPassword(data: IApiResetPasswordData): Promise<IApiResetPasswordResponse> {
