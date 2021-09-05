@@ -34,6 +34,10 @@
     text-decoration: none;
 }
 
+.link {
+    cursor: pointer;
+}
+
 .link_profile {
     text-decoration: none;
     color: #4C4CFF;

@@ -3,10 +3,13 @@ import {IGetState} from '../store';
 import {
     Api,
     IApiEndpoints,
-    IApiLoginData, IApiLogoutData, IApiLogoutResponse,
-    IApiRegisterUserData, IApiRegisterUserResponse,
+    IApiLoginData,
+    IApiLogoutResponse,
+    IApiRegisterUserData,
     IApiResetPasswordData,
-    IApiRestorePasswordData, IApiTokenData, IApiTokenResponse
+    IApiRestorePasswordData,
+    IApiTokenData,
+    IApiTokenResponse
 } from '../Api';
 
 export type BurgerAction =
@@ -36,7 +39,7 @@ export type BurgerAction =
     | { type: IBurgerActionType.LOGIN_REQUEST, data: IApiLoginData }
     | { type: IBurgerActionType.LOGIN_SUCCESS }
     | { type: IBurgerActionType.LOGIN_FAIL }
-    | { type: IBurgerActionType.LOGOUT_REQUEST, data: IApiLogoutData }
+    | { type: IBurgerActionType.LOGOUT_REQUEST}
     | { type: IBurgerActionType.LOGOUT_SUCCESS, data: IApiLogoutResponse }
     | { type: IBurgerActionType.LOGOUT_FAIL }
     | { type: IBurgerActionType.TOKEN_REFRESH_REQUEST, data: IApiTokenData }
@@ -184,10 +187,10 @@ export const loginActionCreator = (data: IApiLoginData) => async (dispatch: IBur
         .catch(() => dispatch({type: IBurgerActionType.LOGIN_FAIL}));
 }
 
-export const logoutActionCreator = (data: IApiLogoutData) => async (dispatch: IBurgerDispatch) => {
-    dispatch({type: IBurgerActionType.LOGOUT_REQUEST, data});
+export const logoutActionCreator = () => async (dispatch: IBurgerDispatch) => {
+    dispatch({type: IBurgerActionType.LOGOUT_REQUEST});
 
-    API.logout(data)
+    API.logout()
         .then((response) => dispatch({type: IBurgerActionType.LOGOUT_SUCCESS, data: response}))
         .catch(() => dispatch({type: IBurgerActionType.LOGOUT_FAIL}));
 }

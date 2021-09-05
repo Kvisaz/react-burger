@@ -33,7 +33,7 @@ export class Api {
             .then(response => {
                 const {accessToken, refreshToken} = response;
                 setCookie(TOKEN_COOKIE, accessToken.split(' ')[1]);
-                setCookie(TOKEN_REFRESH_COOKIE, refreshToken?.split(' ')[1]);
+                setCookie(TOKEN_REFRESH_COOKIE, refreshToken);
                 return response;
             })
             .catch(e => {
@@ -62,8 +62,11 @@ export class Api {
         return this.fetchPost<IApiLoginData, IApiLoginResponse>(this.endpoints.login, data);
     }
 
-    async logout(data: IApiLogoutData): Promise<IApiLogoutResponse> {
-        return this.fetchPost<IApiLogoutData, IApiLogoutResponse>(this.endpoints.login, data)
+    async logout(): Promise<IApiLogoutResponse> {
+        const data: IApiLogoutData = {
+            token: getCookie(TOKEN_REFRESH_COOKIE) ?? ''
+        }
+        return this.fetchPost<IApiLogoutData, IApiLogoutResponse>(this.endpoints.logout, data)
     }
 
     async refreshToken(data: IApiTokenData): Promise<IApiTokenResponse> {

@@ -3,8 +3,14 @@ import styles from './profile.module.css';
 import {Button, Input, PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components';
 import {Link} from 'react-router-dom';
 import {Routes} from '../../services/Routes';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from '../../services/store';
+import {logoutActionCreator} from '../../services/actions';
 
 export function Profile() {
+    const {userForgotEmail: email = ''} = useSelector((state: RootState) => ({...state}));
+    const dispatch = useDispatch();
+
     const onNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         console.log('onNameChange ', e.target.value);
     }, [])
@@ -21,13 +27,17 @@ export function Profile() {
         console.log('onButtonClick');
     }, [])
 
+    const onLogoutClick = useCallback(() => {
+        dispatch(logoutActionCreator())
+    }, [dispatch])
+
     return (<div className={styles.wrap}>
         <div className={styles.content}>
             <div className={styles.col_left}>
                 <div className={`text text_type_main-medium ${styles.links}`}>
                     <span>Профиль</span>
                     <Link to={Routes.orders} className='text_color_inactive'>История заказов</Link>
-                    <Link to={Routes.main} className='text_color_inactive'>Выход</Link>
+                    <span onClick={onLogoutClick} className={`text_color_inactive ${styles.link}`}>Выход</span>
                 </div>
 
                 <div className='text text_type_main-small text_color_inactive'>В этом разделе вы можете<br/>
