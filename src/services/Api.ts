@@ -40,6 +40,12 @@ export class Api {
             .then(() => true);
     }
 
+    async login(data: IApiLoginData): Promise<boolean> {
+        return this
+            .fetch<IApiLoginData, IApiLoginResponse>(this.endpoints.login, data)
+            .then(() => true);
+    }
+
     private async fetch<Data, Response extends IApiResponse>(endPoint: string, data?: Data): Promise<Response> {
         const fetchOptions = data == null
             ? {}
@@ -72,6 +78,7 @@ export interface IApiEndpoints extends Record<string, string> {
     registerUser: string;
     restorePassword: string;
     resetPassword: string;
+    login: string;
 }
 
 export interface IApiResponse {
@@ -128,6 +135,16 @@ export interface IApiResetPasswordData {
 }
 
 export interface IApiResetPasswordResponse {
+    success: boolean;
+    message: string; // "Password successfully reset"
+}
+
+export interface IApiLoginData {
+    login: string;
+    password: string;
+}
+
+export interface IApiLoginResponse {
     success: boolean;
     message: string; // "Password successfully reset"
 }
