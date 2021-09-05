@@ -9,7 +9,7 @@ import {RootState} from '../../services/store';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {Routes} from '../../services/Routes';
 import {ProtectedRoute} from '../common/protected-route/protected-route';
-import {ForgotPassword, Login, Main, Page404, Profile, Register, ResetPassword} from '../../pages';
+import {ForgotPassword, Login, Main, Orders, Page404, Profile, Register, ResetPassword} from '../../pages';
 
 
 function App() {
@@ -26,6 +26,7 @@ function App() {
                     <Route path={Routes.forgotPassword} exact={true}><ForgotPassword/></Route>
                     <Route path={Routes.resetPassword} exact={true}><ResetPassword/></Route>
                     <ProtectedRoute path={Routes.profile} exact={true}><Profile/></ProtectedRoute>
+                    <ProtectedRoute path={Routes.orders} exact={true}><Orders/></ProtectedRoute>
                     <Route><Page404/></Route>
                 </Switch>
             </Router>
