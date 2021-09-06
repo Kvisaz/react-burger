@@ -141,6 +141,9 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
                 isLogoutSuccess: true,
                 isLogoutFailed: false,
                 isUserLogged: false,
+                isOrderRequest: false,
+                isOrderSuccess: false,
+                isOrderFailed: false,
             };
         case IBurgerActionType.LOGOUT_FAIL:
             return {
