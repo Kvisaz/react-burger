@@ -32,7 +32,9 @@ export class Api {
             .fetchPost<IApiRegisterUserData, IApiRegisterUserResponse>(this.endpoints.registerUser, data)
             .then(response => {
                 const {accessToken, refreshToken} = response;
-                setCookie(TOKEN_COOKIE, accessToken.split(' ')[1]);
+                setCookie(TOKEN_COOKIE, accessToken.split(' ')[1], {
+                    expires: 20 * 60 * 1000
+                });
                 setCookie(TOKEN_REFRESH_COOKIE, refreshToken);
                 return response;
             })
@@ -59,7 +61,19 @@ export class Api {
     }
 
     async login(data: IApiLoginData): Promise<IApiLoginResponse> {
-        return this.fetchPost<IApiLoginData, IApiLoginResponse>(this.endpoints.login, data);
+        return this.fetchPost<IApiLoginData, IApiLoginResponse>(this.endpoints.login, data)
+            .then(response => {
+                const {accessToken, refreshToken} = response;
+                setCookie(TOKEN_COOKIE, accessToken.split(' ')[1], {
+                    expires: 20 * 60 * 1000
+                });
+                setCookie(TOKEN_REFRESH_COOKIE, refreshToken);
+                return response;
+            })
+            .catch(e => {
+                console.warn(e);
+                return Promise.reject(e);
+            })
     }
 
     async logout(): Promise<IApiLogoutResponse> {
@@ -73,7 +87,7 @@ export class Api {
         return this.fetchPost<IApiTokenData, IApiTokenResponse>(this.endpoints.token, data);
     }
 
-    async getUserData(): Promise<IApiUserProfileResponse> {
+    async getProfile(): Promise<IApiUserProfileResponse> {
         return fetch(this.endpoints.userData, {
             method: 'GET',
             mode: 'cors',
@@ -84,11 +98,11 @@ export class Api {
                 Authorization: 'Bearer ' + getCookie(TOKEN_COOKIE)
             },
             redirect: 'follow',
-            referrerPolicy: 'no-referrer'
+            referrerPolicy: 'no-referrer',
         }).then(apiResponse => this.checkResponse<IApiUserProfileResponse>(apiResponse));
     }
 
-    async patchUserData(data: IApiUserProfilePatchData): Promise<IApiUserProfileResponse> {
+    async patchProfile(data: IApiUserProfilePatchData): Promise<IApiUserProfileResponse> {
         return fetch(this.endpoints.userData, {
             method: 'PATCH',
             mode: 'cors',
@@ -186,6 +200,10 @@ export interface IApiTokenData {
     token: string; // {{refreshToken}}
 }
 
+export interface IApiGetProfileData {
+    authorization: string; // token
+}
+
 export interface IApiTokenResponse {
     success: boolean;
     accessToken: string; // "Bearer ...",
@@ -231,8 +249,22 @@ export interface IApiLoginData {
     password: string;
 }
 
+
+export interface IApiProfileData {
+    email: string;
+    password: string;
+    name: string;
+}
+
+
 export interface IApiLoginResponse {
     success: boolean;
+    accessToken: string;
+    refreshToken: string;
+    user: {
+        email: string;
+        name: string;
+    }
     message: string; // "Password successfully reset"
 }
 

@@ -59,7 +59,6 @@ export interface IAppState {
     isResetSuccess?: boolean;
     isResetFailed?: boolean;
 
-    userPassword?: string;
     userTokenAuth?: string;
     isTokenAuthRequest?: boolean;
     isTokenAuthSuccess?: boolean;
@@ -72,6 +71,22 @@ export interface IAppState {
 
     needAuthorization?: boolean;
     needBackToMainPage?: boolean;
+
+    isProfileRequest?: boolean;
+    isProfileSuccess?: boolean;
+    isProfileFail?: boolean;
+
+    userName?:string;
+    userPassword?: string;
+    userEmail?:string;
+
+    profileName?: string;
+    profileEmail?: string;
+    profilePassword?: string;
+
+    isProfileUpdateRequest?: boolean;
+    isProfileUpdateSuccess?: boolean;
+    isProfileUpdateFail?: boolean;
 }
 
 

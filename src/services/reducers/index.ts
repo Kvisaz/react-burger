@@ -4,7 +4,13 @@ import {IBurgerPart} from '../../model/IBurgerPart';
 import {IConstructorElementData} from '../../model/IConstructorElementData';
 import {InitialAppState} from '../initialAppState';
 import {nanoid} from 'nanoid';
-import {IApiLoginData, IApiRegisterUserData} from '../Api';
+import {
+    IApiLoginData,
+    IApiLoginResponse,
+    IApiProfileData,
+    IApiRegisterUserData,
+    IApiRegisterUserResponse
+} from '../Api';
 
 
 export function mainReducer(state: IAppState = InitialAppState, action: BurgerAction): IAppState {
@@ -88,13 +94,7 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
                 isRegisterFailed: false,
             };
         case IBurgerActionType.REGISTRATION_USER_SUCCESS:
-            return {
-                ...state,
-                isRegisterRequest: false,
-                isRegisterSuccess: true,
-                isRegisterFailed: false,
-                isUserLogged: true
-            };
+            return onRegisterSuccess(action, state);
         case IBurgerActionType.REGISTRATION_USER_FAIL:
             return {
                 ...state,
@@ -112,13 +112,7 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
                 isLoginFailed: false,
             };
         case IBurgerActionType.LOGIN_SUCCESS:
-            return {
-                ...state,
-                isLoginRequest: false,
-                isLoginSuccess: true,
-                isLoginFailed: false,
-                isUserLogged: true,
-            };
+            return onLoginSuccess(action, state);
         case IBurgerActionType.LOGIN_FAIL:
             return {
                 ...state,
@@ -194,12 +188,72 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
                 isResetFailed: true,
                 isResetSuccess: false,
             };
+        case IBurgerActionType.TOKEN_REFRESH_REQUEST:
+            // TODO
+            return {
+                ...state,
+            };
+        case IBurgerActionType.TOKEN_REFRESH_SUCCESS:
+            // TODO
+            return {
+                ...state,
+            };
+        case IBurgerActionType.TOKEN_REFRESH_FAIL:
+            // TODO
+            return {
+                ...state,
+            };
+        case IBurgerActionType.PROFILE_REQUEST:
+            return {
+                ...state,
+                isProfileRequest: true,
+                isProfileSuccess: false,
+                isProfileFail: false,
+            };
+        case IBurgerActionType.PROFILE_SUCCESS:
+            return onProfilePageLoad(action, state);
+        case IBurgerActionType.PROFILE_FAIL:
+            return {
+                ...state,
+                isProfileRequest: false,
+                isProfileSuccess: false,
+                isProfileFail: true,
+            };
+
+        case IBurgerActionType.PROFILE_PAGE_CHANGE:
+            return onProfilePageChange(action, state);
+        case IBurgerActionType.PROFILE_PAGE_RESET:
+            return onProfilePageReset(action, state);
+
+        case IBurgerActionType.PROFILE_UPDATE_REQUEST:
+            return {
+                ...state,
+                isProfileUpdateRequest: true,
+                isProfileUpdateSuccess: false,
+                isProfileUpdateFail: false
+            };
+        case IBurgerActionType.PROFILE_UPDATE_SUCCESS:
+            return {
+                ...state,
+                isProfileUpdateRequest: false,
+                isProfileUpdateSuccess: true,
+                isProfileUpdateFail: false,
+                userName: action.data.name,
+                userPassword: '',
+                userEmail: action.data.email,
+            };
+        case IBurgerActionType.PROFILE_UPDATE_FAIL:
+            return {
+                ...state,
+                isProfileUpdateRequest: false,
+                isProfileUpdateSuccess: false,
+                isProfileUpdateFail: true
+            };
         default:
             console.warn(`unknown action`, action);
             return {
                 ...state,
             };
-
     }
 }
 
@@ -330,6 +384,38 @@ function onResetPageChange(
     }
 }
 
+function onRegisterSuccess(
+    action: { type: IBurgerActionType.REGISTRATION_USER_SUCCESS, data: IApiRegisterUserResponse, password: string },
+    state: IAppState
+): IAppState {
+    return {
+        ...state,
+        isRegisterRequest: false,
+        isRegisterSuccess: true,
+        isRegisterFailed: false,
+        isUserLogged: true,
+        userEmail: action.data.user.email,
+        userName: action.data.user.name,
+        userPassword: action.password
+    }
+}
+
+function onLoginSuccess(
+    action: { type: IBurgerActionType.LOGIN_SUCCESS, data: IApiLoginResponse, password: string },
+    state: IAppState
+): IAppState {
+    return {
+        ...state,
+        isLoginRequest: false,
+        isLoginSuccess: true,
+        isLoginFailed: false,
+        isUserLogged: true,
+        userEmail: action.data.user.email,
+        userName: action.data.user.name,
+        userPassword: action.password
+    }
+}
+
 function onLoginPageChange(
     action: { type: IBurgerActionType.LOGIN_PAGE_CHANGE, data: IApiLoginData },
     state: IAppState
@@ -338,5 +424,44 @@ function onLoginPageChange(
         ...state,
         loginPageEmail: action.data.email,
         loginPagePassword: action.data.password
+    }
+}
+
+function onProfilePageLoad(
+    action: { type: IBurgerActionType.PROFILE_SUCCESS, data: IApiProfileData },
+    state: IAppState
+): IAppState {
+    return {
+        ...state,
+        isProfileSuccess: true,
+        isProfileRequest: false,
+        isProfileFail: false,
+        profileEmail: action.data.email,
+        profilePassword: action.data.password,
+        profileName: action.data.name
+    }
+}
+
+function onProfilePageChange(
+    action: { type: IBurgerActionType.PROFILE_PAGE_CHANGE, data: IApiProfileData },
+    state: IAppState
+): IAppState {
+    return {
+        ...state,
+        profileEmail: action.data.email,
+        profilePassword: action.data.password,
+        profileName: action.data.name
+    }
+}
+
+function onProfilePageReset(
+    action: { type: IBurgerActionType.PROFILE_PAGE_RESET },
+    state: IAppState
+): IAppState {
+    return {
+        ...state,
+        profileEmail: state.userEmail,
+        profilePassword: state.userPassword ?? '',
+        profileName: state.userName
     }
 }

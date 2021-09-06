@@ -18,7 +18,6 @@ export function BurgerIngredientsTabs() {
 	const { currentTabIndex, tabs } = useSelector<RootState>(state => ({...state})) as IAppState;
 
 	const onClick = (value: string) => {
-		console.log('value', value);
 		dispatch({ type: IBurgerActionType.TAB_SELECT, index: parseInt(value) });
 	};
 

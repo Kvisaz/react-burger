@@ -3,9 +3,9 @@ import {IGetState} from '../store';
 import {
     Api,
     IApiEndpoints,
-    IApiLoginData,
-    IApiLogoutResponse,
-    IApiRegisterUserData,
+    IApiLoginData, IApiLoginResponse,
+    IApiLogoutResponse, IApiProfileData,
+    IApiRegisterUserData, IApiRegisterUserResponse,
     IApiResetPasswordData,
     IApiRestorePasswordData,
     IApiTokenData,
@@ -26,7 +26,7 @@ export type BurgerAction =
     | { type: IBurgerActionType.BASKET_ITEM_SWAP, selectedId1: string, selectedId2: string }
     | { type: IBurgerActionType.REGISTRATION_PAGE_CHANGE, data: IApiRegisterUserData }
     | { type: IBurgerActionType.REGISTRATION_USER_REQUEST, data: IApiRegisterUserData }
-    | { type: IBurgerActionType.REGISTRATION_USER_SUCCESS }
+    | { type: IBurgerActionType.REGISTRATION_USER_SUCCESS, data: IApiRegisterUserResponse, password: string }
     | { type: IBurgerActionType.REGISTRATION_USER_FAIL }
     | { type: IBurgerActionType.RESTORE_PAGE_CHANGE, email: string }
     | { type: IBurgerActionType.RESTORE_PASS_REQUEST, data: IApiRestorePasswordData }
@@ -38,7 +38,7 @@ export type BurgerAction =
     | { type: IBurgerActionType.RESET_PASS_FAIL }
     | { type: IBurgerActionType.LOGIN_PAGE_CHANGE, data: IApiLoginData }
     | { type: IBurgerActionType.LOGIN_REQUEST, data: IApiLoginData }
-    | { type: IBurgerActionType.LOGIN_SUCCESS }
+    | { type: IBurgerActionType.LOGIN_SUCCESS, data: IApiLoginResponse, password: string }
     | { type: IBurgerActionType.LOGIN_FAIL }
     | { type: IBurgerActionType.LOGOUT_REQUEST }
     | { type: IBurgerActionType.LOGOUT_SUCCESS, data: IApiLogoutResponse }
@@ -46,6 +46,14 @@ export type BurgerAction =
     | { type: IBurgerActionType.TOKEN_REFRESH_REQUEST, data: IApiTokenData }
     | { type: IBurgerActionType.TOKEN_REFRESH_SUCCESS, data: IApiTokenResponse }
     | { type: IBurgerActionType.TOKEN_REFRESH_FAIL }
+    | { type: IBurgerActionType.PROFILE_REQUEST }
+    | { type: IBurgerActionType.PROFILE_SUCCESS, data: IApiProfileData }
+    | { type: IBurgerActionType.PROFILE_FAIL }
+    | { type: IBurgerActionType.PROFILE_PAGE_CHANGE, data: IApiProfileData }
+    | { type: IBurgerActionType.PROFILE_PAGE_RESET }
+    | { type: IBurgerActionType.PROFILE_UPDATE_REQUEST, data: IApiProfileData }
+    | { type: IBurgerActionType.PROFILE_UPDATE_SUCCESS, data: IApiProfileData }
+    | { type: IBurgerActionType.PROFILE_UPDATE_FAIL }
 
 type IBurgerDispatch = (action: BurgerAction) => any;
 
@@ -90,6 +98,17 @@ export enum IBurgerActionType {
     TOKEN_REFRESH_REQUEST = 'TOKEN_REFRESH_REQUEST',
     TOKEN_REFRESH_SUCCESS = 'TOKEN_REFRESH_SUCCESS',
     TOKEN_REFRESH_FAIL = 'TOKEN_REFRESH_FAIL',
+
+    PROFILE_REQUEST = 'PROFILE_REQUEST',
+    PROFILE_SUCCESS = 'PROFILE_SUCCESS',
+    PROFILE_FAIL = 'PROFILE_FAIL',
+
+    PROFILE_PAGE_CHANGE = 'PROFILE_PAGE_CHANGE',
+    PROFILE_PAGE_RESET = 'PROFILE_PAGE_RESET',
+
+    PROFILE_UPDATE_REQUEST = 'PROFILE_UPDATE_REQUEST',
+    PROFILE_UPDATE_SUCCESS = 'PROFILE_UPDATE_SUCCESS',
+    PROFILE_UPDATE_FAIL = 'PROFILE_UPDATE_FAIL',
 }
 
 export interface IOrderPayLoad {
@@ -151,7 +170,8 @@ export const registerActionCreator = (data: IApiRegisterUserData) => async (disp
     dispatch({type: IBurgerActionType.REGISTRATION_USER_REQUEST, data});
 
     API.registerUser(data)
-        .then(() => dispatch({type: IBurgerActionType.REGISTRATION_USER_SUCCESS}))
+        .then((response) =>
+            dispatch({type: IBurgerActionType.REGISTRATION_USER_SUCCESS, data: response, password: data.password}))
         .catch(() => dispatch({type: IBurgerActionType.REGISTRATION_USER_FAIL}));
 }
 
@@ -159,7 +179,8 @@ export const loginActionCreator = (data: IApiLoginData) => async (dispatch: IBur
     dispatch({type: IBurgerActionType.LOGIN_REQUEST, data});
 
     API.login(data)
-        .then(() => dispatch({type: IBurgerActionType.LOGIN_SUCCESS}))
+        .then((response) =>
+            dispatch({type: IBurgerActionType.LOGIN_SUCCESS, data: response, password: data.password}))
         .catch(() => dispatch({type: IBurgerActionType.LOGIN_FAIL}));
 }
 
@@ -200,3 +221,31 @@ export const refreshTokenActionCreator = (data: IApiTokenData) => async (dispatc
         .then((response) => dispatch({type: IBurgerActionType.TOKEN_REFRESH_SUCCESS, data: response}))
         .catch(() => dispatch({type: IBurgerActionType.TOKEN_REFRESH_FAIL}));
 }
+
+export const requestProfileActionCreator = () =>
+    async (dispatch: IBurgerDispatch) => {
+        dispatch({type: IBurgerActionType.PROFILE_REQUEST});
+        API.getProfile()
+            .then((response) => {
+                    dispatch({type: IBurgerActionType.PROFILE_SUCCESS, data: {...response.user, password: ''}})
+                }
+            )
+            .catch(() => dispatch({type: IBurgerActionType.PROFILE_FAIL}));
+    }
+
+export const updateProfileActionCreator = () =>
+    async (dispatch: IBurgerDispatch, getState: IGetState) => {
+        const {profileName = '', profileEmail = '', profilePassword = ''} = getState();
+        const data = {
+            name: profileName,
+            email: profileEmail,
+            password: profilePassword
+        };
+        dispatch({type: IBurgerActionType.PROFILE_UPDATE_REQUEST, data});
+        API.patchProfile(data)
+            .then(() => {
+                    dispatch({type: IBurgerActionType.PROFILE_UPDATE_SUCCESS, data})
+                }
+            )
+            .catch(() => dispatch({type: IBurgerActionType.PROFILE_UPDATE_FAIL}));
+    }
