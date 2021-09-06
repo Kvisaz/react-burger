@@ -19,7 +19,6 @@ function App() {
         isOrderSuccess,
         orders,
         needAuthorization,
-        isRestoreSuccess,
         isRestoreRequest,
         isForgotRequest,
         isIngredientsRequest,
@@ -28,7 +27,6 @@ function App() {
         isRegisterRequest,
         isRegisterFailed,
         isLoginRequest,
-        isLoginSuccess
     } = useSelector((state: RootState) => ({...state}));
     const {state: locationState} = useLocation<LocationState>();
     const history = useHistory();
@@ -66,23 +64,6 @@ function App() {
             return;
         }
 
-        if (isLoginSuccess) {
-            console.log('isLoginSuccess', isLoginSuccess)
-            history.replace({
-                pathname: Routes.main,
-                state: {}
-            });
-            return;
-        }
-
-        if (isRestoreSuccess) {
-            history.replace({
-                pathname: Routes.resetPassword,
-                state: {}
-            });
-            return;
-        }
-
         if (isOrderSuccess && orders && orders.length > 0) {
             const {orderId} = orders[orders.length - 1];
             history.replace({
@@ -94,8 +75,7 @@ function App() {
             });
             return;
         }
-    }, [history, orders, isOrderSuccess, needAuthorization,
-        isRestoreSuccess, isLoginSuccess, isRegisterFailed
+    }, [history, orders, isOrderSuccess, needAuthorization, isRegisterFailed
     ]);
 
     const mainIngredientPath = modalIngredient ? Routes.ingredient : null;

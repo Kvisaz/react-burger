@@ -33,10 +33,19 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
                 isIngredientsLoaded: true,
                 isIngredientsRequest: false,
             };
+        case IBurgerActionType.ORDER_RESET:
+            return {
+                ...state,
+                isOrderRequest: false,
+                isOrderSuccess: false,
+                isOrderFailed: false,
+            };
         case IBurgerActionType.ORDER_REQUEST:
             return {
                 ...state,
                 isOrderRequest: true,
+                isOrderSuccess: false,
+                isOrderFailed: false,
             };
         case IBurgerActionType.ORDER_SUCCESS:
             return {
@@ -56,6 +65,7 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
                 ...state,
                 isOrderRequest: false,
                 isOrderFailed: true,
+                isOrderSuccess: false,
             };
         case IBurgerActionType.INGREDIENT_ADD_TO_BASKET:
             return onSelectAction(action, state);

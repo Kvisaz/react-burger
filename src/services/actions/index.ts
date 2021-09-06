@@ -18,6 +18,7 @@ export type BurgerAction =
     | { type: IBurgerActionType.DATA_FAILED, message: string }
     | { type: IBurgerActionType.INGREDIENT_ADD_TO_BASKET, ingredient: IBurgerPart }
     | { type: IBurgerActionType.INGREDIENT_REMOVE_FROM_BASKET, payload: IRemovePayLoad }
+    | { type: IBurgerActionType.ORDER_RESET }
     | { type: IBurgerActionType.ORDER_REQUEST }
     | { type: IBurgerActionType.ORDER_SUCCESS, payload: IOrderPayLoad }
     | { type: IBurgerActionType.ORDER_FAILED }
@@ -39,7 +40,7 @@ export type BurgerAction =
     | { type: IBurgerActionType.LOGIN_REQUEST, data: IApiLoginData }
     | { type: IBurgerActionType.LOGIN_SUCCESS }
     | { type: IBurgerActionType.LOGIN_FAIL }
-    | { type: IBurgerActionType.LOGOUT_REQUEST}
+    | { type: IBurgerActionType.LOGOUT_REQUEST }
     | { type: IBurgerActionType.LOGOUT_SUCCESS, data: IApiLogoutResponse }
     | { type: IBurgerActionType.LOGOUT_FAIL }
     | { type: IBurgerActionType.TOKEN_REFRESH_REQUEST, data: IApiTokenData }
@@ -47,8 +48,6 @@ export type BurgerAction =
     | { type: IBurgerActionType.TOKEN_REFRESH_FAIL }
 
 type IBurgerDispatch = (action: BurgerAction) => any;
-type IBurgerThunkDispatch = Function;
-
 
 export enum IBurgerActionType {
     DATA_REQUEST = 'DATA_REQUEST',
@@ -57,6 +56,7 @@ export enum IBurgerActionType {
     INGREDIENT_ADD_TO_BASKET = 'INGREDIENT_ADD_TO_BASKET',
 
     INGREDIENT_REMOVE_FROM_BASKET = 'INGREDIENT_REMOVE_FROM_BASKET',
+    ORDER_RESET = 'ORDER_RESET',
     ORDER_REQUEST = 'ORDER_REQUEST',
     ORDER_SUCCESS = 'ORDER_SUCCESS',
     ORDER_FAILED = 'ORDER_FAILED',
@@ -122,30 +122,6 @@ export const fetchIngredientsActionCreator = () => async (dispatch: IBurgerDispa
     API.getBurgerParts()
         .then(({ingredients}) => dispatch({type: IBurgerActionType.DATA_LOADED, ingredients}))
         .catch((e: Error | string) => dispatch({type: IBurgerActionType.DATA_FAILED, message: e.toString()}));
-};
-
-export const onOrderClickActionCreator = () => async (dispatch: IBurgerThunkDispatch, getState: IGetState) => {
-    const {userTokenAuth} = getState();
-    if (userTokenAuth != null) {
-        dispatch(orderAuthorizedActionCreator());
-    } else {
-        dispatch(orderUnAuthorizedActionCreator());
-    }
-};
-
-export const orderUnAuthorizedActionCreator = () => async (dispatch: IBurgerDispatch, getState: IGetState) => {
-    dispatch({type: IBurgerActionType.ORDER_REQUEST});
-    const state = getState();
-
-    const selectedBun = state.selectedBun;
-    const selectedIds = state.selectedParts.map(i => i.ingredientId);
-    if (selectedBun) {
-        selectedIds.push(selectedBun.ingredientId);
-        selectedIds.push(selectedBun.ingredientId);
-    }
-    API.order(selectedIds)
-        .then((result) => dispatch({type: IBurgerActionType.ORDER_SUCCESS, payload: result}))
-        .catch(e => console.error(e));
 };
 
 export const orderAuthorizedActionCreator = () => async (dispatch: IBurgerDispatch, getState: IGetState) => {

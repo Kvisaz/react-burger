@@ -1,7 +1,7 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import styles from './forgot-password.module.css';
 import {Button, Input} from '@ya.praktikum/react-developer-burger-ui-components';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import {Routes} from '../../services/Routes';
 import {useDispatch, useSelector} from 'react-redux';
 import {IBurgerActionType, restorePassActionCreator} from '../../services/actions';
@@ -9,9 +9,10 @@ import {RootState} from '../../services/store';
 
 export function ForgotPassword() {
 
-    const {userForgotEmail: email = ''} = useSelector((state: RootState) => ({...state}));
+    const {userForgotEmail: email = '', isRestoreSuccess} = useSelector((state: RootState) => ({...state}));
 
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const onEmailChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         e.persist(); // deprecated since React 17
@@ -21,6 +22,16 @@ export function ForgotPassword() {
     const onButtonClick = useCallback(() => {
         dispatch(restorePassActionCreator({email}))
     }, [dispatch, email])
+
+    useEffect(() => {
+        if (isRestoreSuccess) {
+            history.replace({
+                pathname: Routes.resetPassword,
+                state: {}
+            });
+            return;
+        }
+    }, [history, isRestoreSuccess])
 
     return (<div className={styles.wrap}>
         <div className={styles.content}>
