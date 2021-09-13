@@ -18,7 +18,6 @@ function App() {
     const {
         isOrderSuccess,
         orders,
-        needAuthorization,
         isRestoreRequest,
         isForgotRequest,
         isIngredientsRequest,
@@ -56,14 +55,6 @@ function App() {
      *  redirector
      */
     useEffect(() => {
-        if (needAuthorization) {
-            history.replace({
-                pathname: Routes.login,
-                state: {}
-            });
-            return;
-        }
-
         if (isOrderSuccess && orders && orders.length > 0) {
             const {orderId} = orders[orders.length - 1];
             history.replace({
@@ -75,7 +66,7 @@ function App() {
             });
             return;
         }
-    }, [history, orders, isOrderSuccess, needAuthorization, isRegisterFailed
+    }, [history, orders, isOrderSuccess, isRegisterFailed
     ]);
 
     const mainIngredientPath = modalIngredient ? Routes.ingredient : null;

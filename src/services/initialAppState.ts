@@ -25,5 +25,4 @@ export const InitialAppState: IAppState = {
             name: 'Начинки',
         },
     ],
-    needAuthorization: false
 };

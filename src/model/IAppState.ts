@@ -32,6 +32,7 @@ export interface IAppState {
 
     isAuthorized?: boolean;
     isAuthorizationChecking?: boolean;
+    isRefreshToken?: boolean;
     urlAfterLogging?: string;
 
     loginPageEmail?: string;
@@ -70,7 +71,6 @@ export interface IAppState {
     isTokenRefreshSuccess?: boolean;
     isTokenRefreshFailed?: boolean;
 
-    needAuthorization?: boolean;
     needBackToMainPage?: boolean;
 
     isProfileRequest?: boolean;
