@@ -6,12 +6,14 @@ const TOKEN_REFRESH_COOKIE = 'tokenRefresh';
 export function setTokenAuthCookie(value: string) {
 	setCookie(TOKEN_COOKIE, value, {
 		expires: 20 * 60 * 1000,
+		Path: '/'
 	});
 }
 
 export function setTokenRefreshCookie(value: string) {
 	setCookie(TOKEN_REFRESH_COOKIE, value, {
 		expires: 365 * 24 * 60 * 60 * 1000,
+		Path: '/'
 	});
 }
 
