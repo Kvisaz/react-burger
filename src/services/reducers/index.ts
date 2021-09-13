@@ -249,6 +249,21 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
                 isProfileUpdateSuccess: false,
                 isProfileUpdateFail: true
             };
+        case IBurgerActionType.SAVE_AFTER_LOGGING_URL:
+            return {
+                ...state,
+                urlAfterLogging: action.url
+            };        case IBurgerActionType.AUTH_CHECK_START:
+        return {
+                ...state,
+                isAuthorizationChecking: true
+            };
+        case IBurgerActionType.AUTH_CHECK_END:
+            return {
+                ...state,
+                isAuthorizationChecking: false,
+                isAuthorized: action.data.isAuthorized
+            };
         default:
             console.warn(`unknown action`, action);
             return {

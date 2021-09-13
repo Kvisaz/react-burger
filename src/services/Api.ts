@@ -87,7 +87,12 @@ export class Api {
 	}
 
 	async refreshToken(data: IApiTokenData): Promise<IApiTokenResponse> {
-		return this.fetchPost<IApiTokenData, IApiTokenResponse>(this.endpoints.token, data);
+		return this.fetchPost<IApiTokenData, IApiTokenResponse>(this.endpoints.token, data)
+			.then(result => {
+				setTokenAuthCookie(result.accessToken);
+				setTokenRefreshCookie(result.refreshToken);
+				return result;
+			});
 	}
 
 	async getProfile(): Promise<IApiUserProfileResponse> {
@@ -119,6 +124,29 @@ export class Api {
 			referrerPolicy: 'no-referrer',
 			body: JSON.stringify(data),
 		}).then(apiResponse => this.checkResponse<IApiUserProfileResponse>(apiResponse));
+	}
+
+	async checkAuth(): Promise<IApiAuthCheckResult> {
+		let isAuthorized: boolean;
+
+		const refreshToken = getTokenRefresh();
+		const authToken = getTokenAuth();
+
+		isAuthorized = refreshToken != null && authToken != null;
+
+		console.log('refreshToken ', refreshToken);
+		console.log('authToken ', authToken);
+
+		if (refreshToken && authToken == null) {
+			console.log('try to refresh access token');
+			await this.refreshToken({
+				token: refreshToken,
+			});
+		}
+
+		return {
+			isAuthorized,
+		};
 	}
 
 	private async fetchPost<Data, Response extends IApiResponse>(endPoint: string, data: Data): Promise<Response> {
@@ -279,4 +307,8 @@ export interface IApiLogoutData {
 export interface IApiLogoutResponse {
 	success: boolean;
 	message: string; // "Successful logout"
+}
+
+export interface IApiAuthCheckResult {
+	isAuthorized: boolean
 }
