@@ -13,7 +13,7 @@ export function Login() {
     const {
         loginPageEmail: email = '',
         loginPagePassword: password = '',
-        isUserLogged,
+        isAuthorized,
         urlAfterLogging = Routes.main
     } = useSelector((state: RootState) => ({...state}));
 
@@ -45,7 +45,7 @@ export function Login() {
     }, [dispatch, email, password])
 
     return (<div className={styles.wrap}>
-        {isUserLogged
+        {isAuthorized
             ? (<Redirect to={urlAfterLogging}/>)
             : (
                 <div className={styles.content}>

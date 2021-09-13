@@ -30,7 +30,8 @@ export interface IAppState {
     isRegisterSuccess?: boolean;
     isRegisterFailed?: boolean;
 
-    isUserLogged?: boolean;
+    isAuthorized?: boolean;
+    isAuthorizationChecking?: boolean;
     urlAfterLogging?: string;
 
     loginPageEmail?: string;

@@ -119,7 +119,7 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
                 isLoginRequest: false,
                 isLoginSuccess: false,
                 isLoginFailed: true,
-                isUserLogged: false,
+                isAuthorized: false,
             };
         case IBurgerActionType.LOGOUT_REQUEST:
             return {
@@ -134,7 +134,7 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
                 isLogoutRequest: false,
                 isLogoutSuccess: true,
                 isLogoutFailed: false,
-                isUserLogged: false,
+                isAuthorized: false,
                 isOrderRequest: false,
                 isOrderSuccess: false,
                 isOrderFailed: false,
@@ -393,7 +393,7 @@ function onRegisterSuccess(
         isRegisterRequest: false,
         isRegisterSuccess: true,
         isRegisterFailed: false,
-        isUserLogged: true,
+        isAuthorized: true,
         userEmail: action.data.user.email,
         userName: action.data.user.name,
         userPassword: action.password
@@ -409,7 +409,7 @@ function onLoginSuccess(
         isLoginRequest: false,
         isLoginSuccess: true,
         isLoginFailed: false,
-        isUserLogged: true,
+        isAuthorized: true,
         userEmail: action.data.user.email,
         userName: action.data.user.name,
         userPassword: action.password

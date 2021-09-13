@@ -14,7 +14,7 @@ export function Register() {
         userRegisterEmail: email = '',
         userRegisterName: name = '',
         userRegisterPassword: password = '',
-        isUserLogged,
+        isAuthorized,
         urlAfterLogging = Routes.main
     } = useSelector((state: RootState) => ({...state}));
 
@@ -59,7 +59,7 @@ export function Register() {
     }, [email, name, password, dispatch])
 
     return (<div className={styles.wrap}>
-        {isUserLogged
+        {isAuthorized
             ? (<Redirect to={urlAfterLogging}/>)
             : (
                 <div className={styles.content}>
