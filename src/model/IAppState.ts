@@ -35,6 +35,8 @@ export interface IAppState {
     isNoRefreshToken?: boolean;
     urlAfterLogging?: string;
 
+    isModalUrl?: boolean;
+    
     loginPageEmail?: string;
     loginPagePassword?: string;
     isLoginRequest?: boolean;

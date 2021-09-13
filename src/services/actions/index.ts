@@ -59,6 +59,7 @@ export type BurgerAction =
 	| { type: IBurgerActionType.PROFILE_UPDATE_SUCCESS, data: IApiProfileData }
 	| { type: IBurgerActionType.PROFILE_UPDATE_FAIL }
 	| { type: IBurgerActionType.SAVE_AFTER_LOGGING_URL, url: string }
+	| { type: IBurgerActionType.SET_MODAL_URL, isModal: boolean }
 	| { type: IBurgerActionType.AUTH_CHECK_START }
 	| { type: IBurgerActionType.AUTH_CHECK_END, data: IApiAuthCheckResult }
 
@@ -120,6 +121,8 @@ export enum IBurgerActionType {
 	SAVE_AFTER_LOGGING_URL = 'SAVE_AFTER_LOGGING_URL',
 	AUTH_CHECK_START = 'AUTH_CHECK_START',
 	AUTH_CHECK_END = 'AUTH_CHECK_END',
+
+	SET_MODAL_URL = 'SET_MODAL_URL',
 }
 
 export interface IOrderPayLoad {
@@ -266,16 +269,19 @@ export const updateProfileActionCreator = () =>
 			.catch(() => dispatch({ type: IBurgerActionType.PROFILE_UPDATE_FAIL }));
 	};
 
+export const setModalUrlOn = () =>
+	async (dispatch: IBurgerDispatch) => {
+		dispatch({ type: IBurgerActionType.SET_MODAL_URL, isModal: true });
+	};
+
+export const setModalUrlOff = () =>
+	async (dispatch: IBurgerDispatch) => {
+		dispatch({ type: IBurgerActionType.SET_MODAL_URL, isModal: false });
+	};
+
 export const checkAuth = () =>
-	async (dispatch: IBurgerDispatch, getState: IGetState) => {
-
-		console.log('checkAuth! start')
-
-
-
+	async (dispatch: IBurgerDispatch) => {
 		dispatch({ type: IBurgerActionType.AUTH_CHECK_START });
 		const data = await API.checkAuth();
 		dispatch({ type: IBurgerActionType.AUTH_CHECK_END, data });
-		console.log('checkAuth! end', data)
-
 	};
