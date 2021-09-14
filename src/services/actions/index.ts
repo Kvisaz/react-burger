@@ -280,6 +280,6 @@ export const setModalUrlOff = () =>
 export const checkAuth = () =>
     async (dispatch: IBurgerDispatch) => {
         dispatch({type: IBurgerActionType.AUTH_CHECK_START});
-        const data = await API.checkAuth();
+        const data = await API.restoreAuth();
         dispatch({type: IBurgerActionType.AUTH_CHECK_END, data});
     };

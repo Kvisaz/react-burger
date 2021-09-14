@@ -184,7 +184,7 @@ export class Api {
         });
     }
 
-    async checkAuth(): Promise<IApiAuthCheckResult> {
+    async restoreAuth(): Promise<IApiAuthCheckResult> {
         let isAuthorized = false;
         try {
             const refreshToken = getTokenRefresh();
