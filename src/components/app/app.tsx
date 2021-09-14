@@ -16,106 +16,106 @@ import { ProtectedAuthRoute } from '../common/protected-auth-route/protected-aut
 
 
 function App() {
-	const {
-		isOrderSuccess,
-		orders,
-		isRestoreRequest,
-		isIngredientsRequest,
-		isOrderRequest,
-		isResetRequest,
-		isRegisterRequest,
-		isRegisterFailed,
-		isLoginRequest,
-		isModalUrl,
-		isAuthorizationChecking,
-		isOrderFailed,
-	} = useSelector((state: RootState) => ({ ...state }));
-	const history = useHistory();
-	const location = useLocation();
+  const {
+    isOrderSuccess,
+    orders,
+    isRestoreRequest,
+    isIngredientsRequest,
+    isOrderRequest,
+    isResetRequest,
+    isRegisterRequest,
+    isRegisterFailed,
+    isLoginRequest,
+    isModalUrl,
+    isAuthorizationChecking,
+    isOrderFailed,
+  } = useSelector((state: RootState) => ({ ...state }));
+  const history = useHistory();
+  const location = useLocation();
 
-	const isLoading = useMemo(() => isIngredientsRequest
-		|| isRestoreRequest
-		|| isResetRequest
-		|| isOrderRequest
-		|| isRegisterRequest
-		|| isLoginRequest
-		|| isAuthorizationChecking
-		, [
-			isAuthorizationChecking,
-			isIngredientsRequest, isOrderRequest, isResetRequest,
-			isRestoreRequest, isRegisterRequest,
-			isLoginRequest,
-		]);
+  const isLoading = useMemo(() => isIngredientsRequest
+    || isRestoreRequest
+    || isResetRequest
+    || isOrderRequest
+    || isRegisterRequest
+    || isLoginRequest
+    || isAuthorizationChecking
+    , [
+      isAuthorizationChecking,
+      isIngredientsRequest, isOrderRequest, isResetRequest,
+      isRestoreRequest, isRegisterRequest,
+      isLoginRequest,
+    ]);
 
-	const dispatch = useDispatch();
-	useEffect(() => {
-		dispatch(initData());
-	}, [dispatch]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(initData());
+  }, [dispatch]);
 
-	/**
-	 *  redirector
-	 */
-	useEffect(() => {
-		if (isOrderSuccess && orders && orders.length > 0) {
-			const { orderId } = orders[orders.length - 1];
-			dispatch(setModalUrlOn());
-			history.replace({
-				pathname: Routes.orderPageLinkCreator(orderId),
-			});
-			return;
-		}
-	}, [dispatch, history, orders, isOrderSuccess, isRegisterFailed,
-	]);
+  /**
+   *  redirector
+   */
+  useEffect(() => {
+    if (isOrderSuccess && orders && orders.length > 0) {
+      const { orderId } = orders[orders.length - 1];
+      dispatch(setModalUrlOn());
+      history.replace({
+        pathname: Routes.orderPageLinkCreator(orderId),
+      });
+      return;
+    }
+  }, [dispatch, history, orders, isOrderSuccess, isRegisterFailed,
+  ]);
 
-	useEffect(() => {
-		if (isOrderFailed) {
-			dispatch(logoutActionCreator());
-		}
-	}, [dispatch, isOrderFailed]);
+  useEffect(() => {
+    if (isOrderFailed) {
+      dispatch(logoutActionCreator());
+    }
+  }, [dispatch, isOrderFailed]);
 
-	return (
-		<div className={styles.App}>
-			<AppHeader />
-			{isLoading
-				? (<Loading />)
-				: (<Switch>
-					<Route path={isModalUrl ? location.pathname : Routes.main} exact={true}><Main /></Route>
-					<ProtectedAuthRoute path={Routes.login} exact={true}><Login /></ProtectedAuthRoute>
-					<ProtectedAuthRoute path={Routes.register} exact={true}><Register /></ProtectedAuthRoute>
-					<ProtectedAuthRoute path={Routes.forgotPassword} exact={true}><ForgotPassword /></ProtectedAuthRoute>
-					<Route path={Routes.resetPassword} exact={true}><ResetPassword /></Route>
-					<ProtectedRoute path={Routes.profile} exact={true}><Profile /></ProtectedRoute>
-					<ProtectedRoute path={Routes.orders} exact={true}><Orders /></ProtectedRoute>
-					<Route path={Routes.ingredient} exact={true}>
-						<IngredientDetails />
-					</Route>
-					<Route path={Routes.orderPage} exact={true}>
-						<OrderDetails />
-					</Route>
-					<Route><Page404 /></Route>
-				</Switch>)
-			}
+  return (
+    <div className={styles.App}>
+      <AppHeader />
+      {isLoading
+        ? (<Loading />)
+        : (<Switch>
+          <Route path={isModalUrl ? location.pathname : Routes.main} exact={true}><Main /></Route>
+          <ProtectedAuthRoute path={Routes.login} exact={true}><Login /></ProtectedAuthRoute>
+          <ProtectedAuthRoute path={Routes.register} exact={true}><Register /></ProtectedAuthRoute>
+          <ProtectedAuthRoute path={Routes.forgotPassword} exact={true}><ForgotPassword /></ProtectedAuthRoute>
+          <Route path={Routes.resetPassword} exact={true}><ResetPassword /></Route>
+          <ProtectedRoute path={Routes.profile} exact={true}><Profile /></ProtectedRoute>
+          <ProtectedRoute path={Routes.orders} exact={true}><Orders /></ProtectedRoute>
+          <Route path={Routes.ingredient} exact={true}>
+            <IngredientDetails />
+          </Route>
+          <Route path={Routes.orderPage} exact={true}>
+            <OrderDetails />
+          </Route>
+          <Route><Page404 /></Route>
+        </Switch>)
+      }
 
-			{
-				isModalUrl && (
-					<Route path={Routes.ingredient} exact={true}>
-						<Modal title={'Детали ингредиента'}>
-							<IngredientDetails />
-						</Modal>
-					</Route>
-				)
-			}
-			{
-				isModalUrl && (
-					<Route path={Routes.orderPage} exact={true}>
-						<Modal>
-							<OrderDetails />
-						</Modal>
-					</Route>
-				)
-			}
-		</div>
-	);
+      {
+        isModalUrl && (
+          <Route path={Routes.ingredient} exact={true}>
+            <Modal title={'Детали ингредиента'}>
+              <IngredientDetails />
+            </Modal>
+          </Route>
+        )
+      }
+      {
+        isModalUrl && (
+          <Route path={Routes.orderPage} exact={true}>
+            <Modal>
+              <OrderDetails />
+            </Modal>
+          </Route>
+        )
+      }
+    </div>
+  );
 }
 
 export default App;
