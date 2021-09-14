@@ -50,7 +50,7 @@ export class Api {
 			method: 'POST',
 			headers: {
 				'Content-type': 'application/json',
-				Authorization: 'Bearer ' + getTokenAuth(),
+				Authorization: getTokenAuth() ?? '',
 			},
 			body: JSON.stringify(data),
 		}).then(apiResponse => this.checkResponse<IApiRestorePasswordResponse>(apiResponse));
@@ -103,7 +103,7 @@ export class Api {
 			credentials: 'same-origin',
 			headers: {
 				'Content-type': 'application/json',
-				Authorization: 'Bearer ' + getTokenAuth(),
+				Authorization: getTokenAuth() ?? '',
 			},
 			redirect: 'follow',
 			referrerPolicy: 'no-referrer',
@@ -118,7 +118,7 @@ export class Api {
 			credentials: 'same-origin',
 			headers: {
 				'Content-type': 'application/json',
-				Authorization: 'Bearer ' + getTokenAuth(),
+				Authorization: getTokenAuth() ?? '',
 			},
 			redirect: 'follow',
 			referrerPolicy: 'no-referrer',
@@ -142,6 +142,7 @@ export class Api {
 			await this.refreshToken({
 				token: refreshToken,
 			});
+			isAuthorized = true;
 		}
 
 		return {

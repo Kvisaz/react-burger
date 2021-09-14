@@ -1,38 +1,34 @@
-import React, { useEffect } from 'react';
-import { RouteProps } from 'react-router';
-import { Redirect, Route, useLocation, useRouteMatch } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../services/store';
-import { Routes } from '../../../services/Routes';
-import { checkAuth, IBurgerActionType } from '../../../services/actions';
-import { Loading } from '../../loading/loading';
+import React, {useEffect, useMemo} from 'react';
+import {RouteProps} from 'react-router';
+import {Redirect, Route, useLocation} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from '../../../services/store';
+import {Routes} from '../../../services/Routes';
+import {checkAuth, IBurgerActionType} from '../../../services/actions';
 
 interface IProtectedRouteProps extends RouteProps {
 }
 
-export function ProtectedRoute({ children, ...rest }: IProtectedRouteProps) {
+export function ProtectedRoute({children, ...rest}: IProtectedRouteProps) {
 
-	const {
-		isAuthorized,
-		isAuthorizationChecking,
-		isNoRefreshToken,
-	} = useSelector((state: RootState) => ({ ...state }));
-	const dispatch = useDispatch();
+    const {
+        isAuthorized,
+        isAuthorizationChecking,
+    } = useSelector((state: RootState) => ({...state}));
+    const dispatch = useDispatch();
 
-	const location = useLocation();
+    const location = useLocation();
 
-	useEffect(() => {
-		if (!isAuthorized) {
-			dispatch({ type: IBurgerActionType.SAVE_AFTER_LOGGING_URL, url: location.pathname });
-		}
-		if (!isAuthorized && isNoRefreshToken != true) dispatch(checkAuth());
-	}, []);
+    const isAuthStart = useMemo(() => !isAuthorized && !isAuthorizationChecking,
+        [isAuthorized, isAuthorizationChecking])
 
-	return (<Route {...rest} render={() =>
-		isAuthorized && (children) ||
-		!isAuthorized && isAuthorizationChecking && (<Loading />) ||
-		!isAuthorized && !isAuthorizationChecking && (<Redirect to={Routes.login} />)
+    useEffect(() => {
+        if (!isAuthorized) dispatch({type: IBurgerActionType.SAVE_AFTER_LOGGING_URL, url: location.pathname});
+        if (isAuthStart) dispatch(checkAuth());
+    }, [isAuthStart, isAuthorized, dispatch, location.pathname]);
 
-
-	} />);
+    return (<Route {...rest} render={() =>
+        isAuthorized ? (children)
+            : (<Redirect to={Routes.login}/>)
+    }/>);
 }
