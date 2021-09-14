@@ -18,7 +18,7 @@ export function BurgerConstructorOrder() {
 		if (isAuthorized) {
 			dispatch(orderAuthorizedActionCreator());
 		} else {
-			dispatch({ type: IBurgerActionType.ORDER_RESET });
+			dispatch({ type: IBurgerActionType.SAVE_AFTER_LOGGING_URL, url: Routes.main });
 			history.replace({
 				pathname: Routes.login,
 			});
@@ -29,7 +29,7 @@ export function BurgerConstructorOrder() {
 		<div className={`mr-4 ${styles.main}`}>
 			<div className='mr-10'><MoneyCounter sum={sum} big /></div>
 			<Button type='primary' size='large' onClick={onOrderButtonClick}>
-				Оформить заказ
+				{isAuthorized ? 'Оформить заказ' : 'Авторизуйтесь'}
 			</Button>
 		</div>
 	);
