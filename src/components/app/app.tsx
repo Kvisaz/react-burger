@@ -59,7 +59,6 @@ function App() {
     if (isOrderSuccess && orders && orders.length > 0) {
       const { orderId } = orders[orders.length - 1];
       dispatch(setModalUrlOn());
-      console.log('Routes.orderPageLinkCreator(orderId)', Routes.orderPageLinkCreator(orderId))
       history.replace({
         pathname: Routes.orderPageLinkCreator(orderId),
       });
