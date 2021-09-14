@@ -231,7 +231,8 @@ export class Api {
 }
 
 function isBadToken(message: string | undefined) {
-    return message === 'invalid token' || message === 'jwt expire' || message === 'invalid algorithm';
+    return message === 'invalid token'
+        || message === 'jwt expired';
 }
 
 
