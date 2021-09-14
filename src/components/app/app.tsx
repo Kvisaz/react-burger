@@ -7,11 +7,12 @@ import {OrderDetails} from '../burger-constructor/components/order-details/order
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../services/store';
 import {Route, Switch, useHistory, useLocation} from 'react-router-dom';
-import {LocationState, Routes} from '../../services/Routes';
+import {Routes} from '../../services/Routes';
 import {ProtectedRoute} from '../common/protected-route/protected-route';
 import {ForgotPassword, Login, Main, Orders, Page404, Profile, Register, ResetPassword} from '../../pages';
 import {fetchIngredientsActionCreator, logoutActionCreator, setModalUrlOn} from '../../services/actions';
 import {Loading} from '../loading/loading';
+import {ProtectedAuthRoute} from '../common/protected-auth-route/protected-auth-route';
 
 
 function App() {
@@ -81,9 +82,9 @@ function App() {
                 ? (<Loading/>)
                 : (<Switch>
                     <Route path={isModalUrl ? location.pathname : Routes.main} exact={true}><Main/></Route>
-                    <Route path={Routes.login} exact={true}><Login/></Route>
-                    <Route path={Routes.register} exact={true}><Register/></Route>
-                    <Route path={Routes.forgotPassword} exact={true}><ForgotPassword/></Route>
+                    <ProtectedAuthRoute path={Routes.login} exact={true}><Login/></ProtectedAuthRoute>
+                    <ProtectedAuthRoute path={Routes.register} exact={true}><Register/></ProtectedAuthRoute>
+                    <ProtectedAuthRoute path={Routes.forgotPassword} exact={true}><ForgotPassword/></ProtectedAuthRoute>
                     <Route path={Routes.resetPassword} exact={true}><ResetPassword/></Route>
                     <ProtectedRoute path={Routes.profile} exact={true}><Profile/></ProtectedRoute>
                     <ProtectedRoute path={Routes.orders} exact={true}><Orders/></ProtectedRoute>
