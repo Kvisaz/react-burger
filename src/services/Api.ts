@@ -202,6 +202,7 @@ export class Api {
             }
         } catch (e) {
             console.warn(e)
+            deleteTokenCookies();
         }
         return {
             isAuthorized,

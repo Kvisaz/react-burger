@@ -38,6 +38,7 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
 				})),
 				isIngredientsLoaded: true,
 				isIngredientsRequest: false,
+				isAuthorized: action.isAuthorized
 			};
 		case IBurgerActionType.ORDER_RESET:
 			return {
