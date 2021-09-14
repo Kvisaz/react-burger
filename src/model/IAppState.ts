@@ -47,11 +47,6 @@ export interface IAppState {
     isLogoutSuccess?: boolean;
     isLogoutFailed?: boolean;
 
-    userForgotEmail?: string;
-    isForgotRequest?: boolean;
-    isForgotSuccess?: boolean;
-    isForgotFailed?: boolean;
-
     userRestoreEmail?: string;
     isRestoreRequest?: boolean;
     isRestoreSuccess?: boolean;

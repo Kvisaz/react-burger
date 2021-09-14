@@ -180,6 +180,7 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
 				isResetRequest: false,
 				isResetFailed: false,
 				isResetSuccess: true,
+				isRestoreSuccess: false,
 			};
 		case IBurgerActionType.RESET_PASS_FAIL:
 			return {
@@ -187,6 +188,7 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
 				isResetRequest: false,
 				isResetFailed: true,
 				isResetSuccess: false,
+				isRestoreSuccess: false,
 			};
 		case IBurgerActionType.TOKEN_REFRESH_REQUEST:
 			// TODO
@@ -393,7 +395,7 @@ function onRestorePageChange(
 ): IAppState {
 	return {
 		...state,
-		userForgotEmail: action.email,
+		userRestoreEmail: action.email,
 	};
 }
 

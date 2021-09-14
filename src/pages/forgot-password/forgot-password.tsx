@@ -9,7 +9,7 @@ import {RootState} from '../../services/store';
 
 export function ForgotPassword() {
 
-    const {userForgotEmail: email = '', isRestoreSuccess} = useSelector((state: RootState) => ({...state}));
+    const {userRestoreEmail: email = '', isRestoreSuccess} = useSelector((state: RootState) => ({...state}));
 
     const dispatch = useDispatch();
     const history = useHistory();

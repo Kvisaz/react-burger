@@ -1,7 +1,7 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import styles from './reset-password.module.css';
 import {Button, Input, PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import {Routes} from '../../services/Routes';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../services/store';
@@ -9,8 +9,21 @@ import {IBurgerActionType, resetPassActionCreator} from '../../services/actions'
 
 export function ResetPassword() {
 
+    const history = useHistory();
     const dispatch = useDispatch();
-    const {userResetPassword = '', userResetCode = ''} = useSelector((state: RootState) => ({...state}));
+    const {
+        userResetPassword = '',
+        userResetCode = '',
+        isRestoreSuccess
+    } = useSelector((state: RootState) => ({...state}));
+
+    useEffect(() => {
+        if (!isRestoreSuccess) {
+            history.replace({
+                pathname: Routes.main
+            })
+        }
+    }, [isRestoreSuccess])
 
     const onPasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         e.persist(); // deprecated since React 17

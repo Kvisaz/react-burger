@@ -20,7 +20,6 @@ function App() {
         isOrderSuccess,
         orders,
         isRestoreRequest,
-        isForgotRequest,
         isIngredientsRequest,
         isOrderRequest,
         isResetRequest,
@@ -36,7 +35,6 @@ function App() {
 
     const isLoading = useMemo(() => isIngredientsRequest
         || isRestoreRequest
-        || isForgotRequest
         || isResetRequest
         || isOrderRequest
         || isRegisterRequest
@@ -45,7 +43,7 @@ function App() {
         , [
             isAuthorizationChecking,
             isIngredientsRequest, isOrderRequest, isResetRequest,
-            isForgotRequest, isRestoreRequest, isRegisterRequest,
+            isRestoreRequest, isRegisterRequest,
             isLoginRequest,
         ]);
 
