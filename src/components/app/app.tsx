@@ -10,7 +10,7 @@ import {Route, Switch, useHistory, useLocation} from 'react-router-dom';
 import {LocationState, Routes} from '../../services/Routes';
 import {ProtectedRoute} from '../common/protected-route/protected-route';
 import {ForgotPassword, Login, Main, Orders, Page404, Profile, Register, ResetPassword} from '../../pages';
-import {fetchIngredientsActionCreator, setModalUrlOn} from '../../services/actions';
+import {fetchIngredientsActionCreator, logoutActionCreator, setModalUrlOn} from '../../services/actions';
 import {Loading} from '../loading/loading';
 
 
@@ -27,7 +27,8 @@ function App() {
         isRegisterFailed,
         isLoginRequest,
         isModalUrl,
-        isAuthorizationChecking
+        isAuthorizationChecking,
+        isOrderFailed
     } = useSelector((state: RootState) => ({...state}));
     const history = useHistory();
     const location = useLocation();
@@ -66,6 +67,12 @@ function App() {
         }
     }, [dispatch, history, orders, isOrderSuccess, isRegisterFailed,
     ]);
+
+    useEffect(() => {
+        if (isOrderFailed) {
+            dispatch(logoutActionCreator())
+        }
+    }, [dispatch, isOrderFailed])
 
     return (
         <div className={styles.App}>

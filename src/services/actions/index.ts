@@ -174,7 +174,10 @@ export const orderAuthorizedActionCreator = () => async (dispatch: IBurgerDispat
     }
     API.order(selectedIds)
         .then((result) => dispatch({type: IBurgerActionType.ORDER_SUCCESS, payload: result}))
-        .catch(e => console.error(e));
+        .catch(e => {
+            console.error(e);
+            dispatch({type: IBurgerActionType.ORDER_FAILED})
+        });
 };
 
 export const onIngredientDropActionCreator = (id: string) => (dispatch: IBurgerDispatch, getState: IGetState) => {
