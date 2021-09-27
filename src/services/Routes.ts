@@ -5,14 +5,16 @@ export const Routes = {
   forgotPassword: '/forgot-password',
   resetPassword: '/reset-password',
   profile: '/profile',
-  orders: '/profile/orders',
-  orderPage: '/profile/orders/:id',
+  orderPage: '/order/:id',
   ingredient: '/ingredients/:id',
-  feed: './feed',
-  feedId: './feed/:id',
   ingredientLinkCreator: (id: string) => `/ingredients/${id}`,
   orderPageLinkCreator: (id: number) => `/order/${id}`,
-  feedIdLinkCreator: (id: number) => `/feed/${id}`,
+  orderHistory: '/profile/orders',
+  orderHistoryDetails: '/profile/orders/:id',
+  orderHistoryPageLinkCreator: (id: number) => `/profile/order/${id}`,
+  orderFeed: '/feed',
+  orderFeedDetails: '/feed/:id',
+  orderFeedDetailsLinkCreator: (id: number) => `/feed/${id}`,
 };
 
 

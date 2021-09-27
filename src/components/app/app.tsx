@@ -9,7 +9,17 @@ import { RootState } from '../../services/store';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { Routes } from '../../services/Routes';
 import { ProtectedRoute } from '../common/protected-route/protected-route';
-import { ForgotPassword, Login, Main, Orders, Page404, Profile, Register, ResetPassword } from '../../pages';
+import {
+  ForgotPassword,
+  Login,
+  Main,
+  OrderFeed, OrderFeedDetails,
+  OrderHistory, OrderHistoryDetails,
+  Page404,
+  Profile,
+  Register,
+  ResetPassword,
+} from '../../pages';
 import { initData, logoutActionCreator, setModalUrlOn } from '../../services/actions';
 import { Loading } from '../loading/loading';
 import { ProtectedAuthRoute } from '../common/protected-auth-route/protected-auth-route';
@@ -84,8 +94,11 @@ function App() {
           <ProtectedAuthRoute path={Routes.register} exact={true}><Register /></ProtectedAuthRoute>
           <ProtectedAuthRoute path={Routes.forgotPassword} exact={true}><ForgotPassword /></ProtectedAuthRoute>
           <Route path={Routes.resetPassword} exact={true}><ResetPassword /></Route>
+          <Route path={Routes.orderFeed} exact={true}><OrderFeed /></Route>
+          <Route path={Routes.orderFeedDetails} exact={true}><OrderFeedDetails /></Route>
           <ProtectedRoute path={Routes.profile} exact={true}><Profile /></ProtectedRoute>
-          <ProtectedRoute path={Routes.orders} exact={true}><Orders /></ProtectedRoute>
+          <ProtectedRoute path={Routes.orderHistory} exact={true}><OrderHistory /></ProtectedRoute>
+          <ProtectedRoute path={Routes.orderHistoryDetails} exact={true}><OrderHistoryDetails /></ProtectedRoute>
           <Route path={Routes.ingredient} exact={true}>
             <IngredientDetails />
           </Route>
