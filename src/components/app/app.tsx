@@ -34,12 +34,12 @@ function App() {
   const location = useLocation();
 
   const isLoading = useMemo(() => isIngredientsRequest
-    || isRestoreRequest
-    || isResetRequest
-    || isOrderRequest
-    || isRegisterRequest
-    || isLoginRequest
-    || isAuthorizationChecking
+      || isRestoreRequest
+      || isResetRequest
+      || isOrderRequest
+      || isRegisterRequest
+      || isLoginRequest
+      || isAuthorizationChecking
     , [
       isAuthorizationChecking,
       isIngredientsRequest, isOrderRequest, isResetRequest,
