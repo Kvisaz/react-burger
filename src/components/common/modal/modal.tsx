@@ -4,8 +4,10 @@ import styles from './modal.module.css';
 import { ModalOverlay } from './components/modal-overlay/modal-overlay';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { IBurgerActionType } from '../../../services/actions';
+import { useHistory, useLocation } from 'react-router-dom';
+import { LocationState, Routes } from '../../../services/Routes';
 import { useDispatch } from 'react-redux';
+import { setModalUrlOff } from '../../../services/actions';
 
 interface IModalProps {
 	title?: string;
@@ -21,11 +23,15 @@ const KEY_DOWN = 'keydown';
 
 export function Modal({ title = '', children }: IModalProps) {
 
+	const history = useHistory();
+	const { state: locationState } = useLocation<LocationState>();
 	const dispatch = useDispatch();
+	const backToUrl = locationState?.backTo ?? Routes.main;
 
 	const hide = useCallback(() => {
-		dispatch({ type: IBurgerActionType.CLOSE_MODAL });
-	}, [dispatch]);
+		dispatch(setModalUrlOff());
+		history.replace({ pathname: backToUrl, state: null });
+	}, [history, backToUrl]);
 
 	const onKeyDown = useCallback((e: KeyboardEvent) => {
 		if (e.key === 'Escape') hide();

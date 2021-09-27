@@ -5,9 +5,10 @@ import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients-item.module.css';
 import { IBurgerPart, IBurgerPartPropType } from '../../../../model/IBurgerPart';
 import { MoneyCounter } from '../../../common/money-counter/money-counter';
-import { onIngredientClickActionCreator } from '../../../../services/actions';
 import { RootState } from '../../../../services/store';
-
+import { useHistory, useLocation } from 'react-router-dom';
+import { Routes } from '../../../../services/Routes';
+import { setModalUrlOn } from '../../../../services/actions';
 
 interface IBurgerConstructorItemProps {
 	part: IBurgerPart;
@@ -19,8 +20,9 @@ BurgerIngredientsItem.propTypes = {
 
 export function BurgerIngredientsItem({ part }: IBurgerConstructorItemProps) {
 
-	const dispatch = useDispatch();
 	const state = useSelector((state: RootState) => ({ ...state }));
+	const dispatch = useDispatch();
+	const location = useLocation();
 
 	const [_, dragRef] = useDrag({
 		type: 'item',
@@ -30,9 +32,16 @@ export function BurgerIngredientsItem({ part }: IBurgerConstructorItemProps) {
 	const { ingredientAmountMap } = state;
 	const { price, name, image, _id } = part;
 	const amount = ingredientAmountMap[_id] ?? 0;
+
+	const history = useHistory();
+
 	const onItemClick = useCallback((ingredient: IBurgerPart) => {
-		dispatch(onIngredientClickActionCreator(ingredient._id));
-	}, [dispatch]);
+		dispatch(setModalUrlOn());
+		history.replace({
+			pathname: Routes.ingredientLinkCreator(ingredient._id),
+		});
+
+	}, [history, dispatch]);
 
 	const hasAmount = amount > 0;
 	const counter = hasAmount ? (<Counter count={amount} size='default' />) : null;
