@@ -161,7 +161,7 @@ export const initData = () => async (dispatch: IBurgerDispatch) => {
     const { isAuthorized } = await API.restoreAuth();
     const { ingredients } = await API.getBurgerParts();
     dispatch({ type: IBurgerActionType.DATA_LOADED, ingredients, isAuthorized });
-  } catch (e) {
+  } catch (e: any) {
     dispatch({ type: IBurgerActionType.DATA_FAILED, message: e.toString() });
   }
 };
