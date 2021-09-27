@@ -5,24 +5,24 @@ import { BurgerIngredientsItem } from '../burger-ingredients-item/burger-ingredi
 import PropTypes from 'prop-types';
 
 export interface IBurgerConstructorSectionProps {
-	title: string;
-	parts: IBurgerPart[];
+  title: string;
+  parts: IBurgerPart[];
 }
 
 BurgerIngredientsSection.propTypes = {
-	title: PropTypes.string.isRequired,
-	parts: PropTypes.arrayOf(IBurgerPartPropType),
+  title: PropTypes.string.isRequired,
+  parts: PropTypes.arrayOf(IBurgerPartPropType),
 };
 
 export function BurgerIngredientsSection({ title, parts }: IBurgerConstructorSectionProps) {
-	return (
-		<section className={`${styles.section} mt-10`}>
-			<span className='text text_type_main-medium'>{title}</span>
-			<div className={`mt-6 pl-4 ${styles.list}`}>
-				{parts.map(p => (
-					<BurgerIngredientsItem key={p._id} part={p} />
-				))}
-			</div>
-		</section>
-	);
+  return (
+    <section className={`${styles.section} mt-10`}>
+      <span className='text text_type_main-medium'>{title}</span>
+      <div className={`mt-6 pl-4 ${styles.list}`}>
+        {parts.map(p => (
+          <BurgerIngredientsItem key={p._id} part={p} />
+        ))}
+      </div>
+    </section>
+  );
 }

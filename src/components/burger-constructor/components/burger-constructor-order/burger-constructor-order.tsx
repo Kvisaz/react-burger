@@ -10,27 +10,27 @@ import { Routes } from '../../../../services/Routes';
 
 
 export function BurgerConstructorOrder() {
-	const dispatch = useDispatch();
-	const { isAuthorized, sum } = useSelector((state: RootState) => ({ ...state }));
-	const history = useHistory();
+  const dispatch = useDispatch();
+  const { isAuthorized, sum } = useSelector((state: RootState) => ({ ...state }));
+  const history = useHistory();
 
-	const onOrderButtonClick = useCallback(() => {
-		if (isAuthorized) {
-			dispatch(orderAuthorizedActionCreator());
-		} else {
-			dispatch({ type: IBurgerActionType.SAVE_AFTER_LOGGING_URL, url: Routes.main });
-			history.replace({
-				pathname: Routes.login,
-			});
-		}
-	}, [dispatch, isAuthorized, history]);
+  const onOrderButtonClick = useCallback(() => {
+    if (isAuthorized) {
+      dispatch(orderAuthorizedActionCreator());
+    } else {
+      dispatch({ type: IBurgerActionType.SAVE_AFTER_LOGGING_URL, url: Routes.main });
+      history.replace({
+        pathname: Routes.login,
+      });
+    }
+  }, [dispatch, isAuthorized, history]);
 
-	return (
-		<div className={`mr-4 ${styles.main}`}>
-			<div className='mr-10'><MoneyCounter sum={sum} big /></div>
-			<Button type='primary' size='large' onClick={onOrderButtonClick}>
-				{isAuthorized ? 'Оформить заказ' : 'Авторизуйтесь'}
-			</Button>
-		</div>
-	);
+  return (
+    <div className={`mr-4 ${styles.main}`}>
+      <div className='mr-10'><MoneyCounter sum={sum} big /></div>
+      <Button type='primary' size='large' onClick={onOrderButtonClick}>
+        {isAuthorized ? 'Оформить заказ' : 'Авторизуйтесь'}
+      </Button>
+    </div>
+  );
 }

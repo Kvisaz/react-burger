@@ -11,16 +11,16 @@ interface IProtectedRouteProps extends RouteProps {
 
 export function ProtectedRoute({ children, ...rest }: IProtectedRouteProps) {
 
-	const { isAuthorized } = useSelector((state: RootState) => ({ ...state }));
-	const location = useLocation();
+  const { isAuthorized } = useSelector((state: RootState) => ({ ...state }));
+  const location = useLocation();
 
-	const dispatch = useDispatch();
-	useEffect(() => {
-		if (!isAuthorized) dispatch({ type: IBurgerActionType.SAVE_AFTER_LOGGING_URL, url: location.pathname });
-	}, [isAuthorized, dispatch, location.pathname]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!isAuthorized) dispatch({ type: IBurgerActionType.SAVE_AFTER_LOGGING_URL, url: location.pathname });
+  }, [isAuthorized, dispatch, location.pathname]);
 
-	return (<Route {...rest} render={() =>
-		isAuthorized ? (children)
-			: (<Redirect to={Routes.login} />)
-	} />);
+  return (<Route {...rest} render={() =>
+    isAuthorized ? (children)
+      : (<Redirect to={Routes.login} />)
+  } />);
 }

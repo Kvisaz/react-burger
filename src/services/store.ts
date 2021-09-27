@@ -4,9 +4,9 @@ import { IAppState } from '../model/IAppState';
 import { mainReducer } from './reducers';
 
 declare global {
-	interface Window {
-		__REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-	}
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
 }
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -21,5 +21,5 @@ export type AppDispatch = typeof AppStore.dispatch
 
 
 export interface IGetState {
-	(): IAppState
+  (): IAppState;
 }

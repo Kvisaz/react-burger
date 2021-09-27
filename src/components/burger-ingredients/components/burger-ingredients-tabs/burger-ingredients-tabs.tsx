@@ -9,27 +9,27 @@ import { IBurgerActionType } from '../../../../services/actions';
 
 
 BurgerIngredientsTabs.propTypes = {
-	onPageSelect: PropTypes.func,
+  onPageSelect: PropTypes.func,
 };
 
 export function BurgerIngredientsTabs() {
 
-	const dispatch = useDispatch();
-	const { currentTabIndex, tabs } = useSelector<RootState>(state => ({...state})) as IAppState;
+  const dispatch = useDispatch();
+  const { currentTabIndex, tabs } = useSelector<RootState>(state => ({ ...state })) as IAppState;
 
-	const onClick = (value: string) => {
-		dispatch({ type: IBurgerActionType.TAB_SELECT, index: parseInt(value) });
-	};
+  const onClick = (value: string) => {
+    dispatch({ type: IBurgerActionType.TAB_SELECT, index: parseInt(value) });
+  };
 
-	return (
-		<div className={`mt-5 ${styles.main}`}>
-			{
-				tabs.map(({ name }, index) => (
-					<Tab key={index} value={index.toString()} active={currentTabIndex === index} onClick={onClick}>
-						{name}
-					</Tab>
-				))
-			}
-		</div>
-	);
+  return (
+    <div className={`mt-5 ${styles.main}`}>
+      {
+        tabs.map(({ name }, index) => (
+          <Tab key={index} value={index.toString()} active={currentTabIndex === index} onClick={onClick}>
+            {name}
+          </Tab>
+        ))
+      }
+    </div>
+  );
 }

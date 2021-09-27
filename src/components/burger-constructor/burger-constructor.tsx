@@ -11,41 +11,41 @@ import { DraggableBurgerConstructorItem } from './components/draggable-burger-co
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function mapBun(bun: IConstructorElementData, suffix: string, type: IConstructorElementType): IConstructorElementData {
-	return {
-		...bun,
-		text: `${bun.text} (${suffix})`,
-		type,
-		isLocked: true,
-	};
+  return {
+    ...bun,
+    text: `${bun.text} (${suffix})`,
+    type,
+    isLocked: true,
+  };
 }
 
 export function BurgerConstructor() {
-	const dispatch = useDispatch();
-	const state = useSelector((state: RootState) => ({ ...state }));
+  const dispatch = useDispatch();
+  const state = useSelector((state: RootState) => ({ ...state }));
 
-	const { selectedBun, selectedParts: parts, sum } = state;
+  const { selectedBun, selectedParts: parts, sum } = state;
 
-	const [_, dropTargetRef] = useDrop({
-		accept: 'item',
-		drop(item) {
-			const { id } = item as IdObject;
-			dispatch(onIngredientDropActionCreator(id));
-		},
-	}, [dispatch]);
+  const [_, dropTargetRef] = useDrop({
+    accept: 'item',
+    drop(item) {
+      const { id } = item as IdObject;
+      dispatch(onIngredientDropActionCreator(id));
+    },
+  }, [dispatch]);
 
-	return (
-		<section className={`mt-4 mb-4 ${styles.main}`} ref={dropTargetRef}>
-			{selectedBun && <ConstructorElement {...mapBun(selectedBun, 'верх', IConstructorElementType.TOP)} />}
-			<div className={`mt-4 mb-4 ${styles.list}`}>
-				{parts.map(part => (
-					<DraggableBurgerConstructorItem key={part.selectedId} {...part} />))}
-			</div>
-			{selectedBun && <ConstructorElement {...mapBun(selectedBun, 'низ', IConstructorElementType.BOTTOM)} />}
-			{sum > 0 && selectedBun && (
-				<div className={`mt-10 mb-10 ${styles.sum}`}>
-					<BurgerConstructorOrder />
-				</div>
-			)}
-		</section>
-	);
+  return (
+    <section className={`mt-4 mb-4 ${styles.main}`} ref={dropTargetRef}>
+      {selectedBun && <ConstructorElement {...mapBun(selectedBun, 'верх', IConstructorElementType.TOP)} />}
+      <div className={`mt-4 mb-4 ${styles.list}`}>
+        {parts.map(part => (
+          <DraggableBurgerConstructorItem key={part.selectedId} {...part} />))}
+      </div>
+      {selectedBun && <ConstructorElement {...mapBun(selectedBun, 'низ', IConstructorElementType.BOTTOM)} />}
+      {sum > 0 && selectedBun && (
+        <div className={`mt-10 mb-10 ${styles.sum}`}>
+          <BurgerConstructorOrder />
+        </div>
+      )}
+    </section>
+  );
 }

@@ -1,93 +1,93 @@
-import {IBurgerPart} from './IBurgerPart';
-import {IConstructorElementData} from './IConstructorElementData';
-import {IApiOrderResult} from '../services/Api';
+import { IBurgerPart } from './IBurgerPart';
+import { IConstructorElementData } from './IConstructorElementData';
+import { IApiOrderResult } from '../services/Api';
 
 export interface IAppState {
-    isIngredientsRequest: boolean;
-    isIngredientsLoaded: boolean;
-    isIngredientsFailed: boolean;
-    ingredients: IBurgerPart[];
-    ingredientAmountMap: Record<string, number>;
+  isIngredientsRequest: boolean;
+  isIngredientsLoaded: boolean;
+  isIngredientsFailed: boolean;
+  ingredients: IBurgerPart[];
+  ingredientAmountMap: Record<string, number>;
 
-    sum: number;
-    selectedBun?: IConstructorElementData;
-    selectedParts: IConstructorElementData[];
+  sum: number;
+  selectedBun?: IConstructorElementData;
+  selectedParts: IConstructorElementData[];
 
-    selectedIngredient?: IBurgerPart;
-    orders: IApiOrderResult[];
+  selectedIngredient?: IBurgerPart;
+  orders: IApiOrderResult[];
 
-    isOrderRequest: boolean;
-    isOrderSuccess: boolean;
-    isOrderFailed: boolean;
+  isOrderRequest: boolean;
+  isOrderSuccess: boolean;
+  isOrderFailed: boolean;
 
-    currentTabIndex: number;
-    tabs: ITab[];
+  currentTabIndex: number;
+  tabs: ITab[];
 
-    userRegisterEmail?: string;
-    userRegisterName?: string;
-    userRegisterPassword?: string;
-    isRegisterRequest?: boolean;
-    isRegisterSuccess?: boolean;
-    isRegisterFailed?: boolean;
+  userRegisterEmail?: string;
+  userRegisterName?: string;
+  userRegisterPassword?: string;
+  isRegisterRequest?: boolean;
+  isRegisterSuccess?: boolean;
+  isRegisterFailed?: boolean;
 
-    isAuthorized?: boolean;
-    isAuthorizationChecking?: boolean;
-    isNoRefreshToken?: boolean;
-    urlAfterLogging?: string;
+  isAuthorized?: boolean;
+  isAuthorizationChecking?: boolean;
+  isNoRefreshToken?: boolean;
+  urlAfterLogging?: string;
 
-    isModalUrl?: boolean;
-    
-    loginPageEmail?: string;
-    loginPagePassword?: string;
-    isLoginRequest?: boolean;
-    isLoginSuccess?: boolean;
-    isLoginFailed?: boolean;
+  isModalUrl?: boolean;
 
-    isLogoutRequest?: boolean;
-    isLogoutSuccess?: boolean;
-    isLogoutFailed?: boolean;
+  loginPageEmail?: string;
+  loginPagePassword?: string;
+  isLoginRequest?: boolean;
+  isLoginSuccess?: boolean;
+  isLoginFailed?: boolean;
 
-    userRestoreEmail?: string;
-    isRestoreRequest?: boolean;
-    isRestoreSuccess?: boolean;
-    isRestoreFailed?: boolean;
+  isLogoutRequest?: boolean;
+  isLogoutSuccess?: boolean;
+  isLogoutFailed?: boolean;
 
-    userResetCode?: string;
-    userResetPassword?: string;
-    isResetRequest?: boolean;
-    isResetSuccess?: boolean;
-    isResetFailed?: boolean;
+  userRestoreEmail?: string;
+  isRestoreRequest?: boolean;
+  isRestoreSuccess?: boolean;
+  isRestoreFailed?: boolean;
 
-    userTokenAuth?: string;
-    isTokenAuthRequest?: boolean;
-    isTokenAuthSuccess?: boolean;
-    isTokenAuthFailed?: boolean;
+  userResetCode?: string;
+  userResetPassword?: string;
+  isResetRequest?: boolean;
+  isResetSuccess?: boolean;
+  isResetFailed?: boolean;
 
-    userTokenRefresh?: string;
-    isTokenRefreshRequest?: boolean;
-    isTokenRefreshSuccess?: boolean;
-    isTokenRefreshFailed?: boolean;
+  userTokenAuth?: string;
+  isTokenAuthRequest?: boolean;
+  isTokenAuthSuccess?: boolean;
+  isTokenAuthFailed?: boolean;
 
-    needBackToMainPage?: boolean;
+  userTokenRefresh?: string;
+  isTokenRefreshRequest?: boolean;
+  isTokenRefreshSuccess?: boolean;
+  isTokenRefreshFailed?: boolean;
 
-    isProfileRequest?: boolean;
-    isProfileSuccess?: boolean;
-    isProfileFail?: boolean;
+  needBackToMainPage?: boolean;
 
-    userName?:string;
-    userPassword?: string;
-    userEmail?:string;
+  isProfileRequest?: boolean;
+  isProfileSuccess?: boolean;
+  isProfileFail?: boolean;
 
-    profileName?: string;
-    profileEmail?: string;
-    profilePassword?: string;
+  userName?: string;
+  userPassword?: string;
+  userEmail?: string;
 
-    isProfileUpdateRequest?: boolean;
-    isProfileUpdateSuccess?: boolean;
-    isProfileUpdateFail?: boolean;
+  profileName?: string;
+  profileEmail?: string;
+  profilePassword?: string;
+
+  isProfileUpdateRequest?: boolean;
+  isProfileUpdateSuccess?: boolean;
+  isProfileUpdateFail?: boolean;
 }
 
 
 interface ITab {
-    name: string;
+  name: string;
 }

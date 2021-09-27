@@ -11,46 +11,45 @@ import { Routes } from '../../../../services/Routes';
 import { setModalUrlOn } from '../../../../services/actions';
 
 interface IBurgerConstructorItemProps {
-	part: IBurgerPart;
+  part: IBurgerPart;
 }
 
 BurgerIngredientsItem.propTypes = {
-	part: IBurgerPartPropType.isRequired,
+  part: IBurgerPartPropType.isRequired,
 };
 
 export function BurgerIngredientsItem({ part }: IBurgerConstructorItemProps) {
 
-	const state = useSelector((state: RootState) => ({ ...state }));
-	const dispatch = useDispatch();
-	const location = useLocation();
+  const state = useSelector((state: RootState) => ({ ...state }));
+  const dispatch = useDispatch();
 
-	const [_, dragRef] = useDrag({
-		type: 'item',
-		item: { id: part._id },
-	}, [part]);
+  const [_, dragRef] = useDrag({
+    type: 'item',
+    item: { id: part._id },
+  }, [part]);
 
-	const { ingredientAmountMap } = state;
-	const { price, name, image, _id } = part;
-	const amount = ingredientAmountMap[_id] ?? 0;
+  const { ingredientAmountMap } = state;
+  const { price, name, image, _id } = part;
+  const amount = ingredientAmountMap[_id] ?? 0;
 
-	const history = useHistory();
+  const history = useHistory();
 
-	const onItemClick = useCallback((ingredient: IBurgerPart) => {
-		dispatch(setModalUrlOn());
-		history.replace({
-			pathname: Routes.ingredientLinkCreator(ingredient._id),
-		});
+  const onItemClick = useCallback((ingredient: IBurgerPart) => {
+    dispatch(setModalUrlOn());
+    history.replace({
+      pathname: Routes.ingredientLinkCreator(ingredient._id),
+    });
 
-	}, [history, dispatch]);
+  }, [history, dispatch]);
 
-	const hasAmount = amount > 0;
-	const counter = hasAmount ? (<Counter count={amount} size='default' />) : null;
-	return (
-		<div className={styles.item} onClick={() => onItemClick(part)} ref={dragRef}>
-			<img src={image} alt={name} className={styles.image} />
-			<MoneyCounter sum={price} />
-			<div className={`text text_type_main-default ${styles.name}`}>{name}</div>
-			{counter}
-		</div>
-	);
+  const hasAmount = amount > 0;
+  const counter = hasAmount ? (<Counter count={amount} size='default' />) : null;
+  return (
+    <div className={styles.item} onClick={() => onItemClick(part)} ref={dragRef}>
+      <img src={image} alt={name} className={styles.image} />
+      <MoneyCounter sum={price} />
+      <div className={`text text_type_main-default ${styles.name}`}>{name}</div>
+      {counter}
+    </div>
+  );
 }
