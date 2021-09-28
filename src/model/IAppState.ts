@@ -1,6 +1,7 @@
 import { IBurgerPart } from './IBurgerPart';
 import { IConstructorElementData } from './IConstructorElementData';
 import { IApiOrderResult } from '../services/Api';
+import { IOrderData } from './IOrderData';
 
 export interface IAppState {
   isIngredientsRequest: boolean;
@@ -14,7 +15,14 @@ export interface IAppState {
   selectedParts: IConstructorElementData[];
 
   selectedIngredient?: IBurgerPart;
-  orders: IApiOrderResult[];
+
+  // результаты запроса на заказ - не используется
+  // но оставлено для совместимости
+  orderSuccessResults: IApiOrderResult[];
+
+  // todo - вот главное
+  // norma.nomoreparties.space/api/orders/all
+  orderFeed: IOrderData[];
 
   isOrderRequest: boolean;
   isOrderSuccess: boolean;

@@ -55,14 +55,10 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
         isOrderFailed: false,
       };
     case IBurgerActionType.ORDER_SUCCESS:
-      console.log('order success', [
-        ...state.orders,
-        action.payload,
-      ]);
       return {
         ...state,
-        orders: [
-          ...state.orders,
+        orderSuccessResults: [
+          ...state.orderSuccessResults,
           action.payload,
         ],
         isOrderRequest: false,
