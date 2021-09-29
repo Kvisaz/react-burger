@@ -14,10 +14,10 @@ interface OrderPageParams {
 
 export function OrderDetails() {
 
-  const { orders } = useSelector((state: RootState) => ({ ...state }));
+  const { orderSuccessResults } = useSelector((state: RootState) => ({ ...state }));
   const { id = '-1' } = useParams<OrderPageParams>();
   const orderId = parseInt(id);
-  const order = orders.find(i => i.orderId === orderId);
+  const order = orderSuccessResults.find(i => i.orderId === orderId);
   if (order == null) return null;
 
   const { name: orderName } = order;

@@ -30,7 +30,7 @@ import { ProtectedAuthRoute } from '../common/protected-auth-route/protected-aut
 function App() {
   const {
     isOrderSuccess,
-    orders,
+    orderSuccessResults,
     isRestoreRequest,
     isIngredientsRequest,
     isOrderRequest,
@@ -68,15 +68,15 @@ function App() {
    *  redirector
    */
   useEffect(() => {
-    if (isOrderSuccess && orders && orders.length > 0) {
-      const { orderId } = orders[orders.length - 1];
+    if (isOrderSuccess && orderSuccessResults && orderSuccessResults.length > 0) {
+      const { orderId } = orderSuccessResults[orderSuccessResults.length - 1];
       dispatch(setModalUrlOn());
       history.replace({
         pathname: Routes.orderPageLinkCreator(orderId),
       });
       return;
     }
-  }, [dispatch, history, orders, isOrderSuccess, isRegisterFailed,
+  }, [dispatch, history, orderSuccessResults, isOrderSuccess, isRegisterFailed,
   ]);
 
   useEffect(() => {

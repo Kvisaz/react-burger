@@ -15,6 +15,7 @@ import {
   IApiTokenData,
   IApiTokenResponse,
 } from '../Api';
+import { IOrderData } from '../../model/IOrderData';
 
 export type BurgerAction =
   | { type: IBurgerActionType.DATA_REQUEST }
@@ -62,6 +63,7 @@ export type BurgerAction =
   | { type: IBurgerActionType.SET_MODAL_URL, isModal: boolean }
   | { type: IBurgerActionType.AUTH_CHECK_START }
   | { type: IBurgerActionType.AUTH_CHECK_END, data: IApiAuthCheckResult }
+  | { type: IBurgerActionType.ORDER_FEED_UPDATE, orderFeed: IOrderData[] }
 
 type IBurgerDispatch = (action: BurgerAction) => any;
 
@@ -122,6 +124,8 @@ export enum IBurgerActionType {
   AUTH_CHECK_START = 'AUTH_CHECK_START',
   AUTH_CHECK_END = 'AUTH_CHECK_END',
 
+  ORDER_FEED_UPDATE = 'ORDER_FEED_UPDATE',
+
   SET_MODAL_URL = 'SET_MODAL_URL',
 }
 
@@ -150,6 +154,7 @@ const END_POINTS: IApiEndpoints = {
   restorePassword: 'https://norma.nomoreparties.space/api/password-reset',
   resetPassword: 'https://norma.nomoreparties.space/api/password-reset/reset',
   userData: 'https://norma.nomoreparties.space/api/auth/user',
+  orderFeed: 'https://norma.nomoreparties.space/api/orders/all',
 };
 
 const API = new Api(END_POINTS);
@@ -281,9 +286,12 @@ export const setModalUrlOff = () =>
     dispatch({ type: IBurgerActionType.SET_MODAL_URL, isModal: false });
   };
 
-export const checkAuth = () =>
+export const updateOrderFeed = () =>
   async (dispatch: IBurgerDispatch) => {
-    dispatch({ type: IBurgerActionType.AUTH_CHECK_START });
-    const data = await API.restoreAuth();
-    dispatch({ type: IBurgerActionType.AUTH_CHECK_END, data });
+    try {
+      const orderFeed = await API.fetchOrdersFeed();
+      dispatch({ type: IBurgerActionType.ORDER_FEED_UPDATE, orderFeed });
+    } catch (e) {
+      console.warn(e);
+    }
   };

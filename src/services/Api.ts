@@ -1,11 +1,12 @@
 import { IBurgerPart } from '../model/IBurgerPart';
 import {
-    deleteTokenCookies,
-    getTokenAuth,
-    getTokenRefresh,
-    setTokenAuthCookie,
-    setTokenRefreshCookie,
+  deleteTokenCookies,
+  getTokenAuth,
+  getTokenRefresh,
+  setTokenAuthCookie,
+  setTokenRefreshCookie,
 } from './cookieTokens';
+import { IOrderData } from '../model/IOrderData';
 
 export class Api {
   constructor(private readonly endpoints: IApiEndpoints) {
@@ -190,6 +191,25 @@ export class Api {
     }
   }
 
+
+  async fetchOrdersFeed(): Promise<IOrderData[]> {
+    const orderFeed: IOrderData[] = [];
+    try {
+      const apiResponse = await fetch(this.endpoints.orderFeed);
+      const data: IApiOrderFetchResponse = await apiResponse.json();
+      if (data.success && data.orders) {
+        data.orders.forEach(order => orderFeed.push(order));
+      }
+    } catch (e) {
+      console.warn(e);
+      return Promise.reject(e);
+    }
+
+    console.log('order feed json', JSON.stringify(orderFeed));
+
+    return orderFeed;
+  }
+
   private async fetchPatchProfile(data: IApiUserProfilePatchData): Promise<IApiUserProfileResponse> {
     return fetch(this.endpoints.userData, {
       method: 'PATCH',
@@ -247,6 +267,7 @@ export interface IApiEndpoints extends Record<string, string> {
   logout: string;
   token: string;
   userData: string;
+  orderFeed: string;
 }
 
 export interface IApiResponse {
@@ -378,4 +399,11 @@ export interface IApiLogoutResponse {
 
 export interface IApiAuthCheckResult {
   isAuthorized: boolean;
+}
+
+export interface IApiOrderFetchResponse {
+  orders: IOrderData[];
+  success: boolean;
+  total: number;
+  totalToday: number;
 }
