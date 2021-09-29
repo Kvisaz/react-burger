@@ -20,10 +20,7 @@ export interface IAppState {
   // но оставлено для совместимости
   orderSuccessResults: IApiOrderResult[];
 
-  // todo - вот главное - получи ленту, распарси
-  // и верстай - т е быстро добавь апи и обновление стейта
-  // при открытии страницы - запрос на обновление!
-  // norma.nomoreparties.space/api/orders/all
+  // общая лента заказов
   orderFeed: IOrderData[];
 
   isOrderRequest: boolean;

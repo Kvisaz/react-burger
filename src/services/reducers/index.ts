@@ -276,6 +276,11 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
         isAuthorizationChecking: false,
         isAuthorized: action.data.isAuthorized,
       };
+    case IBurgerActionType.ORDER_FEED_UPDATE:
+      return {
+        ...state,
+        orderFeed: action.orderFeed,
+      };
     default:
       console.warn(`unknown action`, action);
       return {
