@@ -204,9 +204,6 @@ export class Api {
       console.warn(e);
       return Promise.reject(e);
     }
-
-    console.log('order feed json', JSON.stringify(orderFeed));
-
     return orderFeed;
   }
 
