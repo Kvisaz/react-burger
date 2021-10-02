@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo } from 'react';
-import styles from './orderFeed.module.css';
+import styles from './order-feed.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateOrderFeed } from '../../services/actions';
 import { RootState } from '../../services/store';
+import { OrderFeedItem } from '../../components/order-feed-item/order-feed-item';
 
 export function OrderFeed() {
   const dispatch = useDispatch();
@@ -18,9 +19,11 @@ export function OrderFeed() {
     <div className={`text ${styles.main}`}>
       <h1 className='text_type_main-medium'>Лента заказов</h1>
       {hasOrders ? (
-        orderFeed.map(order => (
-          <div key={order._id}>{order.number}. {order.name}</div>
-        ))
+        <div className={styles.list}>
+          {orderFeed.map(order => (
+            <OrderFeedItem key={order._id} {...order} />
+          ))}
+        </div>
       ) : (
         <div className='text text_type_main-small text_color_inactive'>Вы пока ничего не заказали</div>
       )}

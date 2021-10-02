@@ -1,0 +1,24 @@
+.main {
+    background: #1C1C21;
+    border-radius: 40px;
+    box-sizing: content-box;
+    padding: 24px;
+    width: 584px;
+    display: flex;
+    flex-direction: column;
+    align-content: space-around;
+    gap: 24px;
+}
+
+.rowName {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
