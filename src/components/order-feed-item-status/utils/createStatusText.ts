@@ -1,4 +1,4 @@
-import styles from '../orderFeedItemStatus.module.css';
+import styles from '../order-feed-item-status.module.css';
 
 const STATUS_TEXTS: Record<string, string> = {
   'done': 'Выполнен',
