@@ -7,26 +7,26 @@ import { IOrderFeedItemProps, OrderFeedItemPart } from '../common/order-feed-ite
 
 interface IProps {
   ingredients: IBurgerPart[];
+  maxLength: number;
 }
 
 OrderFeedItemParts.propTypes = {
   ingredients: PropTypes.arrayOf(IBurgerPartPropType),
+  maxLength: PropTypes.number.isRequired
 };
 
-const MAX_LENGTH = 2;
-
-export function OrderFeedItemParts({ ingredients }: IProps) {
+export function OrderFeedItemParts({ ingredients, maxLength }: IProps) {
 
   const itemProps: IOrderFeedItemProps [] = useMemo(() => {
     const LENGTH = ingredients.length;
-    const overFlow = LENGTH - MAX_LENGTH;
+    const overFlow = LENGTH - maxLength;
     const isOverFlow = overFlow > 0;
 
-    let nextZindex = MAX_LENGTH + 1;
+    let nextZindex = maxLength + 1;
 
     const props: IOrderFeedItemProps[] = [
       ...ingredients
-        .slice(0, MAX_LENGTH)
+        .slice(0, maxLength)
         .map((part) => (
           {
             imageUrl: part.image_mobile,
@@ -40,7 +40,7 @@ export function OrderFeedItemParts({ ingredients }: IProps) {
       zIndex:  nextZindex--,
     });
     return props;
-  }, [ingredients]);
+  }, [ingredients, maxLength]);
 
   return (
     <div className={styles.main}>

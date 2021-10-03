@@ -28,7 +28,7 @@ export function OrderFeedItem({ name, isStatusVisible, number, ingredients, stat
         <div className='text text_type_main-medium'>{name}</div>
         {isStatusVisible && (<OrderFeedItemStatus status={status} />)}
       </div>
-      <OrderFeedItemParts ingredients={ingredients} />
+      <OrderFeedItemParts ingredients={ingredients} maxLength={6} />
     </div>
   );
 }
