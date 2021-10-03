@@ -5,6 +5,7 @@ import { Routes } from '../../services/Routes';
 import { useDispatch } from 'react-redux';
 import { logoutActionCreator } from '../../services/actions';
 import { ProfileEditor } from '../../components/profile-editor/profile-editor';
+import { OrderFeed } from '../../components/order-feed/order-feed';
 
 export function Profile() {
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ export function Profile() {
         <Switch>
           <Route path={Routes.profile} exact={true}><ProfileEditor /></Route>
           <Route path={Routes.profileOrders} exact={true}>
-            <div>profileOrders</div>
+            <OrderFeed withStatus={true} />
           </Route>
         </Switch>
       </div>

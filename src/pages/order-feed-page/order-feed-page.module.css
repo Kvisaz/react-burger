@@ -12,8 +12,9 @@
 }
 
 .colLeft {
-
+    flex: 1;
 }
 
 .colRight {
+    flex: 1;
 }

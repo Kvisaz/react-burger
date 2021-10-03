@@ -2,7 +2,7 @@
     margin-left: 24px;
     display: flex;
     gap: 60px;
-    width: 860px;
+    height: 100%;
 }
 
 .col_left {
@@ -13,10 +13,8 @@
 }
 
 .col_right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 24px;
+    flex: 1;
+    height: 100%;
 }
 
 .links a, .links span {
