@@ -94,7 +94,7 @@ export function Profile() {
               <div className={styles.col_left}>
                 <div className={`text text_type_main-medium ${styles.links}`}>
                   <span>Профиль</span>
-                  <Link to={Routes.orderHistory} className='text_color_inactive'>История заказов</Link>
+                  <Link to={Routes.profileOrders} className='text_color_inactive'>История заказов</Link>
                   <span onClick={onLogoutClick}
                         className={`text_color_inactive ${styles.link}`}>Выход</span>
                 </div>

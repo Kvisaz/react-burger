@@ -99,8 +99,8 @@ function App() {
           <Route path={Routes.orderFeed} exact={true}><OrderFeedPage /></Route>
           <Route path={Routes.orderFeedDetails} exact={true}><OrderFeedDetails /></Route>
           <ProtectedRoute path={Routes.profile} exact={true}><Profile /></ProtectedRoute>
-          <ProtectedRoute path={Routes.orderHistory} exact={true}><OrderHistory /></ProtectedRoute>
-          <ProtectedRoute path={Routes.orderHistoryDetails} exact={true}><OrderHistoryDetails /></ProtectedRoute>
+          <ProtectedRoute path={Routes.profileOrders} exact={true}><OrderHistory /></ProtectedRoute>
+          <ProtectedRoute path={Routes.profileOrdersDetails} exact={true}><OrderHistoryDetails /></ProtectedRoute>
           <Route path={Routes.ingredient} exact={true}>
             <IngredientDetails />
           </Route>
