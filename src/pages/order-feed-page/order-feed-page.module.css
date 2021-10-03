@@ -1,6 +1,14 @@
 .main {
     display: flex;
+    flex-direction: column;
     height: 100%;
+    overflow: hidden;
+}
+
+.columns {
+    display: flex;
+    gap: 60px;
+    overflow: hidden;
 }
 
 .colLeft {

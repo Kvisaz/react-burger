@@ -23,8 +23,7 @@ export function OrderFeed() {
   }, [dispatch]);
 
   return (
-    <div className={`text ${styles.main}`}>
-      <h1 className='text_type_main-medium'>Лента заказов</h1>
+    <>
       {hasOrders ? (
         <div className={styles.list}>
           {orderProps.map(order => (
@@ -34,7 +33,7 @@ export function OrderFeed() {
       ) : (
         <div className='text text_type_main-small text_color_inactive'>Вы пока ничего не заказали</div>
       )}
-    </div>
+    </>
   );
 }
 
