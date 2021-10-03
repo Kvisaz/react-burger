@@ -17,7 +17,7 @@ export function Profile() {
   return (
     <div className={styles.content}>
       <div className={styles.col_left}>
-        <div className={`text text_type_main-medium ${styles.links}`}>
+        <div className={`text text_type_main-medium mt-30 ${styles.links}`}>
           <NavLink to={Routes.profile} exact={true} className='text_color_inactive'
                    activeClassName={styles.active}>Профиль</NavLink>
           <NavLink to={Routes.profileOrders} exact={true} className='text_color_inactive'
