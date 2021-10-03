@@ -5,7 +5,6 @@ export const Routes = {
   forgotPassword: '/forgot-password',
   resetPassword: '/reset-password',
   profile: '/profile',
-  profileChange: '/profile/profile',
   orderPage: '/order/:id',
   ingredient: '/ingredients/:id',
   ingredientLinkCreator: (id: string) => `/ingredients/${id}`,

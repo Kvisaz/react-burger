@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../services/store';
 import {
   IBurgerActionType,
-  logoutActionCreator,
   requestProfileActionCreator,
   updateProfileActionCreator,
 } from '../../services/actions';
@@ -66,10 +65,6 @@ export function ProfileEditor() {
 
   const onResetClick = useCallback(() => {
     dispatch({ type: IBurgerActionType.PROFILE_PAGE_RESET });
-  }, [dispatch]);
-
-  const onLogoutClick = useCallback(() => {
-    dispatch(logoutActionCreator());
   }, [dispatch]);
 
   const buttonClass = useMemo(() =>

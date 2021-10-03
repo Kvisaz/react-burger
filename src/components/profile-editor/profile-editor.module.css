@@ -1,14 +1,14 @@
 .main {
+    margin-left: 68px;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
     gap: 24px;
 }
-
 
 .buttons {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 28px;
 }
 

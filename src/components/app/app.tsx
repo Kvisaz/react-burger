@@ -15,7 +15,6 @@ import {
   Main,
   OrderFeedPage,
   OrderFeedDetails,
-  OrderHistory,
   OrderHistoryDetails,
   Page404,
   Profile,
@@ -98,9 +97,8 @@ function App() {
           <Route path={Routes.resetPassword} exact={true}><ResetPassword /></Route>
           <Route path={Routes.orderFeed} exact={true}><OrderFeedPage /></Route>
           <Route path={Routes.orderFeedDetails} exact={true}><OrderFeedDetails /></Route>
-          <ProtectedRoute path={Routes.profile} exact={true}><Profile /></ProtectedRoute>
-          <ProtectedRoute path={Routes.profileOrders} exact={true}><OrderHistory /></ProtectedRoute>
           <ProtectedRoute path={Routes.profileOrdersDetails} exact={true}><OrderHistoryDetails /></ProtectedRoute>
+          <ProtectedRoute path={Routes.profile}><Profile /></ProtectedRoute>
           <Route path={Routes.ingredient} exact={true}>
             <IngredientDetails />
           </Route>
