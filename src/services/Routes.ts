@@ -11,10 +11,8 @@ export const Routes = {
   orderPageLinkCreator: (id: number) => `/order/${id}`,
   profileOrders: '/profile/orders',
   profileOrdersDetails: '/profile/orders/:id',
-  profileOrdersDetailsLinkCreator: (id: number) => `/profile/order/${id}`,
   orderFeed: '/feed',
   orderFeedDetails: '/feed/:id',
-  orderFeedDetailsLinkCreator: (id: number) => `/feed/${id}`,
 };
 
 
