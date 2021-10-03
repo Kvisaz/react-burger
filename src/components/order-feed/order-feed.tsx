@@ -7,8 +7,17 @@ import { IOrderFeedItemProps, OrderFeedItem } from '../order-feed-item/order-fee
 import { IOrderData } from '../../services/model/IOrderData';
 import { IBurgerPart } from '../../services/model/IBurgerPart';
 import { getBurgerParts } from '../../services/converters/getBurgerParts';
+import PropTypes from 'prop-types';
 
-export function OrderFeed() {
+export interface IOrderFeedProps {
+  withStatus?: boolean
+}
+
+OrderFeed.propTypes = {
+  withStatus: PropTypes.bool
+}
+
+export function OrderFeed({withStatus}: IOrderFeedProps) {
   const dispatch = useDispatch();
 
   const { orderFeed, ingredients } = useSelector((state: RootState) => ({ ...state }));
@@ -27,7 +36,7 @@ export function OrderFeed() {
       {hasOrders ? (
         <div className={styles.list}>
           {orderProps.map(order => (
-            <OrderFeedItem key={order.id} {...order} />
+            <OrderFeedItem key={order.id} withStatus={withStatus} {...order} />
           ))}
         </div>
       ) : (

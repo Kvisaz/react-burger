@@ -12,10 +12,10 @@ export interface IOrderFeedItemProps {
   ingredients: IBurgerPart[];
   status: string;
   createdAt: string;
-  isStatusVisible?: boolean;
+  withStatus?: boolean;
 }
 
-export function OrderFeedItem({ name, isStatusVisible, number, ingredients, status, createdAt }: IOrderFeedItemProps) {
+export function OrderFeedItem({ name, withStatus, number, ingredients, status, createdAt }: IOrderFeedItemProps) {
   const dateText = useMemo(() => formatDate(createdAt), [createdAt]);
 
   return (
@@ -26,7 +26,7 @@ export function OrderFeedItem({ name, isStatusVisible, number, ingredients, stat
       </div>
       <div className={styles.rowName}>
         <div className='text text_type_main-medium'>{name}</div>
-        {isStatusVisible && (<OrderFeedItemStatus status={status} />)}
+        {withStatus && (<OrderFeedItemStatus status={status} />)}
       </div>
       <OrderFeedItemParts ingredients={ingredients} maxLength={6} />
     </div>
