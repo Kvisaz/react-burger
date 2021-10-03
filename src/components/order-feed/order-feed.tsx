@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo } from 'react';
-import styles from './order-feed.module.css';
 import { useDispatch, useSelector } from 'react-redux';
+import styles from './order-feed.module.css';
 import { updateOrderFeed } from '../../services/actions';
 import { RootState } from '../../services/store';
-import { IOrderFeedItemProps, OrderFeedItem } from '../../components/order-feed-item/order-feed-item';
+import { IOrderFeedItemProps, OrderFeedItem } from '../order-feed-item/order-feed-item';
 import { IOrderData } from '../../services/model/IOrderData';
 import { IBurgerPart } from '../../services/model/IBurgerPart';
 import { getBurgerParts } from '../../services/converters/getBurgerParts';

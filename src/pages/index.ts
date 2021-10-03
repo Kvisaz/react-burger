@@ -6,7 +6,7 @@ import { Page404 } from './page-404/page-404';
 import { Profile } from './profile/profile';
 import { Register } from './register/register';
 import { ResetPassword } from './reset-password/reset-password';
-import { OrderFeed } from './order-feed/order-feed';
+import { OrderFeedPage } from './order-feed-page/order-feed-page';
 import { OrderFeedDetails } from './order-feed-details/order-feed-details';
 import { OrderHistory } from './order-history/order-history';
 import { OrderHistoryDetails } from './order-history-details/order-history-details';
@@ -16,7 +16,7 @@ export {
   Main,
   Login,
   Ingredient,
-  OrderFeed,
+  OrderFeedPage,
   OrderFeedDetails,
   OrderHistory,
   OrderHistoryDetails,

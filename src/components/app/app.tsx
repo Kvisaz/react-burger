@@ -13,7 +13,7 @@ import {
   ForgotPassword,
   Login,
   Main,
-  OrderFeed,
+  OrderFeedPage,
   OrderFeedDetails,
   OrderHistory,
   OrderHistoryDetails,
@@ -96,7 +96,7 @@ function App() {
           <ProtectedAuthRoute path={Routes.register} exact={true}><Register /></ProtectedAuthRoute>
           <ProtectedAuthRoute path={Routes.forgotPassword} exact={true}><ForgotPassword /></ProtectedAuthRoute>
           <Route path={Routes.resetPassword} exact={true}><ResetPassword /></Route>
-          <Route path={Routes.orderFeed} exact={true}><OrderFeed /></Route>
+          <Route path={Routes.orderFeed} exact={true}><OrderFeedPage /></Route>
           <Route path={Routes.orderFeedDetails} exact={true}><OrderFeedDetails /></Route>
           <ProtectedRoute path={Routes.profile} exact={true}><Profile /></ProtectedRoute>
           <ProtectedRoute path={Routes.orderHistory} exact={true}><OrderHistory /></ProtectedRoute>
