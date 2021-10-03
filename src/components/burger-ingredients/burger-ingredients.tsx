@@ -2,11 +2,11 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import styles from './burger-ingredients.module.css';
 import { BurgerIngredientsTabs } from './components/burger-ingredients-tabs/burger-ingredients-tabs';
 import { BurgerIngredientsSection } from './components/burger-ingredients-section/burger-ingredients-section';
-import { IBurgerPart } from '../../model/IBurgerPart';
+import { IBurgerPart } from '../../services/model/IBurgerPart';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../services/store';
 import { IBurgerActionType } from '../../services/actions';
-import { IAppState } from '../../model/IAppState';
+import { IAppState } from '../../services/model/IAppState';
 
 export function BurgerIngredients() {
 

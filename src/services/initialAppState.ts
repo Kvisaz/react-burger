@@ -1,4 +1,4 @@
-import { IAppState } from '../model/IAppState';
+import { IAppState } from './model/IAppState';
 
 // todo delete
 import MOCK_ORDER_FEED from '../../src/utils/orderFeedMock.json';

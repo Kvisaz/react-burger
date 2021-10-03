@@ -1,6 +1,6 @@
 import { IBurgerPart } from './IBurgerPart';
 import { IConstructorElementData } from './IConstructorElementData';
-import { IApiOrderResult } from '../services/Api';
+import { IApiOrderResult } from '../Api';
 import { IOrderData } from './IOrderData';
 
 export interface IAppState {

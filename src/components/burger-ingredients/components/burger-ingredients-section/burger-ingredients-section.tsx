@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './burger-ingredients-section.module.css';
-import { IBurgerPart, IBurgerPartPropType } from '../../../../model/IBurgerPart';
+import { IBurgerPart, IBurgerPartPropType } from '../../../../services/model/IBurgerPart';
 import { BurgerIngredientsItem } from '../burger-ingredients-item/burger-ingredients-item';
 import PropTypes from 'prop-types';
 

@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styles from './order-feed-item-parts.module.css';
-import { IBurgerPart, IBurgerPartPropType } from '../../model/IBurgerPart';
+import { IBurgerPart, IBurgerPartPropType } from '../../services/model/IBurgerPart';
 import { Assets } from '../../Assets';
 import { IOrderFeedItemProps, OrderFeedItemPart } from '../common/order-feed-item-part/order-feed-item-part';
 
@@ -27,7 +27,7 @@ export function OrderFeedItemParts({ ingredients }: IProps) {
     const props: IOrderFeedItemProps[] = [
       ...ingredients
         .slice(0, MAX_LENGTH)
-        .map((part, index) => (
+        .map((part) => (
           {
             imageUrl: part.image_mobile,
             zIndex: nextZindex--,

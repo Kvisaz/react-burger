@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients-item.module.css';
-import { IBurgerPart, IBurgerPartPropType } from '../../../../model/IBurgerPart';
+import { IBurgerPart, IBurgerPartPropType } from '../../../../services/model/IBurgerPart';
 import { MoneyCounter } from '../../../common/money-counter/money-counter';
 import { RootState } from '../../../../services/store';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Routes } from '../../../../services/Routes';
 import { setModalUrlOn } from '../../../../services/actions';
 

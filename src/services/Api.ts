@@ -1,4 +1,4 @@
-import { IBurgerPart } from '../model/IBurgerPart';
+import { IBurgerPart } from './model/IBurgerPart';
 import {
   deleteTokenCookies,
   getTokenAuth,
@@ -6,7 +6,7 @@ import {
   setTokenAuthCookie,
   setTokenRefreshCookie,
 } from './cookieTokens';
-import { IOrderData } from '../model/IOrderData';
+import { IOrderData } from './model/IOrderData';
 
 export class Api {
   constructor(private readonly endpoints: IApiEndpoints) {

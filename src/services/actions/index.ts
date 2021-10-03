@@ -1,4 +1,4 @@
-import { IBurgerPart } from '../../model/IBurgerPart';
+import { IBurgerPart } from '../model/IBurgerPart';
 import { IGetState } from '../store';
 import {
   Api,
@@ -15,7 +15,7 @@ import {
   IApiTokenData,
   IApiTokenResponse,
 } from '../Api';
-import { IOrderData } from '../../model/IOrderData';
+import { IOrderData } from '../model/IOrderData';
 
 export type BurgerAction =
   | { type: IBurgerActionType.DATA_REQUEST }

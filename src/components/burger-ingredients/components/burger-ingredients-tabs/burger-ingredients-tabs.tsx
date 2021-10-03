@@ -4,7 +4,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../../services/store';
-import { IAppState } from '../../../../model/IAppState';
+import { IAppState } from '../../../../services/model/IAppState';
 import { IBurgerActionType } from '../../../../services/actions';
 
 

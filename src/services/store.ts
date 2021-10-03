@@ -1,6 +1,6 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
-import { IAppState } from '../model/IAppState';
+import { IAppState } from './model/IAppState';
 import { mainReducer } from './reducers';
 
 declare global {

@@ -1,12 +1,12 @@
 import React from 'react';
 import styles from './burger-constructor.module.css';
 import { BurgerConstructorOrder } from './components/burger-constructor-order/burger-constructor-order';
-import { IConstructorElementData, IConstructorElementType } from '../../model/IConstructorElementData';
+import { IConstructorElementData, IConstructorElementType } from '../../services/model/IConstructorElementData';
 import { onIngredientDropActionCreator } from '../../services/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../services/store';
 import { useDrop } from 'react-dnd';
-import { IdObject } from '../../model/IdObject';
+import { IdObject } from '../../services/model/IdObject';
 import { DraggableBurgerConstructorItem } from './components/draggable-burger-constructor-item/draggable-burger-constructor-item';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 

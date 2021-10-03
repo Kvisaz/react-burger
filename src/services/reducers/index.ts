@@ -1,7 +1,7 @@
-import { IAppState } from '../../model/IAppState';
+import { IAppState } from '../model/IAppState';
 import { BurgerAction, IBurgerActionType, IRemovePayLoad } from '../actions';
-import { IBurgerPart } from '../../model/IBurgerPart';
-import { IConstructorElementData } from '../../model/IConstructorElementData';
+import { IBurgerPart } from '../model/IBurgerPart';
+import { IConstructorElementData } from '../model/IConstructorElementData';
 import { InitialAppState } from '../initialAppState';
 import { nanoid } from 'nanoid';
 import {
