@@ -42,7 +42,7 @@ export function OrderFeedItem({ id, name, withStatus, number, ingredients, statu
         <div className='text text_type_main-medium'>{name}</div>
         {withStatus && (<OrderFeedItemStatus status={status} />)}
       </div>
-      <OrderFeedItemParts ingredients={ingredients} maxLength={6} />
+      <OrderFeedItemParts ingredients={ingredients} maxLength={5} />
     </div>
   );
 }

@@ -1,24 +1,22 @@
 import React, { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './order-feed-details.module.css';
-import PropTypes from 'prop-types';
 import { IOrderDetailsUrlParams } from '../../services/Routes';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../services/store';
 import { MoneyCounter } from '../common/money-counter/money-counter';
 import { OrderData } from '../order-data/order-data';
 import { OrderFeedDetailsPartList } from './components/order-feed-details-part-list/order-feed-details-part-list';
+import { OrderFeedItemStatus } from '../order-feed-item-status/order-feed-item-status';
 
 export interface IOrderFeedDetailsProps {
-  withStatus?: boolean;
+
 }
 
-OrderFeedDetails.propTypes = {
-  withStatus: PropTypes.bool,
-};
+OrderFeedDetails.propTypes = {};
 
 
-export function OrderFeedDetails({ withStatus }: IOrderFeedDetailsProps) {
+export function OrderFeedDetails() {
   const { id } = useParams<IOrderDetailsUrlParams>();
   const { orderFeed } = useSelector((state: RootState) => ({ ...state }));
   const order = useMemo(() => orderFeed.find(o => o.id === id), [orderFeed, id]);
@@ -32,15 +30,15 @@ export function OrderFeedDetails({ withStatus }: IOrderFeedDetailsProps) {
 
   return (<div className={styles.main}>
     <div className={styles.content}>
-      <div>#{order.number}</div>
-      <div>
-        <div>{order.name}</div>
-        {withStatus && (<div> {order.status} </div>)}
+      <span className={`text text_type_digits-default ${styles.center}`}>#{order.number}</span>
+      <div className='mt-10'>
+        <div className='text text_type_main-medium'>{order.name}</div>
+        <div className='mt-1'><OrderFeedItemStatus status={order.status} /></div>
       </div>
 
-      <div>Состав:</div>
+      <div className='mt-15 mb-6 text text_type_main-medium'>Состав:</div>
       <OrderFeedDetailsPartList ingredients={order.ingredients} />
-      <div>
+      <div className={styles.row}>
         <OrderData data={order.createdAt} />
         <div><MoneyCounter sum={order.ingredients.reduce((acc, next) => acc + next.price, 0)} /></div>
       </div>

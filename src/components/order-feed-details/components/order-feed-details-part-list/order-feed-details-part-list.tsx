@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
-import { IBurgerPart, IBurgerPartPropType } from '../../../../services/model/IBurgerPart';
 import PropTypes from 'prop-types';
+import { IBurgerPart, IBurgerPartPropType } from '../../../../services/model/IBurgerPart';
 import { countBurgerParts } from '../../../../services/converters/countBurgerParts';
+import styles from './order-feed-details-part-list.module.css'
 
 interface IProps {
   ingredients: IBurgerPart[];
@@ -17,7 +18,7 @@ export function OrderFeedDetailsPartList({ ingredients }: IProps) {
   const counted = useMemo(() => countBurgerParts(ingredients), [ingredients]);
 
   return (
-    <div>
+    <div className={styles.main}>
       {counted.map(part => (
         <div key={part._id}>
           <div>{part.name}</div>

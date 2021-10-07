@@ -96,8 +96,7 @@ function App() {
           <Route path={Routes.resetPassword} exact={true}><ResetPassword /></Route>
           <Route path={Routes.orderFeed} exact={true}><OrderFeedPage /></Route>
           <Route path={Routes.orderFeedDetails} exact={true}><OrderFeedDetails /></Route>
-          <ProtectedRoute path={Routes.profileOrdersDetails} exact={true}><OrderFeedDetails
-            withStatus={true} /></ProtectedRoute>
+          <ProtectedRoute path={Routes.profileOrdersDetails} exact={true}><OrderFeedDetails /></ProtectedRoute>
           <ProtectedRoute path={Routes.profile}><Profile /></ProtectedRoute>
           <Route path={Routes.ingredient} exact={true}>
             <IngredientDetails />
