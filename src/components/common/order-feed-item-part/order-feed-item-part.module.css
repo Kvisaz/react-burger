@@ -15,8 +15,11 @@
     background-size: cover;
     width: 64px;
     height: 64px;
-    margin-right: -16px;
     border-radius: 100px;
+}
+
+.overlap {
+    margin-right: -16px;
 }
 
 .img {

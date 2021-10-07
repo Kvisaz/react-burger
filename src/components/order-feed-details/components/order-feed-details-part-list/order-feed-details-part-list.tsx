@@ -25,7 +25,7 @@ export function OrderFeedDetailsPartList({ ingredients }: IProps) {
         <div key={part._id} className={styles.row}>
           <div className={styles.rowPart}>
             <OrderFeedItemPart imageUrl={part.image_mobile} zIndex={1} />
-            <div className='ml-8 text text_type_main-default'>{part.name}</div>
+            <div className='ml-4 text text_type_main-default'>{part.name}</div>
           </div>
           <div className={styles.rowPart}>
             <div className='text text_type_digits-default mr-2'>{part.amount} x {part.price}</div>

@@ -48,7 +48,7 @@ export function OrderFeedItemParts({ ingredients, maxLength }: IProps) {
         {
           itemProps
             .map((props, index) => (
-              <OrderFeedItemPart key={index} {...props} />
+              <OrderFeedItemPart key={index} overlap={true} {...props} />
             ))
         }
       </div>
