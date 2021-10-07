@@ -8,13 +8,7 @@ import { MoneyCounter } from '../common/money-counter/money-counter';
 import { OrderData } from '../order-data/order-data';
 import { OrderFeedDetailsPartList } from './components/order-feed-details-part-list/order-feed-details-part-list';
 import { OrderFeedItemStatus } from '../order-feed-item-status/order-feed-item-status';
-
-export interface IOrderFeedDetailsProps {
-
-}
-
-OrderFeedDetails.propTypes = {};
-
+import { formatOrderNumber } from '../../services/converters/formatOrderNumber';
 
 export function OrderFeedDetails() {
   const { id } = useParams<IOrderDetailsUrlParams>();
@@ -27,10 +21,9 @@ export function OrderFeedDetails() {
     </div>
   );
 
-
   return (<div className={styles.main}>
     <div className={styles.content}>
-      <span className={`text text_type_digits-default ${styles.center}`}>#{order.number}</span>
+        <span className={`text text_type_digits-default ${styles.center}`}>#{formatOrderNumber(order.number)}</span>
       <div className='mt-10'>
         <div className='text text_type_main-medium'>{order.name}</div>
         <div className='mt-1'><OrderFeedItemStatus status={order.status} /></div>
