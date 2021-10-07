@@ -1,7 +1,5 @@
 import { IAppState } from './model/IAppState';
 
-// todo delete
-import MOCK_ORDER_FEED from '../../src/utils/orderFeedMock.json';
 
 export const InitialAppState: IAppState = {
   sum: 0,
@@ -13,9 +11,7 @@ export const InitialAppState: IAppState = {
   selectedBun: undefined,
   selectedParts: [],
   orderSuccessResults: [],
-  orderFeed: [
-    ...MOCK_ORDER_FEED
-  ],
+  orderFeed: [],
   isOrderRequest: false,
   isOrderFailed: false,
   isOrderSuccess: false,

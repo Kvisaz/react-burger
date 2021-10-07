@@ -1,4 +1,17 @@
 import { IBurgerPart } from '../model/IBurgerPart';
+import { IOrderData, IRichOrderData } from '../model/IOrderData';
+
+
+export function mapApiOrderData(data: IOrderData, ingredients: IBurgerPart[]): IRichOrderData {
+  return {
+    createdAt: data.createdAt,
+    id: data._id,
+    name: data.name,
+    number: data.number,
+    status: data.status,
+    ingredients: getBurgerParts(data.ingredients, ingredients),
+  };
+}
 
 export function getBurgerParts(ids: string[], ingredients: IBurgerPart[]): IBurgerPart[] {
   return removeDuplicates(

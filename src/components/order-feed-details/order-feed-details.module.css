@@ -1,0 +1,12 @@
+.main {
+    height: 100%;
+        background: #4C4CFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    background: #8c8cb6;
+    width: 640px;
+}

@@ -15,7 +15,8 @@ import {
   IApiTokenData,
   IApiTokenResponse,
 } from '../Api';
-import { IOrderData } from '../model/IOrderData';
+import { IRichOrderData } from '../model/IOrderData';
+import { mapApiOrderData } from '../converters/getBurgerParts';
 
 export type BurgerAction =
   | { type: IBurgerActionType.DATA_REQUEST }
@@ -63,7 +64,7 @@ export type BurgerAction =
   | { type: IBurgerActionType.SET_MODAL_URL, isModal: boolean }
   | { type: IBurgerActionType.AUTH_CHECK_START }
   | { type: IBurgerActionType.AUTH_CHECK_END, data: IApiAuthCheckResult }
-  | { type: IBurgerActionType.ORDER_FEED_UPDATE, orderFeed: IOrderData[] }
+  | { type: IBurgerActionType.ORDER_FEED_UPDATE, orderFeed: IRichOrderData[] }
 
 type IBurgerDispatch = (action: BurgerAction) => any;
 
@@ -287,9 +288,11 @@ export const setModalUrlOff = () =>
   };
 
 export const updateOrderFeed = () =>
-  async (dispatch: IBurgerDispatch) => {
+  async (dispatch: IBurgerDispatch, getState: IGetState) => {
     try {
-      const orderFeed = await API.fetchOrdersFeed();
+      const apiOrderFeed = await API.fetchOrdersFeed();
+      const { ingredients } = getState();
+      const orderFeed = apiOrderFeed.map(order => mapApiOrderData(order, ingredients));
       dispatch({ type: IBurgerActionType.ORDER_FEED_UPDATE, orderFeed });
     } catch (e) {
       console.warn(e);

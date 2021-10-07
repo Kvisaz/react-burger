@@ -3,10 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './order-feed.module.css';
 import { updateOrderFeed } from '../../services/actions';
 import { RootState } from '../../services/store';
-import { IOrderFeedItemProps, OrderFeedItem } from '../order-feed-item/order-feed-item';
-import { IOrderData } from '../../services/model/IOrderData';
-import { IBurgerPart } from '../../services/model/IBurgerPart';
-import { getBurgerParts } from '../../services/converters/getBurgerParts';
+import { OrderFeedItem } from '../order-feed-item/order-feed-item';
 import PropTypes from 'prop-types';
 
 export interface IOrderFeedProps {
@@ -20,12 +17,8 @@ OrderFeed.propTypes = {
 export function OrderFeed({withStatus}: IOrderFeedProps) {
   const dispatch = useDispatch();
 
-  const { orderFeed, ingredients } = useSelector((state: RootState) => ({ ...state }));
+  const { orderFeed } = useSelector((state: RootState) => ({ ...state }));
   const hasOrders = useMemo(() => orderFeed.length > 0, [orderFeed]);
-
-  const orderProps: IOrderFeedItemProps[] = useMemo(
-    () => orderFeed.map(data => mapOrderItemProps(data, ingredients)),
-    [orderFeed, ingredients]);
 
   useEffect(() => {
     dispatch(updateOrderFeed());
@@ -35,7 +28,7 @@ export function OrderFeed({withStatus}: IOrderFeedProps) {
     <>
       {hasOrders ? (
         <div className={styles.list}>
-          {orderProps.map(order => (
+          {orderFeed.map(order => (
             <OrderFeedItem key={order.id} withStatus={withStatus} {...order} />
           ))}
         </div>
@@ -44,15 +37,4 @@ export function OrderFeed({withStatus}: IOrderFeedProps) {
       )}
     </>
   );
-}
-
-function mapOrderItemProps(data: IOrderData, ingredients: IBurgerPart[]): IOrderFeedItemProps {
-  return {
-    createdAt: data.createdAt,
-    id: data._id,
-    name: data.name,
-    number: data.number,
-    status: data.status,
-    ingredients: getBurgerParts(data.ingredients, ingredients),
-  };
 }
