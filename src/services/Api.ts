@@ -231,6 +231,7 @@ export class Api {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': getTokenAuth() ?? '',
       },
       body: JSON.stringify(data),
     })
