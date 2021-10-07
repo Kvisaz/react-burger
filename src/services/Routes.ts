@@ -15,6 +15,9 @@ export const Routes = {
   orderFeedDetails: '/feed/:id',
 };
 
+export interface IOrderDetailsUrlParams {
+  id: string
+}
 
 export interface LocationState {
   modalIngredient?: boolean;

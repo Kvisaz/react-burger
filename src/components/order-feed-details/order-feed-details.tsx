@@ -1,6 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useParams } from 'react-router-dom';
 import styles from './order-feed-details.module.css';
 import PropTypes from 'prop-types';
+import { IOrderDetailsUrlParams } from '../../services/Routes';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../services/store';
+import { MoneyCounter } from '../common/money-counter/money-counter';
+import { OrderData } from '../order-data/order-data';
+import { OrderFeedDetailsPartList } from './components/order-feed-details-part-list/order-feed-details-part-list';
 
 export interface IOrderFeedDetailsProps {
   withStatus?: boolean;
@@ -12,25 +19,30 @@ OrderFeedDetails.propTypes = {
 
 
 export function OrderFeedDetails({ withStatus }: IOrderFeedDetailsProps) {
+  const { id } = useParams<IOrderDetailsUrlParams>();
+  const { orderFeed } = useSelector((state: RootState) => ({ ...state }));
+  const order = useMemo(() => orderFeed.find(o => o.id === id), [orderFeed, id]);
+
+  if (order == null) return (
+    <div>
+      Сожалею, заказ с id '#{id}' не найден!
+    </div>
+  );
+
+
   return (<div className={styles.main}>
     <div className={styles.content}>
-      <div>#034533</div>
+      <div>#{order.number}</div>
       <div>
-        <div>Black Hole Singularity острый бургер</div>
-        {withStatus && (<div> Выполнен </div>)}
+        <div>{order.name}</div>
+        {withStatus && (<div> {order.status} </div>)}
       </div>
 
       <div>Состав:</div>
+      <OrderFeedDetailsPartList ingredients={order.ingredients} />
       <div>
-        <div>Флюоресцентная булка R2-D3</div>
-        <div>Флюоресцентная булка R2-D3</div>
-        <div>Флюоресцентная булка R2-D3</div>
-        <div>Флюоресцентная булка R2-D3</div>
-      </div>
-
-      <div>
-        <div>Вчера, 13:50 i-GMT+3</div>
-        <div>510</div>
+        <OrderData data={order.createdAt} />
+        <div><MoneyCounter sum={order.ingredients.reduce((acc, next) => acc + next.price, 0)} /></div>
       </div>
     </div>
   </div>);

@@ -15,6 +15,10 @@ export interface IBurgerPart {
   __v: number; // 0
 }
 
+export interface IBurgerPartCounted extends IBurgerPart{
+  amount: number;
+}
+
 export const IBurgerPartPropType = PropTypes.exact({
   _id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
@@ -28,5 +32,10 @@ export const IBurgerPartPropType = PropTypes.exact({
   image_mobile: PropTypes.string.isRequired,
   image_large: PropTypes.string.isRequired,
   __v: PropTypes.number.isRequired,
+  amount: PropTypes.number.isRequired,
+});
+
+export const IBurgerPartCountedPropType = PropTypes.exact({
+  ...IBurgerPartPropType,
   amount: PropTypes.number.isRequired,
 });
