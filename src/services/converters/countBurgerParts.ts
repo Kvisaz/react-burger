@@ -9,6 +9,13 @@ export function countBurgerParts(parts: IBurgerPart[]): IBurgerPartCounted[] {
       ...part,
       amount: 1,
     };
+
+    if(part.type==='bun') {
+      idParts[_id] = {
+        ...part,
+        amount: 2,
+      }
+    }
   });
   return Object.values(idParts);
 }

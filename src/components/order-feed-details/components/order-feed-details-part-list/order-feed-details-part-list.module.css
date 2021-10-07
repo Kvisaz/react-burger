@@ -1,3 +1,15 @@
 .main {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
 
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.rowPart {
+    display: flex;
+    align-items: center;
 }
