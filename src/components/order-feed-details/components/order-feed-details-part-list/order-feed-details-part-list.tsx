@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { IBurgerPart, IBurgerPartPropType } from '../../../../services/model/IBurgerPart';
 import { countBurgerParts } from '../../../../services/converters/countBurgerParts';
-import styles from './order-feed-details-part-list.module.css'
+import styles from './order-feed-details-part-list.module.css';
 import { OrderFeedItemPart } from '../../../common/order-feed-item-part/order-feed-item-part';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -19,8 +19,12 @@ export function OrderFeedDetailsPartList({ ingredients }: IProps) {
 
   const counted = useMemo(() => countBurgerParts(ingredients), [ingredients]);
 
+  const listClassName = useMemo(() => ingredients.length <= 3 ?
+    styles.main : `${styles.main} ${styles.scrollable}`,
+    [ingredients.length]);
+
   return (
-    <div className={styles.main}>
+    <div className={listClassName}>
       {counted.map(part => (
         <div key={part._id} className={styles.row}>
           <div className={styles.rowPart}>

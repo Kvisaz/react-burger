@@ -1,17 +1,24 @@
 .main {
     height: 228px;
-    overflow-y: scroll;
     display: flex;
     flex-direction: column;
     gap: 16px;
+}
+
+.scrollable {
+    overflow-y: scroll;
 }
 
 .row {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.scrollable .row {
     margin-right: 12px;
 }
+
 .rowPart {
     display: flex;
     align-items: center;
