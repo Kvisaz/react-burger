@@ -1,7 +1,7 @@
 import { IBurgerPart } from './IBurgerPart';
 import { IConstructorElementData } from './IConstructorElementData';
 import { IApiOrderResult } from '../Api';
-import { IRichOrderData } from './IOrderData';
+import { IOrderFeedItem } from './IOrderFeedItem';
 
 export interface IAppState {
   isIngredientsRequest: boolean;
@@ -21,7 +21,7 @@ export interface IAppState {
   orderSuccessResults: IApiOrderResult[];
 
   // общая лента заказов
-  orderFeed: IRichOrderData[];
+  orderFeed: IOrderFeedItem[];
 
   isOrderRequest: boolean;
   isOrderSuccess: boolean;

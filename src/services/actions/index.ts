@@ -15,7 +15,7 @@ import {
   IApiTokenData,
   IApiTokenResponse,
 } from '../Api';
-import { IRichOrderData } from '../model/IOrderData';
+import { IOrderFeedItem } from '../model/IOrderFeedItem';
 import { mapApiOrderData } from '../converters/getBurgerParts';
 
 export type BurgerAction =
@@ -64,7 +64,7 @@ export type BurgerAction =
   | { type: IBurgerActionType.SET_MODAL_URL, isModal: boolean }
   | { type: IBurgerActionType.AUTH_CHECK_START }
   | { type: IBurgerActionType.AUTH_CHECK_END, data: IApiAuthCheckResult }
-  | { type: IBurgerActionType.ORDER_FEED_UPDATE, orderFeed: IRichOrderData[] }
+  | { type: IBurgerActionType.ORDER_FEED_UPDATE, orderFeed: IOrderFeedItem[] }
 
 type IBurgerDispatch = (action: BurgerAction) => any;
 

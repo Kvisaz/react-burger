@@ -1,8 +1,8 @@
 import { IBurgerPart } from '../model/IBurgerPart';
-import { IOrderData, IRichOrderData } from '../model/IOrderData';
+import { IApiOrderFeedItem, IOrderFeedItem } from '../model/IOrderFeedItem';
 
 
-export function mapApiOrderData(data: IOrderData, ingredients: IBurgerPart[]): IRichOrderData {
+export function mapApiOrderData(data: IApiOrderFeedItem, ingredients: IBurgerPart[]): IOrderFeedItem {
   return {
     createdAt: data.createdAt,
     id: data._id,

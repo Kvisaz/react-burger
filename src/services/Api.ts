@@ -6,7 +6,7 @@ import {
   setTokenAuthCookie,
   setTokenRefreshCookie,
 } from './cookieTokens';
-import { IOrderData } from './model/IOrderData';
+import { IApiOrderFeedItem } from './model/IOrderFeedItem';
 
 export class Api {
   constructor(private readonly endpoints: IApiEndpoints) {
@@ -192,8 +192,8 @@ export class Api {
   }
 
 
-  async fetchOrdersFeed(): Promise<IOrderData[]> {
-    const orderFeed: IOrderData[] = [];
+  async fetchOrdersFeed(): Promise<IApiOrderFeedItem[]> {
+    const orderFeed: IApiOrderFeedItem[] = [];
     try {
       const apiResponse = await fetch(this.endpoints.orderFeed);
       const data: IApiOrderFetchResponse = await apiResponse.json();
@@ -399,7 +399,7 @@ export interface IApiAuthCheckResult {
 }
 
 export interface IApiOrderFetchResponse {
-  orders: IOrderData[];
+  orders: IApiOrderFeedItem[];
   success: boolean;
   total: number;
   totalToday: number;

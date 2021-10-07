@@ -1,6 +1,6 @@
 import { IBurgerPart } from './IBurgerPart';
 
-export interface IOrderData {
+export interface IApiOrderFeedItem {
   _id: string; // "6152596ca0dd75001c7080c1",
   ingredients: string[]; // [ "60d3b41abdacab0026a733c7", "60d3b41abdacab0026a733c7"],
   status: string,
@@ -10,7 +10,7 @@ export interface IOrderData {
   number: number; // 4029
 }
 
-export interface IRichOrderData {
+export interface IOrderFeedItem {
   id: string;
   name: string;
   number: number;
