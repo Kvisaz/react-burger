@@ -8,7 +8,7 @@ export const Routes = {
   orderPage: '/order/:id',
   ingredient: '/ingredients/:id',
   ingredientLinkCreator: (id: string) => `/ingredients/${id}`,
-  orderPageLinkCreator: (id: number) => `/order/${id}`,
+  orderPageLinkCreator: (id: string) => `/order/${id}`,
   profileOrders: '/profile/orders',
   profileOrdersDetails: '/profile/orders/:id',
   orderFeed: '/feed',

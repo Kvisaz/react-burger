@@ -1,6 +1,5 @@
 import { IBurgerPart } from './IBurgerPart';
 import { IConstructorElementData } from './IConstructorElementData';
-import { IApiOrderResult } from '../Api';
 import { IOrderFeedItem } from './IOrderFeedItem';
 
 export interface IAppState {
@@ -15,10 +14,6 @@ export interface IAppState {
   selectedParts: IConstructorElementData[];
 
   selectedIngredient?: IBurgerPart;
-
-  // результаты запроса на заказ - не используется
-  // но оставлено для совместимости
-  orderSuccessResults: IApiOrderResult[];
 
   // общая лента заказов
   orderFeed: IOrderFeedItem[];
@@ -94,6 +89,9 @@ export interface IAppState {
   isProfileUpdateRequest?: boolean;
   isProfileUpdateSuccess?: boolean;
   isProfileUpdateFail?: boolean;
+
+  showCreatedOrder?: IOrderFeedItem;
+  showedOrders: IOrderFeedItem[];
 }
 
 

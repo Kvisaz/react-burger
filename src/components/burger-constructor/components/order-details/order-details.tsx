@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styles from './order-details.module.css';
 import { Assets } from '../../../../Assets';
 import { useParams } from 'react-router-dom';
@@ -14,18 +14,17 @@ interface OrderPageParams {
 
 export function OrderDetails() {
 
-  const { orderSuccessResults } = useMainState();
+  const { showedOrders } = useMainState();
   const { id = '-1' } = useParams<OrderPageParams>();
-  const orderId = parseInt(id);
-  const order = orderSuccessResults.find(i => i.orderId === orderId);
+  const order = useMemo(() => showedOrders.find(order => order.id === id), [showedOrders, id]);
   if (order == null) return null;
 
-  const { name: orderName } = order;
+  console.log('OrderDetails', order);
 
   return (
     <div className={styles.content}>
-      <span className='text text_type_digits-large mb-8'>{formatOrderNumber(orderId)}</span>
-      <span className='text text_type_main-medium mb-15'>{orderName}</span>
+      <span className='text text_type_digits-large mb-8'>{formatOrderNumber(order.number)}</span>
+      <span className='text text_type_main-medium mb-15'>{order.name}</span>
       <img src={ICON_URL} className={`mb-15 ${styles.done}`} alt='Иконка Готовности' />
       <span className='text text_type_main-default  mb-2'>Ваш заказ начали готовить</span>
       <span

@@ -13,6 +13,7 @@ import {
 } from '../Api';
 import { mapApiOrderData } from '../converters/getBurgerParts';
 import { logg } from '../utils/log';
+import { OrderStatus } from '../model/IOrderFeedItem';
 
 
 export function mainReducer(state: IAppState = InitialAppState, action: BurgerAction): IAppState {
@@ -58,16 +59,10 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
       };
     case IBurgerActionType.ORDER_SUCCESS:
       return {
-        ...state,
-        orderSuccessResults: [
-          ...state.orderSuccessResults,
-          action.payload,
-        ],
+        ...resetOrderBasket(state),
         isOrderRequest: false,
         isOrderSuccess: true,
-        ingredientAmountMap: {},
-        selectedParts: [],
-        selectedBun: undefined,
+        isOrderFailed: false,
       };
     case IBurgerActionType.ORDER_FAILED:
       return {
@@ -284,6 +279,12 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
       return {
         ...state,
         orderFeed: action.orderFeed,
+      };
+    case IBurgerActionType.ORDERED_POPUP_SHOW:
+      return {
+        ...state,
+        showCreatedOrder: undefined,
+        showedOrders: [...state.showedOrders, action.order]
       };
     default:
       console.warn(`unknown action`, action);
@@ -502,6 +503,18 @@ function onProfilePageReset(
   };
 }
 
+/**
+ * Обнулить корзину
+ */
+function resetOrderBasket(state: IAppState): IAppState {
+  return {
+    ...state,
+    ingredientAmountMap: {},
+    selectedParts: [],
+    selectedBun: undefined,
+  };
+}
+
 function onWsOrderGetMessage(
   action: { type: IBurgerActionType.WS_ORDER_GET_MESSAGE, message: IWsOrderMessage },
   state: IAppState,
@@ -514,11 +527,19 @@ function onWsOrderGetMessage(
   if (success) {
     const { ingredients } = state;
     const orderFeed = orders.map(order => mapApiOrderData(order, ingredients));
+
+    const showCreatedOrder = orderFeed.filter(order => order.status === OrderStatus.CREATED)[0];
+    logg('showCreatedOrder ', showCreatedOrder);
+
+    // если ордер можно показать - можно очистить корзину
+    const successState = showCreatedOrder ? resetOrderBasket(state) : state;
+
     return {
-      ...state,
+      ...successState,
       orderFeed,
       orderToday,
       orderTotal,
+      showCreatedOrder,
     };
   } else {
     return {

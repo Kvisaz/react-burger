@@ -25,6 +25,12 @@ export const socketMiddleWare = (wsUrl: string, wsActions: IWSActions) => {
       if (type === wsInit) {
         const url = `${wsUrl}?token=${action.token}`;
         socket = new WebSocket(url);
+
+        // close socket
+        window.onbeforeunload = function() {
+          socket.onclose = function () {};
+          socket.close();
+        };
       }
       if (socket) {
 

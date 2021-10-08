@@ -19,7 +19,7 @@ import {
   Register,
   ResetPassword,
 } from '../../pages';
-import { initData, logoutActionCreator, setModalUrlOn } from '../../services/actions';
+import { IBurgerActionType, initData, logoutActionCreator, setModalUrlOn } from '../../services/actions';
 import { Loading } from '../loading/loading';
 import { ProtectedAuthRoute } from '../common/protected-auth-route/protected-auth-route';
 import { useMainState } from '../../services/hooks/useMainState';
@@ -27,32 +27,28 @@ import { useMainState } from '../../services/hooks/useMainState';
 
 function App() {
   const {
-    isOrderSuccess,
-    orderSuccessResults,
     isRestoreRequest,
     isIngredientsRequest,
-    isOrderRequest,
     isResetRequest,
     isRegisterRequest,
-    isRegisterFailed,
     isLoginRequest,
     isModalUrl,
     isAuthorizationChecking,
     isOrderFailed,
+    showCreatedOrder,
   } = useMainState();
   const history = useHistory();
   const location = useLocation();
 
   const isLoading = useMemo(() => isIngredientsRequest
-      || isRestoreRequest
-      || isResetRequest
-      || isOrderRequest
-      || isRegisterRequest
-      || isLoginRequest
-      || isAuthorizationChecking
+    || isRestoreRequest
+    || isResetRequest
+    || isRegisterRequest
+    || isLoginRequest
+    || isAuthorizationChecking
     , [
       isAuthorizationChecking,
-      isIngredientsRequest, isOrderRequest, isResetRequest,
+      isIngredientsRequest, isResetRequest,
       isRestoreRequest, isRegisterRequest,
       isLoginRequest,
     ]);
@@ -66,16 +62,15 @@ function App() {
    *  redirector
    */
   useEffect(() => {
-    if (isOrderSuccess && orderSuccessResults && orderSuccessResults.length > 0) {
-      const { orderId } = orderSuccessResults[orderSuccessResults.length - 1];
+    if (showCreatedOrder) {
       dispatch(setModalUrlOn());
+      dispatch({ type: IBurgerActionType.ORDERED_POPUP_SHOW, order: showCreatedOrder });
       history.replace({
-        pathname: Routes.orderPageLinkCreator(orderId),
+        pathname: Routes.orderPageLinkCreator(showCreatedOrder.id),
       });
       return;
     }
-  }, [dispatch, history, orderSuccessResults, isOrderSuccess, isRegisterFailed,
-  ]);
+  }, [dispatch, history, showCreatedOrder]);
 
   useEffect(() => {
     if (isOrderFailed) {

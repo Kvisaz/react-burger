@@ -10,7 +10,6 @@ export const InitialAppState: IAppState = {
   ingredientAmountMap: {},
   selectedBun: undefined,
   selectedParts: [],
-  orderSuccessResults: [],
   orderFeed: [],
   orderTotal: 0,
   orderToday: 0,
@@ -29,4 +28,5 @@ export const InitialAppState: IAppState = {
       name: 'Начинки',
     },
   ],
+  showedOrders: []
 };

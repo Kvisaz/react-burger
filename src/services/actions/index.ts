@@ -74,6 +74,7 @@ export type BurgerAction =
   | { type: IBurgerActionType.WS_ORDER_CONNECTION_ERROR, error: any }
   | { type: IBurgerActionType.WS_ORDER_GET_MESSAGE, message: IWsOrderMessage }
   | { type: IBurgerActionType.WS_ORDER_SEND_MESSAGE, message: any }
+  | { type: IBurgerActionType.ORDERED_POPUP_SHOW, order: IOrderFeedItem }
 
 type IBurgerDispatch = (action: BurgerAction) => any;
 
@@ -145,6 +146,9 @@ export enum IBurgerActionType {
   WS_ORDER_CONNECTION_CLOSE = 'WS_ORDER_CONNECTION_CLOSE',
   WS_ORDER_GET_MESSAGE = 'WS_ORDER_GET_MESSAGE',
   WS_ORDER_SEND_MESSAGE = 'WS_ORDER_SEND_MESSAGE',
+
+  // отправить при открытии окна с информацией о полученном заказе
+  ORDERED_POPUP_SHOW = 'ORDERED_POPUP_SHOW',
 }
 
 
@@ -216,8 +220,9 @@ export const orderAuthorizedActionCreator = () => async (dispatch: IBurgerDispat
     selectedIds.push(selectedBun.ingredientId);
     selectedIds.push(selectedBun.ingredientId);
   }
+  
+  // order срабатывает с сильным запозданием, поэтому перевесим SUCCESS на проверку через сокеты
   API.order(selectedIds)
-    .then((result) => dispatch({ type: IBurgerActionType.ORDER_SUCCESS, payload: result }))
     .catch(e => {
       console.error(e);
       dispatch({ type: IBurgerActionType.ORDER_FAILED });
