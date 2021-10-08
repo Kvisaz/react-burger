@@ -16,7 +16,7 @@ export const orderSocketMiddleWare = (wsUrl: string, wsActions: IWSActions) => {
   return (store: any) => {
     let socket: WebSocket;
 
-    const { wsInit, wsSendMessage, onMessage, onClose, onError, onOpen } = wsActions;
+    const {wsInit, wsSendMessage, onMessage, onClose, onError, onOpen} = wsActions;
 
     return (next: any) => (action: any) => {
       const { dispatch, getState } = store;
@@ -40,7 +40,7 @@ export const orderSocketMiddleWare = (wsUrl: string, wsActions: IWSActions) => {
           const { data } = event;
           const message = JSON.parse(data);
           console.log('socket message', message);
-          dispatch({ type: onMessage, orderFeed: message });
+          dispatch({ type:onMessage, orderFeed: message });
         };
         socket.onclose = event => {
           dispatch({ type: onClose, event });
