@@ -4,7 +4,7 @@ import styles from './order-feed-item.module.css';
 import { OrderFeedItemStatus } from '../order-feed-item-status/order-feed-item-status';
 import { OrderFeedItemParts } from '../order-feed-item-parts/order-feed-item-parts';
 import { IBurgerPart, IBurgerPartPropType } from '../../services/model/IBurgerPart';
-import { IOrderFeedItem } from '../../services/model/IOrderFeedItem';
+import { IOrderFeedItem, OrderStatus } from '../../services/model/IOrderFeedItem';
 import PropTypes from 'prop-types';
 import { OrderData } from '../order-data/order-data';
 import { formatOrderNumber } from '../../services/converters/formatOrderNumber';
@@ -14,7 +14,7 @@ export interface IOrderFeedItemProps extends IOrderFeedItem {
   id: string;
   number: number;
   ingredients: IBurgerPart[];
-  status: string;
+  status: OrderStatus;
   createdAt: string;
   withStatus?: boolean;
 }
