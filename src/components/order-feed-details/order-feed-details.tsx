@@ -2,17 +2,16 @@ import React, { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './order-feed-details.module.css';
 import { IOrderDetailsUrlParams } from '../../services/Routes';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../services/store';
 import { MoneyCounter } from '../common/money-counter/money-counter';
 import { OrderData } from '../order-data/order-data';
 import { OrderFeedDetailsPartList } from './components/order-feed-details-part-list/order-feed-details-part-list';
 import { OrderFeedItemStatus } from '../order-feed-item-status/order-feed-item-status';
 import { formatOrderNumber } from '../../services/converters/formatOrderNumber';
+import { useMainState } from '../../services/hooks/useMainState';
 
 export function OrderFeedDetails() {
   const { id } = useParams<IOrderDetailsUrlParams>();
-  const { orderFeed } = useSelector((state: RootState) => ({ ...state }));
+  const { orderFeed } = useMainState();
   const order = useMemo(() => orderFeed.find(o => o.id === id), [orderFeed, id]);
 
   if (order == null) return (

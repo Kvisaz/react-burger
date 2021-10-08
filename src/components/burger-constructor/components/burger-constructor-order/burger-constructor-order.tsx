@@ -2,16 +2,16 @@ import React, { useCallback } from 'react';
 import styles from './burger-constructor-order.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { MoneyCounter } from '../../../common/money-counter/money-counter';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { IBurgerActionType, orderAuthorizedActionCreator } from '../../../../services/actions';
-import { RootState } from '../../../../services/store';
 import { useHistory } from 'react-router-dom';
 import { Routes } from '../../../../services/Routes';
+import { useMainState } from '../../../../services/hooks/useMainState';
 
 
 export function BurgerConstructorOrder() {
   const dispatch = useDispatch();
-  const { isAuthorized, sum } = useSelector((state: RootState) => ({ ...state }));
+  const { isAuthorized, sum } = useMainState();
   const history = useHistory();
 
   const onOrderButtonClick = useCallback(() => {

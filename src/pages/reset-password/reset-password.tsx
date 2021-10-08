@@ -6,6 +6,7 @@ import { Routes } from '../../services/Routes';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../services/store';
 import { IBurgerActionType, resetPassActionCreator } from '../../services/actions';
+import { useMainState } from '../../services/hooks/useMainState';
 
 export function ResetPassword() {
 
@@ -15,7 +16,7 @@ export function ResetPassword() {
     userResetPassword = '',
     userResetCode = '',
     isRestoreSuccess,
-  } = useSelector((state: RootState) => ({ ...state }));
+  } = useMainState();
 
   useEffect(() => {
     if (!isRestoreSuccess) {

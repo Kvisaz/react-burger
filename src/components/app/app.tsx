@@ -4,8 +4,7 @@ import { AppHeader } from '../app-header/app-header';
 import { Modal } from '../common/modal/modal';
 import { IngredientDetails } from '../burger-ingredients/components/ingredient-details/ingredient-details';
 import { OrderDetails } from '../burger-constructor/components/order-details/order-details';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../services/store';
+import { useDispatch } from 'react-redux';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { Routes } from '../../services/Routes';
 import { ProtectedRoute } from '../common/protected-route/protected-route';
@@ -23,6 +22,7 @@ import {
 import { initData, logoutActionCreator, setModalUrlOn } from '../../services/actions';
 import { Loading } from '../loading/loading';
 import { ProtectedAuthRoute } from '../common/protected-auth-route/protected-auth-route';
+import { useMainState } from '../../services/hooks/useMainState';
 
 
 function App() {
@@ -39,7 +39,7 @@ function App() {
     isModalUrl,
     isAuthorizationChecking,
     isOrderFailed,
-  } = useSelector((state: RootState) => ({ ...state }));
+  } = useMainState();
   const history = useHistory();
   const location = useLocation();
 

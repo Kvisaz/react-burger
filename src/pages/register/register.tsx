@@ -3,9 +3,9 @@ import styles from './register.module.css';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Redirect } from 'react-router-dom';
 import { Routes } from '../../services/Routes';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../services/store';
+import { useDispatch } from 'react-redux';
 import { IBurgerActionType, registerActionCreator } from '../../services/actions';
+import { useMainState } from '../../services/hooks/useMainState';
 
 export function Register() {
 
@@ -16,7 +16,7 @@ export function Register() {
     userRegisterPassword: password = '',
     isAuthorized,
     urlAfterLogging = Routes.main,
-  } = useSelector((state: RootState) => ({ ...state }));
+  } = useMainState();
 
 
   const onNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {

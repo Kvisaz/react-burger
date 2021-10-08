@@ -2,18 +2,16 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './ingredient-details.module.css';
 import { Nutrition } from './components/nutrition/nutrition';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../services/store';
+import { useMainState } from '../../../../services/hooks/useMainState';
 
 interface IngredientParams {
   id?: string;
 }
 
 export function IngredientDetails() {
-  const state = useSelector((state: RootState) => ({ ...state }));
   const { id } = useParams<IngredientParams>();
 
-  const { ingredients } = state;
+  const { ingredients } = useMainState();
   const selectedIngredient = ingredients.find(i => i._id === id);
   if (selectedIngredient == null) return null;
 

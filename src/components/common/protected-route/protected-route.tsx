@@ -2,16 +2,16 @@ import React, { useEffect } from 'react';
 import { RouteProps } from 'react-router';
 import { Redirect, Route, useLocation } from 'react-router-dom';
 import { Routes } from '../../../services/Routes';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../services/store';
+import { useDispatch } from 'react-redux';
 import { IBurgerActionType } from '../../../services/actions';
+import { useMainState } from '../../../services/hooks/useMainState';
 
 interface IProtectedRouteProps extends RouteProps {
 }
 
 export function ProtectedRoute({ children, ...rest }: IProtectedRouteProps) {
 
-  const { isAuthorized } = useSelector((state: RootState) => ({ ...state }));
+  const { isAuthorized } = useMainState();
   const location = useLocation();
 
   const dispatch = useDispatch();

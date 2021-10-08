@@ -2,10 +2,9 @@ import React from 'react';
 import styles from './burger-ingredients-tabs.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../../services/store';
-import { IAppState } from '../../../../services/model/IAppState';
+import { useDispatch } from 'react-redux';
 import { IBurgerActionType } from '../../../../services/actions';
+import { useMainState } from '../../../../services/hooks/useMainState';
 
 
 BurgerIngredientsTabs.propTypes = {
@@ -15,7 +14,7 @@ BurgerIngredientsTabs.propTypes = {
 export function BurgerIngredientsTabs() {
 
   const dispatch = useDispatch();
-  const { currentTabIndex, tabs } = useSelector<RootState>(state => ({ ...state })) as IAppState;
+  const { currentTabIndex, tabs } = useMainState();
 
   const onClick = (value: string) => {
     dispatch({ type: IBurgerActionType.TAB_SELECT, index: parseInt(value) });

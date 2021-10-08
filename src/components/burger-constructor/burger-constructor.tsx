@@ -3,12 +3,12 @@ import styles from './burger-constructor.module.css';
 import { BurgerConstructorOrder } from './components/burger-constructor-order/burger-constructor-order';
 import { IConstructorElementData, IConstructorElementType } from '../../services/model/IConstructorElementData';
 import { onIngredientDropActionCreator } from '../../services/actions';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../services/store';
+import { useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { IdObject } from '../../services/model/IdObject';
 import { DraggableBurgerConstructorItem } from './components/draggable-burger-constructor-item/draggable-burger-constructor-item';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useMainState } from '../../services/hooks/useMainState';
 
 function mapBun(bun: IConstructorElementData, suffix: string, type: IConstructorElementType): IConstructorElementData {
   return {
@@ -21,9 +21,8 @@ function mapBun(bun: IConstructorElementData, suffix: string, type: IConstructor
 
 export function BurgerConstructor() {
   const dispatch = useDispatch();
-  const state = useSelector((state: RootState) => ({ ...state }));
 
-  const { selectedBun, selectedParts: parts, sum } = state;
+  const { selectedBun, selectedParts: parts, sum } = useMainState();
 
   const [_, dropTargetRef] = useDrop({
     accept: 'item',

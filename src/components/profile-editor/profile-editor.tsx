@@ -1,14 +1,10 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import styles from './profile-editor.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../services/store';
-import {
-  IBurgerActionType,
-  requestProfileActionCreator,
-  updateProfileActionCreator,
-} from '../../services/actions';
+import { useDispatch } from 'react-redux';
+import { IBurgerActionType, requestProfileActionCreator, updateProfileActionCreator } from '../../services/actions';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Loading } from '../loading/loading';
+import { useMainState } from '../../services/hooks/useMainState';
 
 export function ProfileEditor() {
   const {
@@ -19,7 +15,7 @@ export function ProfileEditor() {
     profileName: name = userName,
     profileEmail: email = userEmail,
     profilePassword: password = userPassword,
-  } = useSelector((state: RootState) => ({ ...state }));
+  } = useMainState();
 
   const profileChanged = useMemo(() => userEmail !== email
       || userName !== name

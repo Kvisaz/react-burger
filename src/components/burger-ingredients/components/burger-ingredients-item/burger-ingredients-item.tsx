@@ -1,14 +1,14 @@
 import React, { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients-item.module.css';
 import { IBurgerPart, IBurgerPartPropType } from '../../../../services/model/IBurgerPart';
 import { MoneyCounter } from '../../../common/money-counter/money-counter';
-import { RootState } from '../../../../services/store';
 import { useHistory } from 'react-router-dom';
 import { Routes } from '../../../../services/Routes';
 import { setModalUrlOn } from '../../../../services/actions';
+import { useMainState } from '../../../../services/hooks/useMainState';
 
 interface IBurgerConstructorItemProps {
   part: IBurgerPart;
@@ -20,7 +20,7 @@ BurgerIngredientsItem.propTypes = {
 
 export function BurgerIngredientsItem({ part }: IBurgerConstructorItemProps) {
 
-  const state = useSelector((state: RootState) => ({ ...state }));
+  const state = useMainState();
   const dispatch = useDispatch();
 
   const [_, dragRef] = useDrag({

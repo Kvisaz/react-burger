@@ -3,13 +3,13 @@ import styles from './forgot-password.module.css';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useHistory } from 'react-router-dom';
 import { Routes } from '../../services/Routes';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { IBurgerActionType, restorePassActionCreator } from '../../services/actions';
-import { RootState } from '../../services/store';
+import { useMainState } from '../../services/hooks/useMainState';
 
 export function ForgotPassword() {
 
-  const { userRestoreEmail: email = '', isRestoreSuccess } = useSelector((state: RootState) => ({ ...state }));
+  const { userRestoreEmail: email = '', isRestoreSuccess } = useMainState();
 
   const dispatch = useDispatch();
   const history = useHistory();

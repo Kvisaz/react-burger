@@ -1,10 +1,9 @@
 import React from 'react';
 import styles from './order-details.module.css';
 import { Assets } from '../../../../Assets';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../services/store';
 import { useParams } from 'react-router-dom';
 import { formatOrderNumber } from '../../../../services/converters/formatOrderNumber';
+import { useMainState } from '../../../../services/hooks/useMainState';
 
 
 const ICON_URL = Assets.images.orderDone;
@@ -15,7 +14,7 @@ interface OrderPageParams {
 
 export function OrderDetails() {
 
-  const { orderSuccessResults } = useSelector((state: RootState) => ({ ...state }));
+  const { orderSuccessResults } = useMainState();
   const { id = '-1' } = useParams<OrderPageParams>();
   const orderId = parseInt(id);
   const order = orderSuccessResults.find(i => i.orderId === orderId);

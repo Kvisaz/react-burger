@@ -3,9 +3,9 @@ import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burg
 import { Link, Redirect } from 'react-router-dom';
 import styles from './login.module.css';
 import { Routes } from '../../services/Routes';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { IBurgerActionType, loginActionCreator } from '../../services/actions';
-import { RootState } from '../../services/store';
+import { useMainState } from '../../services/hooks/useMainState';
 
 export function Login() {
 
@@ -15,7 +15,7 @@ export function Login() {
     loginPagePassword: password = '',
     isAuthorized,
     urlAfterLogging = Routes.main,
-  } = useSelector((state: RootState) => ({ ...state }));
+  } = useMainState();
 
 
   const onLoginChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {

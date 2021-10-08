@@ -1,4 +1,4 @@
-import { applyMiddleware, compose, createStore, Store } from 'redux';
+import { applyMiddleware, combineReducers, compose, createStore, Store } from 'redux';
 import thunk from 'redux-thunk';
 import { IAppState } from './model/IAppState';
 import { mainReducer } from './reducers';
@@ -24,7 +24,8 @@ const wsActions: IWSActions = {
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 
-export const AppStore: IAppStore = createStore(mainReducer,
+export const AppStore = createStore(
+  mainReducer,
   composeEnhancers(
     applyMiddleware(
       thunk,
