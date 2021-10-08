@@ -7,6 +7,7 @@ import {
   setTokenRefreshCookie,
 } from './cookieTokens';
 import { IApiOrderFeedItem } from './model/IOrderFeedItem';
+import { logg } from './utils/log';
 
 export class Api {
   constructor(private readonly endpoints: IApiEndpoints) {
@@ -103,12 +104,12 @@ export class Api {
       let responseBody = await this.fetchProfile();
       if (!responseBody.success) {
         const { message } = responseBody;
-        console.log('responseBody not success', message);
+        logg('responseBody not success', message);
         if (isBadToken(message)) {
-          console.log('invalid token');
+          logg('invalid token');
           const { accessToken } = await this.refreshToken();
           if (accessToken) {
-            console.log('token refreshed ', accessToken);
+            logg('token refreshed ', accessToken);
             responseBody = await this.fetchProfile();
           }
         } else return Promise.reject(message);
@@ -125,12 +126,12 @@ export class Api {
       let responseBody = await this.fetchPatchProfile(data);
       if (!responseBody.success) {
         const { message } = responseBody;
-        console.log('responseBody not success', message);
+        logg('responseBody not success', message);
         if (isBadToken(message)) {
-          console.log('invalid token');
+          logg('invalid token');
           const { accessToken } = await this.refreshToken();
           if (accessToken) {
-            console.log('token refreshed ', accessToken);
+            logg('token refreshed ', accessToken);
             responseBody = await this.fetchPatchProfile(data);
           }
         } else return Promise.reject(message);
@@ -150,11 +151,11 @@ export class Api {
 
       isAuthorized = refreshToken != null && authToken != null;
 
-      console.log('refreshToken ', refreshToken);
-      console.log('authToken ', authToken);
+      logg('refreshToken ', refreshToken);
+      logg('authToken ', authToken);
 
       if (refreshToken && authToken == null) {
-        console.log('try to refresh access token');
+        logg('try to refresh access token');
         await this.refreshToken();
         isAuthorized = true;
       }
@@ -181,9 +182,9 @@ export class Api {
         redirect: 'follow',
         referrerPolicy: 'no-referrer',
       });
-      console.log('fetchProfile apiResponse', apiResponse);
+      logg('fetchProfile apiResponse', apiResponse);
       const responseBody = await apiResponse.json();
-      console.log('fetchProfile response body', responseBody);
+      logg('fetchProfile response body', responseBody);
       return responseBody;
     } catch (e) {
       console.warn(e);
@@ -221,7 +222,7 @@ export class Api {
       referrerPolicy: 'no-referrer',
       body: JSON.stringify(data),
     }).then(apiResponse => {
-      console.log('patchProfile ', apiResponse);
+      logg('patchProfile ', apiResponse);
       return apiResponse.json();
     });
   }

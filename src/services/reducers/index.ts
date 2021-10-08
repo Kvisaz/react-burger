@@ -1,5 +1,5 @@
 import { IAppState } from '../model/IAppState';
-import { BurgerAction, IBurgerActionType, IRemovePayLoad } from '../actions';
+import { BurgerAction, IBurgerActionType, IRemovePayLoad, IWsOrderMessage } from '../actions';
 import { IBurgerPart } from '../model/IBurgerPart';
 import { IConstructorElementData } from '../model/IConstructorElementData';
 import { InitialAppState } from '../initialAppState';
@@ -11,6 +11,8 @@ import {
   IApiRegisterUserData,
   IApiRegisterUserResponse,
 } from '../Api';
+import { mapApiOrderData } from '../converters/getBurgerParts';
+import { logg } from '../utils/log';
 
 
 export function mainReducer(state: IAppState = InitialAppState, action: BurgerAction): IAppState {
@@ -276,6 +278,8 @@ export function mainReducer(state: IAppState = InitialAppState, action: BurgerAc
         isAuthorizationChecking: false,
         isAuthorized: action.data.isAuthorized,
       };
+    case IBurgerActionType.WS_ORDER_GET_MESSAGE:
+      return onWsOrderGetMessage(action, state);
     case IBurgerActionType.ORDER_FEED_UPDATE:
       return {
         ...state,
@@ -496,4 +500,29 @@ function onProfilePageReset(
     profilePassword: state.userPassword ?? '',
     profileName: state.userName,
   };
+}
+
+function onWsOrderGetMessage(
+  action: { type: IBurgerActionType.WS_ORDER_GET_MESSAGE, message: IWsOrderMessage },
+  state: IAppState,
+):
+  IAppState {
+
+  logg('WS_ORDER_GET_MESSAGE meesage', action);
+  const { success, orders, total: orderTotal, totalToday: orderToday } = action.message;
+
+  if (success) {
+    const { ingredients } = state;
+    const orderFeed = orders.map(order => mapApiOrderData(order, ingredients));
+    return {
+      ...state,
+      orderFeed,
+      orderToday,
+      orderTotal,
+    };
+  } else {
+    return {
+      ...state,
+    };
+  }
 }

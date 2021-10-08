@@ -22,6 +22,8 @@ export interface IAppState {
 
   // общая лента заказов
   orderFeed: IOrderFeedItem[];
+  orderTotal: number;
+  orderToday: number;
 
   isOrderRequest: boolean;
   isOrderSuccess: boolean;

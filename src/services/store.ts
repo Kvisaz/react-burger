@@ -1,9 +1,9 @@
-import { applyMiddleware, combineReducers, compose, createStore, Store } from 'redux';
+import { applyMiddleware, compose, createStore, Store } from 'redux';
 import thunk from 'redux-thunk';
 import { IAppState } from './model/IAppState';
 import { mainReducer } from './reducers';
 import { BurgerAction, IBurgerActionType } from './actions';
-import { IWSActions, orderSocketMiddleWare } from './middleware/orderSocketMiddleWare';
+import { IWSActions, socketMiddleWare } from './middleware/socketMiddleWare';
 
 declare global {
   interface Window {
@@ -14,6 +14,7 @@ declare global {
 const WS_ORDER_URL = 'wss://norma.nomoreparties.space/orders/all';
 const wsActions: IWSActions = {
   wsInit: IBurgerActionType.WS_ORDER_CONNECTION_START,
+  wsClose: IBurgerActionType.WS_ORDER_CONNECTION_CLOSE,
   onOpen: IBurgerActionType.WS_ORDER_CONNECTION_SUCCESS,
   onError: IBurgerActionType.WS_ORDER_CONNECTION_ERROR,
   onMessage: IBurgerActionType.WS_ORDER_GET_MESSAGE,
@@ -29,7 +30,7 @@ export const AppStore = createStore(
   composeEnhancers(
     applyMiddleware(
       thunk,
-      orderSocketMiddleWare(WS_ORDER_URL, wsActions),
+      socketMiddleWare(WS_ORDER_URL, wsActions),
     ),
   ));
 

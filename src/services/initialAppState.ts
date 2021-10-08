@@ -12,6 +12,8 @@ export const InitialAppState: IAppState = {
   selectedParts: [],
   orderSuccessResults: [],
   orderFeed: [],
+  orderTotal: 0,
+  orderToday: 0,
   isOrderRequest: false,
   isOrderFailed: false,
   isOrderSuccess: false,

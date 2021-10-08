@@ -15,8 +15,10 @@ import {
   IApiTokenData,
   IApiTokenResponse,
 } from '../Api';
-import { IOrderFeedItem } from '../model/IOrderFeedItem';
+import { IApiOrderFeedItem, IOrderFeedItem } from '../model/IOrderFeedItem';
 import { mapApiOrderData } from '../converters/getBurgerParts';
+import { getTokenAuth } from '../cookieTokens';
+import { logg } from '../utils/log';
 
 export type BurgerAction =
   | { type: IBurgerActionType.DATA_REQUEST }
@@ -67,9 +69,10 @@ export type BurgerAction =
   | { type: IBurgerActionType.ORDER_FEED_UPDATE, orderFeed: IOrderFeedItem[] }
   | { type: IBurgerActionType.WS_ORDER_CONNECTION_START, token: string }
   | { type: IBurgerActionType.WS_ORDER_CONNECTION_SUCCESS }
+  | { type: IBurgerActionType.WS_ORDER_CONNECTION_CLOSE }
   | { type: IBurgerActionType.WS_ORDER_CONNECTION_CLOSED, event: any }
   | { type: IBurgerActionType.WS_ORDER_CONNECTION_ERROR, error: any }
-  | { type: IBurgerActionType.WS_ORDER_GET_MESSAGE, message: any }
+  | { type: IBurgerActionType.WS_ORDER_GET_MESSAGE, message: IWsOrderMessage }
   | { type: IBurgerActionType.WS_ORDER_SEND_MESSAGE, message: any }
 
 type IBurgerDispatch = (action: BurgerAction) => any;
@@ -139,8 +142,17 @@ export enum IBurgerActionType {
   WS_ORDER_CONNECTION_START = 'WS_ORDER_CONNECTION_START',
   WS_ORDER_CONNECTION_ERROR = 'WS_ORDER_CONNECTION_ERROR',
   WS_ORDER_CONNECTION_CLOSED = 'WS_ORDER_CONNECTION_CLOSED',
+  WS_ORDER_CONNECTION_CLOSE = 'WS_ORDER_CONNECTION_CLOSE',
   WS_ORDER_GET_MESSAGE = 'WS_ORDER_GET_MESSAGE',
   WS_ORDER_SEND_MESSAGE = 'WS_ORDER_SEND_MESSAGE',
+}
+
+
+export interface IWsOrderMessage {
+  success?: boolean;
+  total: number;
+  totalToday: number;
+  orders: IApiOrderFeedItem[];
 }
 
 export interface IOrderPayLoad {
@@ -173,13 +185,21 @@ const END_POINTS: IApiEndpoints = {
 
 const API = new Api(END_POINTS);
 
+function initWsOrders(dispatch: IBurgerDispatch) {
+  const token = getTokenAuth();
+  if (token) {
+    dispatch({ type: IBurgerActionType.WS_ORDER_CONNECTION_START, token });
+  }
+}
+
 export const initData = () => async (dispatch: IBurgerDispatch) => {
   dispatch({ type: IBurgerActionType.DATA_REQUEST });
 
   try {
     const { isAuthorized } = await API.restoreAuth();
     const { ingredients } = await API.getBurgerParts();
-    console.log('ingredients', ingredients)
+    initWsOrders(dispatch);
+    logg('ingredients', ingredients);
     dispatch({ type: IBurgerActionType.DATA_LOADED, ingredients, isAuthorized });
   } catch (e: any) {
     dispatch({ type: IBurgerActionType.DATA_FAILED, message: e.toString() });
@@ -225,14 +245,15 @@ export const loginActionCreator = (data: IApiLoginData) => async (dispatch: IBur
   dispatch({ type: IBurgerActionType.LOGIN_REQUEST, data });
 
   API.login(data)
-    .then((response) =>
-      dispatch({ type: IBurgerActionType.LOGIN_SUCCESS, data: response, password: data.password }))
-    .catch(() => dispatch({ type: IBurgerActionType.LOGIN_FAIL }));
+    .then((response) => {
+      dispatch({ type: IBurgerActionType.LOGIN_SUCCESS, data: response, password: data.password });
+      initWsOrders(dispatch);
+    }).catch(() => dispatch({ type: IBurgerActionType.LOGIN_FAIL }));
 };
 
 export const logoutActionCreator = () => async (dispatch: IBurgerDispatch) => {
   dispatch({ type: IBurgerActionType.LOGOUT_REQUEST });
-
+  dispatch({ type: IBurgerActionType.WS_ORDER_CONNECTION_CLOSE });
   API.logout()
     .then((response) => dispatch({ type: IBurgerActionType.LOGOUT_SUCCESS, data: response }))
     .catch(() => dispatch({ type: IBurgerActionType.LOGOUT_FAIL }));
@@ -301,7 +322,7 @@ export const setModalUrlOff = () =>
     dispatch({ type: IBurgerActionType.SET_MODAL_URL, isModal: false });
   };
 
-export const updateOrderFeed = () =>
+export const updateOrderFeedFromHttp = () =>
   async (dispatch: IBurgerDispatch, getState: IGetState) => {
     try {
       const apiOrderFeed = await API.fetchOrdersFeed();
