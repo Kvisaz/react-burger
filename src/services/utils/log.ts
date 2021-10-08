@@ -5,7 +5,7 @@ interface ExtendedWindow {
 /**
  *  Можно менять через консоль
  */
-(window as ExtendedWindow).isLogAllowed = true;
+(window as ExtendedWindow).isLogAllowed = false;
 
 export function logg(...args: any[]) {
   const { isLogAllowed } = window as ExtendedWindow;
