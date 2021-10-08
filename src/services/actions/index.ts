@@ -65,12 +65,12 @@ export type BurgerAction =
   | { type: IBurgerActionType.AUTH_CHECK_START }
   | { type: IBurgerActionType.AUTH_CHECK_END, data: IApiAuthCheckResult }
   | { type: IBurgerActionType.ORDER_FEED_UPDATE, orderFeed: IOrderFeedItem[] }
-  | { type: IBurgerActionType.WS_CONNECTION_START }
-  | { type: IBurgerActionType.WS_CONNECTION_SUCCESS }
-  | { type: IBurgerActionType.WS_CONNECTION_CLOSED, event: any }
-  | { type: IBurgerActionType.WS_CONNECTION_ERROR, error: any }
-  | { type: IBurgerActionType.WS_GET_MESSAGE, message: any }
-  | { type: IBurgerActionType.WS_SEND_MESSAGE, message: any }
+  | { type: IBurgerActionType.WS_ORDER_CONNECTION_START, token: string }
+  | { type: IBurgerActionType.WS_ORDER_CONNECTION_SUCCESS }
+  | { type: IBurgerActionType.WS_ORDER_CONNECTION_CLOSED, event: any }
+  | { type: IBurgerActionType.WS_ORDER_CONNECTION_ERROR, error: any }
+  | { type: IBurgerActionType.WS_ORDER_GET_MESSAGE, message: any }
+  | { type: IBurgerActionType.WS_ORDER_SEND_MESSAGE, message: any }
 
 type IBurgerDispatch = (action: BurgerAction) => any;
 
@@ -135,12 +135,12 @@ export enum IBurgerActionType {
 
   SET_MODAL_URL = 'SET_MODAL_URL',
 
-  WS_CONNECTION_SUCCESS = 'WS_CONNECTION_SUCCESS',
-  WS_CONNECTION_START = 'WS_CONNECTION_START',
-  WS_CONNECTION_ERROR = 'WS_CONNECTION_ERROR',
-  WS_CONNECTION_CLOSED = 'WS_CONNECTION_CLOSED',
-  WS_GET_MESSAGE = 'WS_GET_MESSAGE',
-  WS_SEND_MESSAGE = 'WS_SEND_MESSAGE',
+  WS_ORDER_CONNECTION_SUCCESS = 'WS_ORDER_CONNECTION_SUCCESS',
+  WS_ORDER_CONNECTION_START = 'WS_ORDER_CONNECTION_START',
+  WS_ORDER_CONNECTION_ERROR = 'WS_ORDER_CONNECTION_ERROR',
+  WS_ORDER_CONNECTION_CLOSED = 'WS_ORDER_CONNECTION_CLOSED',
+  WS_ORDER_GET_MESSAGE = 'WS_ORDER_GET_MESSAGE',
+  WS_ORDER_SEND_MESSAGE = 'WS_ORDER_SEND_MESSAGE',
 }
 
 export interface IOrderPayLoad {
