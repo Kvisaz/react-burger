@@ -26,7 +26,7 @@ export type OrderAction =
   | { type: OrderActionActionType.BASKET_ITEM_SWAP, selectedId1: string, selectedId2: string }
 
 
-export interface IOrderPayLoad extends IApiOrderFeedItem{
+export interface IOrderPayLoad extends IOrderFeedItem{
 }
 
 
@@ -101,6 +101,8 @@ const orderAuthorizedActionCreator = () => async (dispatch: OrderDispatch, getSt
   dispatch({ type: OrderActionActionType.ORDER_REQUEST });
   const state = getState().orders;
 
+  const { ingredients } = getState().ingredients;
+
   const selectedBun = state.selectedBun;
   const selectedIds = state.selectedParts.map(i => i.ingredientId);
   if (selectedBun) {
@@ -111,7 +113,7 @@ const orderAuthorizedActionCreator = () => async (dispatch: OrderDispatch, getSt
   // order срабатывает с сильным запозданием, поэтому перевесим SUCCESS на проверку через сокеты
   API.order(selectedIds)
     .then(result => {
-      dispatch({ type: OrderActionActionType.ORDER_SUCCESS, payload: result });
+      dispatch({ type: OrderActionActionType.ORDER_SUCCESS, payload: mapApiOrderData(result, ingredients) });
       setTimeout(()=>{
         dispatch({ type: OrderActionActionType.ORDER_MESSAGE_RESET });
       }, 1500)

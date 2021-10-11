@@ -34,6 +34,7 @@ export function ordersReducer(state: IOrderState = InitialOrdersFeedState, actio
         isOrderRequest: false,
         isOrderSuccess: true,
         isOrderFailed: false,
+        showCreatedOrder: action.payload,
         orderMessage: 'Бургер успешно заказан',
         isBadOrderMessage: false,
       };
