@@ -1,7 +1,5 @@
-import React, { useEffect, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useMemo } from 'react';
 import styles from './order-feed.module.css';
-import { ORDERS_ACTION } from '../../services/actions';
 import { OrderFeedItem } from '../order-feed-item/order-feed-item';
 import PropTypes from 'prop-types';
 import { useOrderState } from '../../services/hooks';
@@ -15,14 +13,8 @@ OrderFeed.propTypes = {
 }
 
 export function OrderFeed({withStatus}: IOrderFeedProps) {
-  const dispatch = useDispatch();
-
   const { orderFeed } = useOrderState();
   const hasOrders = useMemo(() => orderFeed.length > 0, [orderFeed]);
-
-  useEffect(() => {
-    dispatch(ORDERS_ACTION.updateOrderFeedFromHttp());
-  }, [dispatch]);
 
   return (
     <>

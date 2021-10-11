@@ -66,8 +66,10 @@ function App() {
   useEffect(() => {
     if (isAuthorized) {
       dispatch(ORDERS_ACTION.initOrderFeedSocket());
+    } else {
+      dispatch(ORDERS_ACTION.updateOrderFeedFromHttp())
     }
-  }, [isAuthorized]);
+  }, [dispatch, isAuthorized]);
 
   /**
    *  redirector
