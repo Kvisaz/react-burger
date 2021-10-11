@@ -6,12 +6,14 @@ import { useDispatch } from 'react-redux';
 import { MAIN_ACTION } from '../../services/actions';
 import { ProfileEditor } from '../../components/profile-editor/profile-editor';
 import { OrderFeed } from '../../components/order-feed/order-feed';
+import { ORDERS_ACTION } from '../../services/actions/orders';
 
 export function Profile() {
   const dispatch = useDispatch();
 
   const onLogoutClick = useCallback(() => {
     dispatch(MAIN_ACTION.logoutActionCreator());
+    dispatch(ORDERS_ACTION.closeSocket());
   }, [dispatch]);
 
   return (

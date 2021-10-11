@@ -19,7 +19,7 @@ import {
   Register,
   ResetPassword,
 } from '../../pages';
-import { INGREDIENTS_ACTION, MAIN_ACTION, MainActionType } from '../../services/actions';
+import { INGREDIENTS_ACTION, MAIN_ACTION, ORDERS_ACTION } from '../../services/actions';
 import { Loading } from '../loading/loading';
 import { ProtectedAuthRoute } from '../common/protected-auth-route/protected-auth-route';
 import { useIngredientsState, useMainState, useOrderState } from '../../services/hooks';
@@ -37,7 +37,6 @@ function App() {
   } = useMainState();
 
   const {
-    isOrderFailed,
     showCreatedOrder,
   } = useOrderState();
 
@@ -64,11 +63,11 @@ function App() {
     dispatch(INGREDIENTS_ACTION.initData());
   }, [dispatch]);
 
-  useEffect(()=>{
-    if(isAuthorized){
-      dispatch(MAIN_ACTION.initOrderFeedSocket())
+  useEffect(() => {
+    if (isAuthorized) {
+      dispatch(ORDERS_ACTION.initOrderFeedSocket());
     }
-  },[isAuthorized])
+  }, [isAuthorized]);
 
   /**
    *  redirector
@@ -76,19 +75,13 @@ function App() {
   useEffect(() => {
     if (showCreatedOrder) {
       dispatch(MAIN_ACTION.setModalUrlOn());
-      dispatch({ type: MainActionType.ORDERED_POPUP_SHOW, order: showCreatedOrder });
+      dispatch(ORDERS_ACTION.showOrderPopup(showCreatedOrder));
       history.replace({
         pathname: Routes.orderPageLinkCreator(showCreatedOrder.id),
       });
       return;
     }
   }, [dispatch, history, showCreatedOrder]);
-
-  useEffect(() => {
-    if (isOrderFailed) {
-      dispatch(MAIN_ACTION.logoutActionCreator());
-    }
-  }, [dispatch, isOrderFailed]);
 
   return (
     <div className={styles.App}>

@@ -3,7 +3,7 @@ import styles from './burger-constructor-order.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { MoneyCounter } from '../../../common/money-counter/money-counter';
 import { useDispatch } from 'react-redux';
-import { MAIN_ACTION, MainActionType } from '../../../../services/actions';
+import { MainActionType, ORDERS_ACTION } from '../../../../services/actions';
 import { useHistory } from 'react-router-dom';
 import { Routes } from '../../../../services/Routes';
 import { useMainState, useOrderState } from '../../../../services/hooks';
@@ -17,7 +17,7 @@ export function BurgerConstructorOrder() {
 
   const onOrderButtonClick = useCallback(() => {
     if (isAuthorized) {
-      dispatch(MAIN_ACTION.orderAuthorizedActionCreator());
+      dispatch(ORDERS_ACTION.orderAuthorizedActionCreator());
     } else {
       dispatch({ type: MainActionType.SAVE_AFTER_LOGGING_URL, url: Routes.main });
       history.replace({

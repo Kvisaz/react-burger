@@ -1,7 +1,7 @@
 import { applyMiddleware, compose, createStore, Store } from 'redux';
 import thunk from 'redux-thunk';
 import { IMainState, IRootState, rootReducer } from './reducers';
-import { MainAction, MainActionType } from './actions';
+import { MainAction, MainActionType, OrderActionActionType } from './actions';
 import { IWSActions, socketMiddleWare } from './middleware/socketMiddleWare';
 
 declare global {
@@ -12,13 +12,13 @@ declare global {
 
 const WS_ORDER_URL = 'wss://norma.nomoreparties.space/orders/all';
 const wsActions: IWSActions = {
-  wsInit: MainActionType.WS_ORDER_CONNECTION_START,
-  wsClose: MainActionType.WS_ORDER_CONNECTION_CLOSE,
-  onOpen: MainActionType.WS_ORDER_CONNECTION_SUCCESS,
-  onError: MainActionType.WS_ORDER_CONNECTION_ERROR,
-  onMessage: MainActionType.WS_ORDER_GET_MESSAGE,
-  wsSendMessage: MainActionType.WS_ORDER_SEND_MESSAGE,
-  onClose: MainActionType.WS_ORDER_CONNECTION_CLOSED,
+  wsInit: OrderActionActionType.WS_ORDER_CONNECTION_START,
+  wsClose: OrderActionActionType.WS_ORDER_CONNECTION_CLOSE,
+  onOpen: OrderActionActionType.WS_ORDER_CONNECTION_SUCCESS,
+  onError: OrderActionActionType.WS_ORDER_CONNECTION_ERROR,
+  onMessage: OrderActionActionType.WS_ORDER_GET_MESSAGE,
+  wsSendMessage: OrderActionActionType.WS_ORDER_SEND_MESSAGE,
+  onClose: OrderActionActionType.WS_ORDER_CONNECTION_CLOSED,
 };
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

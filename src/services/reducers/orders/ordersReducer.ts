@@ -1,59 +1,58 @@
 import { nanoid } from 'nanoid';
-import { MainAction, MainActionType, IRemovePayLoad, IWsOrderMessage } from '../../actions';
 import { IBurgerPart } from '../../model/IBurgerPart';
 import { logg } from '../../utils/log';
 import { OrderStatus } from '../../model/IOrderFeedItem';
 import { IConstructorElementData } from '../../model/IConstructorElementData';
 import { mapApiOrderData } from '../../converters/getBurgerParts';
 import { IngredientStorage } from '../../services/IngredientStorage';
-import { InitialOrdersFeedState, IOrderState } from './ordersFeedState';
+import { InitialOrdersFeedState, IOrderState } from './ordersState';
+import { IRemovePayLoad, IWsOrderMessage, OrderAction, OrderActionActionType } from '../../actions/orders';
 
 
-export function ordersFeedReducer(state: IOrderState = InitialOrdersFeedState, action: MainAction): IOrderState {
+export function ordersReducer(state: IOrderState = InitialOrdersFeedState, action: OrderAction): IOrderState {
   switch (action.type) {
-    case MainActionType.ORDER_RESET:
+    case OrderActionActionType.ORDER_RESET:
       return {
         ...state,
         isOrderRequest: false,
         isOrderSuccess: false,
         isOrderFailed: false,
       };
-    case MainActionType.ORDER_REQUEST:
+    case OrderActionActionType.ORDER_REQUEST:
       return {
         ...state,
         isOrderRequest: true,
         isOrderSuccess: false,
         isOrderFailed: false,
       };
-    case MainActionType.ORDER_SUCCESS:
+    case OrderActionActionType.ORDER_SUCCESS:
       return {
         ...resetOrderBasket(state),
         isOrderRequest: false,
         isOrderSuccess: true,
         isOrderFailed: false,
       };
-    case MainActionType.ORDER_FAILED:
+    case OrderActionActionType.ORDER_FAILED:
       return {
         ...state,
         isOrderRequest: false,
         isOrderFailed: true,
         isOrderSuccess: false,
       };
-    case MainActionType.INGREDIENT_ADD_TO_BASKET:
+    case OrderActionActionType.INGREDIENT_ADD_TO_BASKET:
       return onSelectAction(action, state);
-    case MainActionType.INGREDIENT_REMOVE_FROM_BASKET:
+    case OrderActionActionType.INGREDIENT_REMOVE_FROM_BASKET:
       return onRemoveAction(action, state);
-    case MainActionType.BASKET_ITEM_SWAP:
+    case OrderActionActionType.BASKET_ITEM_SWAP:
       return onBasketItemSwap(action, state);
-
-    case MainActionType.WS_ORDER_GET_MESSAGE:
+    case OrderActionActionType.WS_ORDER_GET_MESSAGE:
       return onWsOrderGetMessage(action, state);
-    case MainActionType.ORDER_FEED_UPDATE:
+    case OrderActionActionType.ORDER_FEED_UPDATE:
       return {
         ...state,
         orderFeed: action.orderFeed,
       };
-    case MainActionType.ORDERED_POPUP_SHOW:
+    case OrderActionActionType.ORDERED_POPUP_SHOW:
       return {
         ...state,
         showCreatedOrder: undefined,
@@ -68,7 +67,7 @@ export function ordersFeedReducer(state: IOrderState = InitialOrdersFeedState, a
 }
 
 function onSelectAction(
-  action: { type: MainActionType.INGREDIENT_ADD_TO_BASKET, ingredient: IBurgerPart },
+  action: { type: OrderActionActionType.INGREDIENT_ADD_TO_BASKET, ingredient: IBurgerPart },
   state: IOrderState,
 ): IOrderState {
   const selectedIngredient = action.ingredient;
@@ -95,7 +94,7 @@ function onSelectAction(
 }
 
 function onRemoveAction(
-  action: { type: MainActionType.INGREDIENT_REMOVE_FROM_BASKET, payload: IRemovePayLoad },
+  action: { type: OrderActionActionType.INGREDIENT_REMOVE_FROM_BASKET, payload: IRemovePayLoad },
   state: IOrderState):
   IOrderState {
 
@@ -144,7 +143,7 @@ function setUniqueSelectorId(data: IConstructorElementData): IConstructorElement
 }
 
 function onBasketItemSwap(
-  action: { type: MainActionType.BASKET_ITEM_SWAP, selectedId1: string, selectedId2: string },
+  action: { type: OrderActionActionType.BASKET_ITEM_SWAP, selectedId1: string, selectedId2: string },
   state: IOrderState,
 ): IOrderState {
   const { selectedId1, selectedId2 } = action;
@@ -178,7 +177,7 @@ function resetOrderBasket(state: IOrderState): IOrderState {
 }
 
 function onWsOrderGetMessage(
-  action: { type: MainActionType.WS_ORDER_GET_MESSAGE, message: IWsOrderMessage },
+  action: { type: OrderActionActionType.WS_ORDER_GET_MESSAGE, message: IWsOrderMessage },
   state: IOrderState,
 ):
   IOrderState {

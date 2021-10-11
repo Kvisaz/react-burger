@@ -1,15 +1,15 @@
-import { MainActionType } from '../actions';
+import { MainActionType, OrderActionActionType } from '../actions';
 import { logg } from '../utils/log';
 
 
-export interface IWSActions extends Record<string, MainActionType> {
-  wsInit: MainActionType;
-  wsSendMessage: MainActionType;
-  wsClose: MainActionType;
-  onOpen: MainActionType;
-  onClose: MainActionType;
-  onError: MainActionType;
-  onMessage: MainActionType;
+export interface IWSActions extends Record<string, OrderActionActionType> {
+  wsInit: OrderActionActionType;
+  wsSendMessage: OrderActionActionType;
+  wsClose: OrderActionActionType;
+  onOpen: OrderActionActionType;
+  onClose: OrderActionActionType;
+  onError: OrderActionActionType;
+  onMessage: OrderActionActionType;
 }
 
 export const socketMiddleWare = (wsUrl: string, wsActions: IWSActions) => {
