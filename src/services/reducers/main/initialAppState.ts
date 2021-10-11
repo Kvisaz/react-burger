@@ -1,12 +1,11 @@
-import { IAppState } from './model/IAppState';
+import { IMainState } from './IMainState';
 
 
-export const InitialAppState: IAppState = {
+export const InitialAppState: IMainState = {
   sum: 0,
-  isIngredientsRequest: false,
-  isIngredientsFailed: false,
-  isIngredientsLoaded: false,
-  ingredients: [],
+  // isIngredientsFailed: false,
+  // isIngredientsLoaded: false,
+  // ingredients: [],
   ingredientAmountMap: {},
   selectedBun: undefined,
   selectedParts: [],

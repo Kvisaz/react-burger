@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './ingredient-details.module.css';
 import { Nutrition } from './components/nutrition/nutrition';
-import { useMainState } from '../../../../services/hooks/useMainState';
+import { useIngredientsState } from '../../../../services/hooks/useIngredientsState';
 
 interface IngredientParams {
   id?: string;
@@ -11,7 +11,7 @@ interface IngredientParams {
 export function IngredientDetails() {
   const { id } = useParams<IngredientParams>();
 
-  const { ingredients } = useMainState();
+  const { ingredients } = useIngredientsState();
   const selectedIngredient = ingredients.find(i => i._id === id);
   if (selectedIngredient == null) return null;
 

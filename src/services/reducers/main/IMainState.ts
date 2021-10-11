@@ -1,14 +1,18 @@
-import { IBurgerPart } from './IBurgerPart';
-import { IConstructorElementData } from './IConstructorElementData';
-import { IOrderFeedItem } from './IOrderFeedItem';
+import { IBurgerPart } from '../../model/IBurgerPart';
+import { IConstructorElementData } from '../../model/IConstructorElementData';
+import { IOrderFeedItem } from '../../model/IOrderFeedItem';
 
-export interface IAppState {
-  isIngredientsRequest: boolean;
-  isIngredientsLoaded: boolean;
-  isIngredientsFailed: boolean;
-  ingredients: IBurgerPart[];
+export interface IMainState {
+
+  // get ingredients
+  // isIngredientsRequest: boolean;
+  // isIngredientsLoaded: boolean;
+  // isIngredientsFailed: boolean;
+  // ingredients: IBurgerPart[];
+
+
+  // selected
   ingredientAmountMap: Record<string, number>;
-
   sum: number;
   selectedBun?: IConstructorElementData;
   selectedParts: IConstructorElementData[];

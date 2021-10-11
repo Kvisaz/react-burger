@@ -1,7 +1,6 @@
 import { applyMiddleware, compose, createStore, Store } from 'redux';
 import thunk from 'redux-thunk';
-import { IAppState } from './model/IAppState';
-import { mainReducer } from './reducers';
+import { IMainState, IngredientsState, rootReducer } from './reducers';
 import { BurgerAction, IBurgerActionType } from './actions';
 import { IWSActions, socketMiddleWare } from './middleware/socketMiddleWare';
 
@@ -26,7 +25,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 
 export const AppStore = createStore(
-  mainReducer,
+  rootReducer,
   composeEnhancers(
     applyMiddleware(
       thunk,
@@ -39,9 +38,12 @@ export type RootState = ReturnType<typeof AppStore.getState>
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof AppStore.dispatch
 
-export interface IAppStore extends Store<IAppState, BurgerAction> {
+export interface IAppStore extends Store<IMainState, BurgerAction> {
 }
 
 export interface IGetState {
-  (): IAppState;
+  (): {
+    main: IMainState,
+    ingredients: IngredientsState
+  };
 }

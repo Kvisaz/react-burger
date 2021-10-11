@@ -5,11 +5,11 @@ import { BurgerIngredientsSection } from './components/burger-ingredients-sectio
 import { IBurgerPart } from '../../services/model/IBurgerPart';
 import { useDispatch } from 'react-redux';
 import { IBurgerActionType } from '../../services/actions';
-import { useMainState } from '../../services/hooks/useMainState';
+import { useIngredientsState } from '../../services/hooks/useIngredientsState';
 
 export function BurgerIngredients() {
 
-  const { ingredients } = useMainState();
+  const { ingredients } = useIngredientsState();
   const dispatch = useDispatch();
 
   const listRef = useRef<HTMLDivElement>(null);

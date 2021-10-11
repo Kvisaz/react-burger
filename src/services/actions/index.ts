@@ -212,7 +212,7 @@ export const initData = () => async (dispatch: IBurgerDispatch) => {
 
 export const orderAuthorizedActionCreator = () => async (dispatch: IBurgerDispatch, getState: IGetState) => {
   dispatch({ type: IBurgerActionType.ORDER_REQUEST });
-  const state = getState();
+  const state = getState().main;
 
   const selectedBun = state.selectedBun;
   const selectedIds = state.selectedParts.map(i => i.ingredientId);
@@ -230,7 +230,7 @@ export const orderAuthorizedActionCreator = () => async (dispatch: IBurgerDispat
 };
 
 export const onIngredientDropActionCreator = (id: string) => (dispatch: IBurgerDispatch, getState: IGetState) => {
-  const { ingredients } = getState();
+  const { ingredients } = getState().ingredients;
   const ingredient = ingredients.find(i => i._id === id);
   if (ingredient) {
     dispatch({ type: IBurgerActionType.INGREDIENT_ADD_TO_BASKET, ingredient });
@@ -274,7 +274,7 @@ export const restorePassActionCreator = (data: IApiRestorePasswordData) =>
 
 export const resetPassActionCreator = () =>
   async (dispatch: IBurgerDispatch, getState: IGetState) => {
-    const { userResetCode: token = '', userResetPassword: password = '' } = getState();
+    const { userResetCode: token = '', userResetPassword: password = '' } = getState().main;
     const data: IApiResetPasswordData = {
       password, token,
     };
@@ -299,7 +299,7 @@ export const requestProfileActionCreator = () =>
 
 export const updateProfileActionCreator = () =>
   async (dispatch: IBurgerDispatch, getState: IGetState) => {
-    const { profileName = '', profileEmail = '', profilePassword = '' } = getState();
+    const { profileName = '', profileEmail = '', profilePassword = '' } = getState().main;
     const data = {
       name: profileName,
       email: profileEmail,
@@ -331,7 +331,7 @@ export const updateOrderFeedFromHttp = () =>
   async (dispatch: IBurgerDispatch, getState: IGetState) => {
     try {
       const apiOrderFeed = await API.fetchOrdersFeed();
-      const { ingredients } = getState();
+      const { ingredients } = getState().ingredients;
       const orderFeed = apiOrderFeed.map(order => mapApiOrderData(order, ingredients));
       dispatch({ type: IBurgerActionType.ORDER_FEED_UPDATE, orderFeed });
     } catch (e) {
