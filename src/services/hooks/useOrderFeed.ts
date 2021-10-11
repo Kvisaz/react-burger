@@ -9,14 +9,16 @@ export function useOrderFeed() {
   } = useMainState();
   const dispatch = useDispatch();
 
-  console.log('useOrderFeed')
-
   useEffect(() => {
     if (isAuthorized) {
       dispatch(ORDERS_ACTION.initOrderFeedSocket());
     } else {
       dispatch(ORDERS_ACTION.updateOrderFeedFromHttp());
     }
+
+    return () => {
+      dispatch(ORDERS_ACTION.closeSocket());
+    };
   }, [dispatch, isAuthorized]);
 
 }

@@ -3,6 +3,7 @@ import styles from './order-feed.module.css';
 import { OrderFeedItem } from '../order-feed-item/order-feed-item';
 import PropTypes from 'prop-types';
 import { useOrderState } from '../../services/hooks';
+import { useOrderFeed } from '../../services/hooks/useOrderFeed';
 
 export interface IOrderFeedProps {
   withStatus?: boolean
@@ -13,6 +14,7 @@ OrderFeed.propTypes = {
 }
 
 export function OrderFeed({withStatus}: IOrderFeedProps) {
+  useOrderFeed();
   const { orderFeed } = useOrderState();
   const hasOrders = useMemo(() => orderFeed.length > 0, [orderFeed]);
 

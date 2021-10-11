@@ -8,8 +8,6 @@ import { Register } from './register/register';
 import { ResetPassword } from './reset-password/reset-password';
 import { OrderFeedPage } from './order-feed-page/order-feed-page';
 import { OrderFeedDetails } from '../components/order-feed-details/order-feed-details';
-import { OrderHistory } from './order-history/order-history';
-import { OrderHistoryDetails } from './order-history-details/order-history-details';
 
 export {
   ForgotPassword,
@@ -18,8 +16,6 @@ export {
   Ingredient,
   OrderFeedPage,
   OrderFeedDetails,
-  OrderHistory,
-  OrderHistoryDetails,
   Page404,
   Profile,
   Register,

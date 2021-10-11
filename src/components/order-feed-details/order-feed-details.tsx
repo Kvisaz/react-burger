@@ -8,8 +8,10 @@ import { OrderFeedDetailsPartList } from './components/order-feed-details-part-l
 import { OrderFeedItemStatus } from '../order-feed-item-status/order-feed-item-status';
 import { formatOrderNumber } from '../../services/converters/formatOrderNumber';
 import { useOrderState } from '../../services/hooks';
+import { useOrderFeed } from '../../services/hooks/useOrderFeed';
 
 export function OrderFeedDetails() {
+  useOrderFeed();
   const { id } = useParams<IOrderDetailsUrlParams>();
   const { orderFeed } = useOrderState();
   const order = useMemo(() => orderFeed.find(o => o.id === id), [orderFeed, id]);
@@ -22,7 +24,7 @@ export function OrderFeedDetails() {
 
   return (<div className={styles.main}>
     <div className={styles.content}>
-        <span className={`text text_type_digits-default ${styles.center}`}>#{formatOrderNumber(order.number)}</span>
+      <span className={`text text_type_digits-default ${styles.center}`}>#{formatOrderNumber(order.number)}</span>
       <div className='mt-10'>
         <div className='text text_type_main-medium'>{order.name}</div>
         <div className='mt-1'><OrderFeedItemStatus status={order.status} /></div>

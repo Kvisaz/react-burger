@@ -64,13 +64,6 @@ function App() {
     dispatch(INGREDIENTS_ACTION.initData());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (isAuthorized) {
-      dispatch(ORDERS_ACTION.initOrderFeedSocket());
-    } else {
-      dispatch(ORDERS_ACTION.updateOrderFeedFromHttp())
-    }
-  }, [dispatch, isAuthorized]);
 
   /**
    *  redirector
