@@ -14,7 +14,7 @@ import { OrderStatus } from '../../model/IOrderFeedItem';
 import { InitialAppState } from './initialAppState';
 import { IConstructorElementData } from '../../model/IConstructorElementData';
 import { mapApiOrderData } from '../../converters/getBurgerParts';
-import { IngredientService } from '../connectors/IngredientService';
+import { IngredientStorage } from '../../storages/IngredientStorage';
 
 
 export function mainReducer(state: IMainState = InitialAppState, action: BurgerAction): IMainState {
@@ -526,7 +526,7 @@ function onWsOrderGetMessage(
   const { success, orders, total: orderTotal, totalToday: orderToday } = action.message;
 
   if (success) {
-    const ingredients = IngredientService.getIngredients();
+    const ingredients = IngredientStorage.getIngredients();
     const orderFeed = orders.map(order => mapApiOrderData(order, ingredients));
 
     const showCreatedOrder = orderFeed.filter(order => order.status === OrderStatus.CREATED)[0];

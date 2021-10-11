@@ -2,7 +2,7 @@ import { BurgerAction, IBurgerActionType } from '../../actions';
 import { IngredientsState, InitialIngredientsState } from './IngredientsState';
 import { logg } from '../../utils/log';
 import { IBurgerPart } from '../../model/IBurgerPart';
-import { IngredientService } from '../connectors/IngredientService';
+import { IngredientStorage } from '../../storages/IngredientStorage';
 
 export function ingredientsReducer(state: IngredientsState = InitialIngredientsState, action: BurgerAction): IngredientsState {
   switch (action.type) {
@@ -40,7 +40,7 @@ function onDataLoad(
     amount: 0,
   }));
 
-  IngredientService.save(ingredients); // for use in other reducers
+  IngredientStorage.save(ingredients); // for use in other reducers
 
   return {
     ...state,
