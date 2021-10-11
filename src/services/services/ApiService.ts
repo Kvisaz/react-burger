@@ -82,11 +82,8 @@ export class ApiService {
     const data: IApiLogoutData = {
       token: getTokenRefresh() ?? '',
     };
-    return this.fetchPost<IApiLogoutData, IApiLogoutResponse>(this.endpoints.logout, data)
-      .then(response => {
-        deleteTokenCookies();
-        return response;
-      });
+    deleteTokenCookies();
+    return this.fetchPost<IApiLogoutData, IApiLogoutResponse>(this.endpoints.logout, data);
   }
 
   async refreshToken(): Promise<IApiTokenResponse> {

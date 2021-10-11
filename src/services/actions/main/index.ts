@@ -121,7 +121,7 @@ const registerActionCreator = (data: IApiRegisterUserData) => async (dispatch: I
     .catch(() => dispatch({ type: MainActionType.REGISTRATION_USER_FAIL }));
 };
 
-const loginActionCreator = (data: IApiLoginData) => async (dispatch: IMainDispatch) => {
+const login = (data: IApiLoginData) => async (dispatch: IMainDispatch) => {
   dispatch({ type: MainActionType.LOGIN_REQUEST, data });
 
   API.login(data)
@@ -130,7 +130,7 @@ const loginActionCreator = (data: IApiLoginData) => async (dispatch: IMainDispat
     }).catch(() => dispatch({ type: MainActionType.LOGIN_FAIL }));
 };
 
-const logoutActionCreator = () => async (dispatch: IMainDispatch) => {
+const logout = () => async (dispatch: IMainDispatch) => {
   dispatch({ type: MainActionType.LOGOUT_REQUEST });
   API.logout()
     .then((response) => dispatch({ type: MainActionType.LOGOUT_SUCCESS, data: response }))
@@ -213,8 +213,8 @@ export const MAIN_ACTION = {
   requestProfileActionCreator,
   resetPassActionCreator,
   restorePassActionCreator,
-  logoutActionCreator,
-  loginActionCreator,
+  logout,
+  login,
   registerActionCreator,
   restoreAuth
 };

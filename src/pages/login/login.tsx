@@ -40,7 +40,7 @@ export function Login() {
 
   const onSubmit = useCallback((e) => {
     e.preventDefault();
-    dispatch(MAIN_ACTION.loginActionCreator({
+    dispatch(MAIN_ACTION.login({
       email, password,
     }));
   }, [dispatch, email, password]);
