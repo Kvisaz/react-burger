@@ -52,7 +52,8 @@ export function Register() {
     });
   }, [dispatch, email, name]);
 
-  const onSubmit = useCallback(() => {
+  const onSubmit = useCallback((e) => {
+    e.preventDefault();
     dispatch(MAIN_ACTION.registerActionCreator({
       email, name, password,
     }));

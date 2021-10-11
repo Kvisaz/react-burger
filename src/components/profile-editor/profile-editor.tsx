@@ -55,7 +55,8 @@ export function ProfileEditor() {
     });
   }, [dispatch, name, email]);
 
-  const onSubmit = useCallback(() => {
+  const onSubmit = useCallback((e) => {
+    e.preventDefault();
     dispatch(MAIN_ACTION.updateProfileActionCreator());
   }, [dispatch]);
 

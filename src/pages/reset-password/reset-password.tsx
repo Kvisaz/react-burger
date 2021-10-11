@@ -43,7 +43,8 @@ export function ResetPassword() {
   }, [dispatch, userResetPassword]);
 
 
-  const onSubmit = useCallback(() => {
+  const onSubmit = useCallback((e) => {
+    e.preventDefault();
     dispatch(MAIN_ACTION.resetPassActionCreator());
   }, [dispatch]);
 

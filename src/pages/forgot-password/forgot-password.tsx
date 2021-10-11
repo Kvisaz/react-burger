@@ -19,7 +19,8 @@ export function ForgotPassword() {
     dispatch({ type: MainActionType.RESTORE_PAGE_CHANGE, email: e.target.value });
   }, [dispatch]);
 
-  const onSubmit = useCallback(() => {
+  const onSubmit = useCallback((e) => {
+    e.preventDefault();
     dispatch(MAIN_ACTION.restorePassActionCreator({ email }));
   }, [dispatch, email]);
 

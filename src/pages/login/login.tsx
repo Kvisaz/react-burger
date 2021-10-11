@@ -38,7 +38,8 @@ export function Login() {
     });
   }, [dispatch, email]);
 
-  const onSubmit = useCallback(() => {
+  const onSubmit = useCallback((e) => {
+    e.preventDefault();
     dispatch(MAIN_ACTION.loginActionCreator({
       email, password,
     }));
