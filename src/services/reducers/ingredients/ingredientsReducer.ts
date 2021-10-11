@@ -32,7 +32,7 @@ export function ingredientsReducer(state: IngredientsState = InitialIngredientsS
 
 function onDataLoad(
   state: IngredientsState,
-  action: { type: IngredientActionType.DATA_LOADED; ingredients: IBurgerPart[]; isAuthorized: boolean },
+  action: { type: IngredientActionType.DATA_LOADED; ingredients: IBurgerPart[] },
 ): IngredientsState {
 
   const ingredients = action.ingredients.map(i => ({

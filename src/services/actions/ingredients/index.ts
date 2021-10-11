@@ -4,7 +4,7 @@ import { logg } from '../../utils/log';
 
 export type IngredientAction =
   | { type: IngredientActionType.DATA_REQUEST }
-  | { type: IngredientActionType.DATA_LOADED, ingredients: IBurgerPart[], isAuthorized: boolean }
+  | { type: IngredientActionType.DATA_LOADED, ingredients: IBurgerPart[] }
   | { type: IngredientActionType.DATA_FAILED, message: string }
 
 export enum IngredientActionType {
@@ -19,10 +19,9 @@ const initData = () => async (dispatch: IngredientDispatch) => {
   dispatch({ type: IngredientActionType.DATA_REQUEST });
 
   try {
-    const { isAuthorized } = await API.restoreAuth();
     const { ingredients } = await API.getBurgerParts();
     logg('ingredients', ingredients);
-    dispatch({ type: IngredientActionType.DATA_LOADED, ingredients, isAuthorized });
+    dispatch({ type: IngredientActionType.DATA_LOADED, ingredients });
   } catch (e: any) {
     dispatch({ type: IngredientActionType.DATA_FAILED, message: e.toString() });
   }

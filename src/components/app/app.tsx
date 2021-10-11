@@ -60,6 +60,7 @@ function App() {
 
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(MAIN_ACTION.restoreAuth());
     dispatch(INGREDIENTS_ACTION.initData());
   }, [dispatch]);
 

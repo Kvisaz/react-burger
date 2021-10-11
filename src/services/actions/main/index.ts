@@ -13,9 +13,6 @@ import {
   IApiTokenData,
   IApiTokenResponse,
 } from '../../services/ApiService';
-import { mapApiOrderData } from '../../converters/getBurgerParts';
-import { getTokenAuth } from '../../cookieTokens';
-import { logg } from '../../utils/log';
 
 export type MainAction =
   | { type: MainActionType.TAB_SELECT, index: number }
@@ -115,10 +112,6 @@ export interface IAuthCheckStartData {
 }
 
 
-
-
-
-
 const registerActionCreator = (data: IApiRegisterUserData) => async (dispatch: IMainDispatch) => {
   dispatch({ type: MainActionType.REGISTRATION_USER_REQUEST, data });
 
@@ -207,6 +200,11 @@ const setModalUrlOff = () =>
     dispatch({ type: MainActionType.SET_MODAL_URL, isModal: false });
   };
 
+const restoreAuth = () => async (dispatch: IMainDispatch) => {
+  const { isAuthorized } = await API.restoreAuth();
+  dispatch({ type: MainActionType.AUTH_CHECK_END, data: { isAuthorized } });
+};
+
 
 export const MAIN_ACTION = {
   setModalUrlOff,
@@ -218,4 +216,5 @@ export const MAIN_ACTION = {
   logoutActionCreator,
   loginActionCreator,
   registerActionCreator,
+  restoreAuth
 };
