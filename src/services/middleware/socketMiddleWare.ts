@@ -1,15 +1,15 @@
-import { IBurgerActionType } from '../actions';
+import { MainActionType } from '../actions';
 import { logg } from '../utils/log';
 
 
-export interface IWSActions extends Record<string, IBurgerActionType> {
-  wsInit: IBurgerActionType;
-  wsSendMessage: IBurgerActionType;
-  wsClose: IBurgerActionType;
-  onOpen: IBurgerActionType;
-  onClose: IBurgerActionType;
-  onError: IBurgerActionType;
-  onMessage: IBurgerActionType;
+export interface IWSActions extends Record<string, MainActionType> {
+  wsInit: MainActionType;
+  wsSendMessage: MainActionType;
+  wsClose: MainActionType;
+  onOpen: MainActionType;
+  onClose: MainActionType;
+  onError: MainActionType;
+  onMessage: MainActionType;
 }
 
 export const socketMiddleWare = (wsUrl: string, wsActions: IWSActions) => {

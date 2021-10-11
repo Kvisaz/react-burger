@@ -4,7 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import styles from './login.module.css';
 import { Routes } from '../../services/Routes';
 import { useDispatch } from 'react-redux';
-import { IBurgerActionType, loginActionCreator } from '../../services/actions';
+import { MainActionType, loginActionCreator } from '../../services/actions';
 import { useMainState } from '../../services/hooks/useMainState';
 
 export function Login() {
@@ -21,7 +21,7 @@ export function Login() {
   const onLoginChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     e.persist();  // deprecated since React 17
     dispatch({
-      type: IBurgerActionType.LOGIN_PAGE_CHANGE, data: {
+      type: MainActionType.LOGIN_PAGE_CHANGE, data: {
         password,
         email: e.target.value,
       },
@@ -31,7 +31,7 @@ export function Login() {
   const onPasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     e.persist();  // deprecated since React 17
     dispatch({
-      type: IBurgerActionType.LOGIN_PAGE_CHANGE, data: {
+      type: MainActionType.LOGIN_PAGE_CHANGE, data: {
         email,
         password: e.target.value,
       },

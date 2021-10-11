@@ -19,7 +19,7 @@ import {
   Register,
   ResetPassword,
 } from '../../pages';
-import { IBurgerActionType, initData, logoutActionCreator, setModalUrlOn } from '../../services/actions';
+import { MainActionType, initData, logoutActionCreator, setModalUrlOn } from '../../services/actions';
 import { Loading } from '../loading/loading';
 import { ProtectedAuthRoute } from '../common/protected-auth-route/protected-auth-route';
 import { useIngredientsState, useMainState, useOrderState } from '../../services/hooks';
@@ -69,7 +69,7 @@ function App() {
   useEffect(() => {
     if (showCreatedOrder) {
       dispatch(setModalUrlOn());
-      dispatch({ type: IBurgerActionType.ORDERED_POPUP_SHOW, order: showCreatedOrder });
+      dispatch({ type: MainActionType.ORDERED_POPUP_SHOW, order: showCreatedOrder });
       history.replace({
         pathname: Routes.orderPageLinkCreator(showCreatedOrder.id),
       });

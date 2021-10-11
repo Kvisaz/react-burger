@@ -4,7 +4,7 @@ import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burg
 import { Link, Redirect } from 'react-router-dom';
 import { Routes } from '../../services/Routes';
 import { useDispatch } from 'react-redux';
-import { IBurgerActionType, registerActionCreator } from '../../services/actions';
+import { MainActionType, registerActionCreator } from '../../services/actions';
 import { useMainState } from '../../services/hooks/useMainState';
 
 export function Register() {
@@ -22,7 +22,7 @@ export function Register() {
   const onNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     e.persist(); // deprecated since React 17
     dispatch({
-      type: IBurgerActionType.REGISTRATION_PAGE_CHANGE,
+      type: MainActionType.REGISTRATION_PAGE_CHANGE,
       data: {
         email, password,
         name: e.target.value,
@@ -33,7 +33,7 @@ export function Register() {
   const onLoginChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     e.persist(); // deprecated since React 17
     dispatch({
-      type: IBurgerActionType.REGISTRATION_PAGE_CHANGE,
+      type: MainActionType.REGISTRATION_PAGE_CHANGE,
       data: {
         password, name,
         email: e.target.value,
@@ -44,7 +44,7 @@ export function Register() {
   const onPasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     e.persist(); // deprecated since React 17
     dispatch({
-      type: IBurgerActionType.REGISTRATION_PAGE_CHANGE,
+      type: MainActionType.REGISTRATION_PAGE_CHANGE,
       data: {
         email, name,
         password: e.target.value,

@@ -4,7 +4,7 @@ import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burg
 import { Link, useHistory } from 'react-router-dom';
 import { Routes } from '../../services/Routes';
 import { useDispatch } from 'react-redux';
-import { IBurgerActionType, resetPassActionCreator } from '../../services/actions';
+import { MainActionType, resetPassActionCreator } from '../../services/actions';
 import { useMainState } from '../../services/hooks';
 
 export function ResetPassword() {
@@ -28,7 +28,7 @@ export function ResetPassword() {
   const onPasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     e.persist(); // deprecated since React 17
     dispatch({
-      type: IBurgerActionType.RESET_PAGE_CHANGE,
+      type: MainActionType.RESET_PAGE_CHANGE,
       code: userResetCode,
       password: e.target.value,
     });
@@ -36,7 +36,7 @@ export function ResetPassword() {
 
   const onCodeChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
-      type: IBurgerActionType.RESET_PAGE_CHANGE,
+      type: MainActionType.RESET_PAGE_CHANGE,
       code: e.target.value,
       password: userResetPassword,
     });

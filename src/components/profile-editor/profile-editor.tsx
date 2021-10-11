@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import styles from './profile-editor.module.css';
 import { useDispatch } from 'react-redux';
-import { IBurgerActionType, requestProfileActionCreator, updateProfileActionCreator } from '../../services/actions';
+import { MainActionType, requestProfileActionCreator, updateProfileActionCreator } from '../../services/actions';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Loading } from '../loading/loading';
 import { useMainState } from '../../services/hooks/useMainState';
@@ -27,7 +27,7 @@ export function ProfileEditor() {
   const onNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     e.persist(); // deprecated since React 17
     dispatch({
-      type: IBurgerActionType.PROFILE_PAGE_CHANGE, data: {
+      type: MainActionType.PROFILE_PAGE_CHANGE, data: {
         name: e.target.value,
         email, password,
       },
@@ -37,7 +37,7 @@ export function ProfileEditor() {
   const onEmailChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     e.persist(); // deprecated since React 17
     dispatch({
-      type: IBurgerActionType.PROFILE_PAGE_CHANGE, data: {
+      type: MainActionType.PROFILE_PAGE_CHANGE, data: {
         name,
         email: e.target.value,
         password,
@@ -48,7 +48,7 @@ export function ProfileEditor() {
   const onPasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     e.persist(); // deprecated since React 17
     dispatch({
-      type: IBurgerActionType.PROFILE_PAGE_CHANGE, data: {
+      type: MainActionType.PROFILE_PAGE_CHANGE, data: {
         name, email,
         password: e.target.value,
       },
@@ -60,7 +60,7 @@ export function ProfileEditor() {
   }, [dispatch]);
 
   const onResetClick = useCallback(() => {
-    dispatch({ type: IBurgerActionType.PROFILE_PAGE_RESET });
+    dispatch({ type: MainActionType.PROFILE_PAGE_RESET });
   }, [dispatch]);
 
   const buttonClass = useMemo(() =>

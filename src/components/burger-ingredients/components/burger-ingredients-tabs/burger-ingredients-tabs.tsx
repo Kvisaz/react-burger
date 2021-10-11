@@ -3,7 +3,7 @@ import styles from './burger-ingredients-tabs.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { IBurgerActionType } from '../../../../services/actions';
+import { MainActionType } from '../../../../services/actions';
 import { useMainState } from '../../../../services/hooks/useMainState';
 
 
@@ -17,7 +17,7 @@ export function BurgerIngredientsTabs() {
   const { currentTabIndex, tabs } = useMainState();
 
   const onClick = (value: string) => {
-    dispatch({ type: IBurgerActionType.TAB_SELECT, index: parseInt(value) });
+    dispatch({ type: MainActionType.TAB_SELECT, index: parseInt(value) });
   };
 
   return (

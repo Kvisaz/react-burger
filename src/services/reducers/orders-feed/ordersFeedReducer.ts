@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import { BurgerAction, IBurgerActionType, IRemovePayLoad, IWsOrderMessage } from '../../actions';
+import { MainAction, MainActionType, IRemovePayLoad, IWsOrderMessage } from '../../actions';
 import { IBurgerPart } from '../../model/IBurgerPart';
 import { logg } from '../../utils/log';
 import { OrderStatus } from '../../model/IOrderFeedItem';
@@ -9,51 +9,51 @@ import { IngredientStorage } from '../../storages/IngredientStorage';
 import { InitialOrdersFeedState, IOrderState } from './ordersFeedState';
 
 
-export function ordersFeedReducer(state: IOrderState = InitialOrdersFeedState, action: BurgerAction): IOrderState {
+export function ordersFeedReducer(state: IOrderState = InitialOrdersFeedState, action: MainAction): IOrderState {
   switch (action.type) {
-    case IBurgerActionType.ORDER_RESET:
+    case MainActionType.ORDER_RESET:
       return {
         ...state,
         isOrderRequest: false,
         isOrderSuccess: false,
         isOrderFailed: false,
       };
-    case IBurgerActionType.ORDER_REQUEST:
+    case MainActionType.ORDER_REQUEST:
       return {
         ...state,
         isOrderRequest: true,
         isOrderSuccess: false,
         isOrderFailed: false,
       };
-    case IBurgerActionType.ORDER_SUCCESS:
+    case MainActionType.ORDER_SUCCESS:
       return {
         ...resetOrderBasket(state),
         isOrderRequest: false,
         isOrderSuccess: true,
         isOrderFailed: false,
       };
-    case IBurgerActionType.ORDER_FAILED:
+    case MainActionType.ORDER_FAILED:
       return {
         ...state,
         isOrderRequest: false,
         isOrderFailed: true,
         isOrderSuccess: false,
       };
-    case IBurgerActionType.INGREDIENT_ADD_TO_BASKET:
+    case MainActionType.INGREDIENT_ADD_TO_BASKET:
       return onSelectAction(action, state);
-    case IBurgerActionType.INGREDIENT_REMOVE_FROM_BASKET:
+    case MainActionType.INGREDIENT_REMOVE_FROM_BASKET:
       return onRemoveAction(action, state);
-    case IBurgerActionType.BASKET_ITEM_SWAP:
+    case MainActionType.BASKET_ITEM_SWAP:
       return onBasketItemSwap(action, state);
 
-    case IBurgerActionType.WS_ORDER_GET_MESSAGE:
+    case MainActionType.WS_ORDER_GET_MESSAGE:
       return onWsOrderGetMessage(action, state);
-    case IBurgerActionType.ORDER_FEED_UPDATE:
+    case MainActionType.ORDER_FEED_UPDATE:
       return {
         ...state,
         orderFeed: action.orderFeed,
       };
-    case IBurgerActionType.ORDERED_POPUP_SHOW:
+    case MainActionType.ORDERED_POPUP_SHOW:
       return {
         ...state,
         showCreatedOrder: undefined,
@@ -68,7 +68,7 @@ export function ordersFeedReducer(state: IOrderState = InitialOrdersFeedState, a
 }
 
 function onSelectAction(
-  action: { type: IBurgerActionType.INGREDIENT_ADD_TO_BASKET, ingredient: IBurgerPart },
+  action: { type: MainActionType.INGREDIENT_ADD_TO_BASKET, ingredient: IBurgerPart },
   state: IOrderState,
 ): IOrderState {
   const selectedIngredient = action.ingredient;
@@ -95,7 +95,7 @@ function onSelectAction(
 }
 
 function onRemoveAction(
-  action: { type: IBurgerActionType.INGREDIENT_REMOVE_FROM_BASKET, payload: IRemovePayLoad },
+  action: { type: MainActionType.INGREDIENT_REMOVE_FROM_BASKET, payload: IRemovePayLoad },
   state: IOrderState):
   IOrderState {
 
@@ -144,7 +144,7 @@ function setUniqueSelectorId(data: IConstructorElementData): IConstructorElement
 }
 
 function onBasketItemSwap(
-  action: { type: IBurgerActionType.BASKET_ITEM_SWAP, selectedId1: string, selectedId2: string },
+  action: { type: MainActionType.BASKET_ITEM_SWAP, selectedId1: string, selectedId2: string },
   state: IOrderState,
 ): IOrderState {
   const { selectedId1, selectedId2 } = action;
@@ -178,7 +178,7 @@ function resetOrderBasket(state: IOrderState): IOrderState {
 }
 
 function onWsOrderGetMessage(
-  action: { type: IBurgerActionType.WS_ORDER_GET_MESSAGE, message: IWsOrderMessage },
+  action: { type: MainActionType.WS_ORDER_GET_MESSAGE, message: IWsOrderMessage },
   state: IOrderState,
 ):
   IOrderState {

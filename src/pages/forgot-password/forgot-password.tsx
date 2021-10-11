@@ -4,7 +4,7 @@ import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-component
 import { Link, useHistory } from 'react-router-dom';
 import { Routes } from '../../services/Routes';
 import { useDispatch } from 'react-redux';
-import { IBurgerActionType, restorePassActionCreator } from '../../services/actions';
+import { MainActionType, restorePassActionCreator } from '../../services/actions';
 import { useMainState } from '../../services/hooks/useMainState';
 
 export function ForgotPassword() {
@@ -16,7 +16,7 @@ export function ForgotPassword() {
 
   const onEmailChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     e.persist(); // deprecated since React 17
-    dispatch({ type: IBurgerActionType.RESTORE_PAGE_CHANGE, email: e.target.value });
+    dispatch({ type: MainActionType.RESTORE_PAGE_CHANGE, email: e.target.value });
   }, [dispatch]);
 
   const onButtonClick = useCallback(() => {

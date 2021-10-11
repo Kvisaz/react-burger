@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import styles from './draggable-burger-constructor-item.module.css';
-import { IBurgerActionType } from '../../../../services/actions';
+import { MainActionType } from '../../../../services/actions';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { DragSourceMonitor, useDrag, useDrop } from 'react-dnd';
 
@@ -62,7 +62,7 @@ export function DraggableBurgerConstructorItem(props: IBurgerConstructorItemProp
       const selectedId1 = item.selectedId;
       const selectedId2 = selectedId;
       if (selectedId1 !== selectedId2) {
-        dispatch({ type: IBurgerActionType.BASKET_ITEM_SWAP, selectedId1, selectedId2 });
+        dispatch({ type: MainActionType.BASKET_ITEM_SWAP, selectedId1, selectedId2 });
       }
     },
   }, [selectedId, dispatch]);
@@ -72,7 +72,7 @@ export function DraggableBurgerConstructorItem(props: IBurgerConstructorItemProp
   return (
     <div className={styles.basketItem} ref={ref} style={{ opacity }}>
       <ConstructorElement {...props} handleClose={() => dispatch({
-        type: IBurgerActionType.INGREDIENT_REMOVE_FROM_BASKET,
+        type: MainActionType.INGREDIENT_REMOVE_FROM_BASKET,
         payload: { selectedId, ingredientId },
       })} />
     </div>

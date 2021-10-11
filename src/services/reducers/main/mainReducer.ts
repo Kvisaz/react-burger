@@ -1,5 +1,5 @@
 import { IMainState, InitialMainState } from './IMainState';
-import { BurgerAction, IBurgerActionType } from '../../actions';
+import { MainAction, MainActionType } from '../../actions';
 import {
   IApiLoginData,
   IApiLoginResponse,
@@ -9,45 +9,45 @@ import {
 } from '../../Api';
 
 
-export function mainReducer(state: IMainState = InitialMainState, action: BurgerAction): IMainState {
+export function mainReducer(state: IMainState = InitialMainState, action: MainAction): IMainState {
   switch (action.type) {
-    case IBurgerActionType.TAB_SELECT:
+    case MainActionType.TAB_SELECT:
       return {
         ...state,
         currentTabIndex: action.index,
       };
     /*    case IBurgerActionType.BASKET_ITEM_SWAP:
           return onBasketItemSwap(action, state);*/
-    case IBurgerActionType.REGISTRATION_PAGE_CHANGE:
+    case MainActionType.REGISTRATION_PAGE_CHANGE:
       return onRegisterPageChange(action, state);
-    case IBurgerActionType.REGISTRATION_USER_REQUEST:
+    case MainActionType.REGISTRATION_USER_REQUEST:
       return {
         ...state,
         isRegisterRequest: true,
         isRegisterSuccess: false,
         isRegisterFailed: false,
       };
-    case IBurgerActionType.REGISTRATION_USER_SUCCESS:
+    case MainActionType.REGISTRATION_USER_SUCCESS:
       return onRegisterSuccess(action, state);
-    case IBurgerActionType.REGISTRATION_USER_FAIL:
+    case MainActionType.REGISTRATION_USER_FAIL:
       return {
         ...state,
         isRegisterRequest: false,
         isRegisterSuccess: false,
         isRegisterFailed: true,
       };
-    case IBurgerActionType.LOGIN_PAGE_CHANGE:
+    case MainActionType.LOGIN_PAGE_CHANGE:
       return onLoginPageChange(action, state);
-    case IBurgerActionType.LOGIN_REQUEST:
+    case MainActionType.LOGIN_REQUEST:
       return {
         ...state,
         isLoginRequest: true,
         isLoginSuccess: false,
         isLoginFailed: false,
       };
-    case IBurgerActionType.LOGIN_SUCCESS:
+    case MainActionType.LOGIN_SUCCESS:
       return onLoginSuccess(action, state);
-    case IBurgerActionType.LOGIN_FAIL:
+    case MainActionType.LOGIN_FAIL:
       return {
         ...state,
         isLoginRequest: false,
@@ -55,14 +55,14 @@ export function mainReducer(state: IMainState = InitialMainState, action: Burger
         isLoginFailed: true,
         isAuthorized: false,
       };
-    case IBurgerActionType.LOGOUT_REQUEST:
+    case MainActionType.LOGOUT_REQUEST:
       return {
         ...state,
         isLogoutRequest: true,
         isLogoutSuccess: false,
         isLogoutFailed: false,
       };
-    case IBurgerActionType.LOGOUT_SUCCESS:
+    case MainActionType.LOGOUT_SUCCESS:
       return {
         ...state,
         isLogoutRequest: false,
@@ -70,42 +70,42 @@ export function mainReducer(state: IMainState = InitialMainState, action: Burger
         isLogoutFailed: false,
         isAuthorized: false,
       };
-    case IBurgerActionType.LOGOUT_FAIL:
+    case MainActionType.LOGOUT_FAIL:
       return {
         ...state,
         isLogoutRequest: false,
         isLogoutSuccess: false,
         isLogoutFailed: true,
       };
-    case IBurgerActionType.RESTORE_PAGE_CHANGE:
+    case MainActionType.RESTORE_PAGE_CHANGE:
       return onRestorePageChange(action, state);
-    case IBurgerActionType.RESTORE_PASS_REQUEST:
+    case MainActionType.RESTORE_PASS_REQUEST:
       return {
         ...state,
         isRestoreRequest: true,
       };
-    case IBurgerActionType.RESTORE_PASS_SUCCESS:
+    case MainActionType.RESTORE_PASS_SUCCESS:
       return {
         ...state,
         isRestoreRequest: false,
         isRestoreSuccess: true,
         isRestoreFailed: false,
       };
-    case IBurgerActionType.RESTORE_PASS_FAIL:
+    case MainActionType.RESTORE_PASS_FAIL:
       return {
         ...state,
         isRestoreRequest: false,
         isRestoreSuccess: false,
         isRestoreFailed: true,
       };
-    case IBurgerActionType.RESET_PAGE_CHANGE:
+    case MainActionType.RESET_PAGE_CHANGE:
       return onResetPageChange(action, state);
-    case IBurgerActionType.RESET_PASS_REQUEST:
+    case MainActionType.RESET_PASS_REQUEST:
       return {
         ...state,
         isResetRequest: true,
       };
-    case IBurgerActionType.RESET_PASS_SUCCESS:
+    case MainActionType.RESET_PASS_SUCCESS:
       return {
         ...state,
         isResetRequest: false,
@@ -113,7 +113,7 @@ export function mainReducer(state: IMainState = InitialMainState, action: Burger
         isResetSuccess: true,
         isRestoreSuccess: false,
       };
-    case IBurgerActionType.RESET_PASS_FAIL:
+    case MainActionType.RESET_PASS_FAIL:
       return {
         ...state,
         isResetRequest: false,
@@ -121,31 +121,31 @@ export function mainReducer(state: IMainState = InitialMainState, action: Burger
         isResetSuccess: false,
         isRestoreSuccess: false,
       };
-    case IBurgerActionType.TOKEN_REFRESH_REQUEST:
+    case MainActionType.TOKEN_REFRESH_REQUEST:
       // TODO
       return {
         ...state,
       };
-    case IBurgerActionType.TOKEN_REFRESH_SUCCESS:
+    case MainActionType.TOKEN_REFRESH_SUCCESS:
       // TODO
       return {
         ...state,
       };
-    case IBurgerActionType.TOKEN_REFRESH_FAIL:
+    case MainActionType.TOKEN_REFRESH_FAIL:
       // TODO
       return {
         ...state,
       };
-    case IBurgerActionType.PROFILE_REQUEST:
+    case MainActionType.PROFILE_REQUEST:
       return {
         ...state,
         isProfileRequest: true,
         isProfileSuccess: false,
         isProfileFail: false,
       };
-    case IBurgerActionType.PROFILE_SUCCESS:
+    case MainActionType.PROFILE_SUCCESS:
       return onProfilePageLoad(action, state);
-    case IBurgerActionType.PROFILE_FAIL:
+    case MainActionType.PROFILE_FAIL:
       return {
         ...state,
         isProfileRequest: false,
@@ -153,19 +153,19 @@ export function mainReducer(state: IMainState = InitialMainState, action: Burger
         isProfileFail: true,
       };
 
-    case IBurgerActionType.PROFILE_PAGE_CHANGE:
+    case MainActionType.PROFILE_PAGE_CHANGE:
       return onProfilePageChange(action, state);
-    case IBurgerActionType.PROFILE_PAGE_RESET:
+    case MainActionType.PROFILE_PAGE_RESET:
       return onProfilePageReset(action, state);
 
-    case IBurgerActionType.PROFILE_UPDATE_REQUEST:
+    case MainActionType.PROFILE_UPDATE_REQUEST:
       return {
         ...state,
         isProfileUpdateRequest: true,
         isProfileUpdateSuccess: false,
         isProfileUpdateFail: false,
       };
-    case IBurgerActionType.PROFILE_UPDATE_SUCCESS:
+    case MainActionType.PROFILE_UPDATE_SUCCESS:
       return {
         ...state,
         isProfileUpdateRequest: false,
@@ -175,32 +175,32 @@ export function mainReducer(state: IMainState = InitialMainState, action: Burger
         userPassword: '',
         userEmail: action.data.email,
       };
-    case IBurgerActionType.PROFILE_UPDATE_FAIL:
+    case MainActionType.PROFILE_UPDATE_FAIL:
       return {
         ...state,
         isProfileUpdateRequest: false,
         isProfileUpdateSuccess: false,
         isProfileUpdateFail: true,
       };
-    case IBurgerActionType.SAVE_AFTER_LOGGING_URL:
+    case MainActionType.SAVE_AFTER_LOGGING_URL:
       return {
         ...state,
         urlAfterLogging: action.url,
       };
 
 
-    case IBurgerActionType.SET_MODAL_URL:
+    case MainActionType.SET_MODAL_URL:
       return {
         ...state,
         isModalUrl: action.isModal,
       };
 
-    case IBurgerActionType.AUTH_CHECK_START:
+    case MainActionType.AUTH_CHECK_START:
       return {
         ...state,
         isAuthorizationChecking: true,
       };
-    case IBurgerActionType.AUTH_CHECK_END:
+    case MainActionType.AUTH_CHECK_END:
       return {
         ...state,
         isAuthorizationChecking: false,
@@ -215,7 +215,7 @@ export function mainReducer(state: IMainState = InitialMainState, action: Burger
 }
 
 function onRegisterPageChange(
-  action: { type: IBurgerActionType.REGISTRATION_PAGE_CHANGE, data: IApiRegisterUserData },
+  action: { type: MainActionType.REGISTRATION_PAGE_CHANGE, data: IApiRegisterUserData },
   state: IMainState,
 ): IMainState {
   return {
@@ -227,7 +227,7 @@ function onRegisterPageChange(
 }
 
 function onRestorePageChange(
-  action: { type: IBurgerActionType.RESTORE_PAGE_CHANGE, email: string },
+  action: { type: MainActionType.RESTORE_PAGE_CHANGE, email: string },
   state: IMainState,
 ): IMainState {
   return {
@@ -237,7 +237,7 @@ function onRestorePageChange(
 }
 
 function onResetPageChange(
-  action: { type: IBurgerActionType.RESET_PAGE_CHANGE, code: string, password: string },
+  action: { type: MainActionType.RESET_PAGE_CHANGE, code: string, password: string },
   state: IMainState,
 ): IMainState {
   return {
@@ -248,7 +248,7 @@ function onResetPageChange(
 }
 
 function onRegisterSuccess(
-  action: { type: IBurgerActionType.REGISTRATION_USER_SUCCESS, data: IApiRegisterUserResponse, password: string },
+  action: { type: MainActionType.REGISTRATION_USER_SUCCESS, data: IApiRegisterUserResponse, password: string },
   state: IMainState,
 ): IMainState {
   return {
@@ -264,7 +264,7 @@ function onRegisterSuccess(
 }
 
 function onLoginSuccess(
-  action: { type: IBurgerActionType.LOGIN_SUCCESS, data: IApiLoginResponse, password: string },
+  action: { type: MainActionType.LOGIN_SUCCESS, data: IApiLoginResponse, password: string },
   state: IMainState,
 ): IMainState {
   return {
@@ -280,7 +280,7 @@ function onLoginSuccess(
 }
 
 function onLoginPageChange(
-  action: { type: IBurgerActionType.LOGIN_PAGE_CHANGE, data: IApiLoginData },
+  action: { type: MainActionType.LOGIN_PAGE_CHANGE, data: IApiLoginData },
   state: IMainState,
 ): IMainState {
   return {
@@ -291,7 +291,7 @@ function onLoginPageChange(
 }
 
 function onProfilePageLoad(
-  action: { type: IBurgerActionType.PROFILE_SUCCESS, data: IApiProfileData },
+  action: { type: MainActionType.PROFILE_SUCCESS, data: IApiProfileData },
   state: IMainState,
 ): IMainState {
   return {
@@ -306,7 +306,7 @@ function onProfilePageLoad(
 }
 
 function onProfilePageChange(
-  action: { type: IBurgerActionType.PROFILE_PAGE_CHANGE, data: IApiProfileData },
+  action: { type: MainActionType.PROFILE_PAGE_CHANGE, data: IApiProfileData },
   state: IMainState,
 ): IMainState {
   return {
@@ -318,7 +318,7 @@ function onProfilePageChange(
 }
 
 function onProfilePageReset(
-  action: { type: IBurgerActionType.PROFILE_PAGE_RESET },
+  action: { type: MainActionType.PROFILE_PAGE_RESET },
   state: IMainState,
 ): IMainState {
   return {

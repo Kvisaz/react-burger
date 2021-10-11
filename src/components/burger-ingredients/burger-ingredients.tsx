@@ -4,7 +4,7 @@ import { BurgerIngredientsTabs } from './components/burger-ingredients-tabs/burg
 import { BurgerIngredientsSection } from './components/burger-ingredients-section/burger-ingredients-section';
 import { IBurgerPart } from '../../services/model/IBurgerPart';
 import { useDispatch } from 'react-redux';
-import { IBurgerActionType } from '../../services/actions';
+import { MainActionType } from '../../services/actions';
 import { useIngredientsState } from '../../services/hooks/useIngredientsState';
 
 export function BurgerIngredients() {
@@ -38,7 +38,7 @@ export function BurgerIngredients() {
           nearestIndex = i;
         }
       }
-      dispatch({ type: IBurgerActionType.TAB_SELECT, index: nearestIndex });
+      dispatch({ type: MainActionType.TAB_SELECT, index: nearestIndex });
     }
   }, [ref1, ref2, ref3, dispatch]);
 
