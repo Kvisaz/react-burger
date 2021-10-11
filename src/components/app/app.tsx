@@ -19,10 +19,11 @@ import {
   Register,
   ResetPassword,
 } from '../../pages';
-import { MainActionType, initData, logoutActionCreator, setModalUrlOn } from '../../services/actions';
+import { initOrderFeedSocket, logoutActionCreator, MainActionType, setModalUrlOn } from '../../services/actions';
 import { Loading } from '../loading/loading';
 import { ProtectedAuthRoute } from '../common/protected-auth-route/protected-auth-route';
 import { useIngredientsState, useMainState, useOrderState } from '../../services/hooks';
+import { INGREDIENTS_ACTION } from '../../services/actions';
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
     isRegisterRequest,
     isLoginRequest,
     isModalUrl,
+    isAuthorized,
     isAuthorizationChecking,
   } = useMainState();
 
@@ -60,8 +62,14 @@ function App() {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(initData());
+    dispatch(INGREDIENTS_ACTION.initData());
   }, [dispatch]);
+
+  useEffect(()=>{
+    if(isAuthorized){
+      dispatch(initOrderFeedSocket())
+    }
+  },[isAuthorized])
 
   /**
    *  redirector

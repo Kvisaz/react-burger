@@ -1,18 +1,18 @@
-import { MainAction, MainActionType } from '../../actions';
+import { IngredientAction, IngredientActionType } from '../../actions';
 import { IngredientsState, InitialIngredientsState } from './IngredientsState';
 import { logg } from '../../utils/log';
 import { IBurgerPart } from '../../model/IBurgerPart';
 import { IngredientStorage } from '../../services/IngredientStorage';
 
-export function ingredientsReducer(state: IngredientsState = InitialIngredientsState, action: MainAction): IngredientsState {
+export function ingredientsReducer(state: IngredientsState = InitialIngredientsState, action: IngredientAction): IngredientsState {
   switch (action.type) {
-    case MainActionType.DATA_REQUEST: {
+    case IngredientActionType.DATA_REQUEST: {
       return {
         ...state,
         isIngredientsRequest: true,
       };
     }
-    case MainActionType.DATA_FAILED : {
+    case IngredientActionType.DATA_FAILED : {
       return {
         ...state,
         isIngredientsRequest: false,
@@ -20,7 +20,7 @@ export function ingredientsReducer(state: IngredientsState = InitialIngredientsS
         isIngredientsFailed: true,
       };
     }
-    case MainActionType.DATA_LOADED:
+    case IngredientActionType.DATA_LOADED:
       return onDataLoad(state, action);
     default:
       logg(`ingredientsReducer unknown action`, action);
@@ -32,7 +32,7 @@ export function ingredientsReducer(state: IngredientsState = InitialIngredientsS
 
 function onDataLoad(
   state: IngredientsState,
-  action: { type: MainActionType.DATA_LOADED; ingredients: IBurgerPart[]; isAuthorized: boolean },
+  action: { type: IngredientActionType.DATA_LOADED; ingredients: IBurgerPart[]; isAuthorized: boolean },
 ): IngredientsState {
 
   const ingredients = action.ingredients.map(i => ({

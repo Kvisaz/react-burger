@@ -20,9 +20,6 @@ import { getTokenAuth } from '../../cookieTokens';
 import { logg } from '../../utils/log';
 
 export type MainAction =
-  | { type: MainActionType.DATA_REQUEST }
-  | { type: MainActionType.DATA_LOADED, ingredients: IBurgerPart[], isAuthorized: boolean }
-  | { type: MainActionType.DATA_FAILED, message: string }
   | { type: MainActionType.INGREDIENT_ADD_TO_BASKET, ingredient: IBurgerPart }
   | { type: MainActionType.INGREDIENT_REMOVE_FROM_BASKET, payload: IRemovePayLoad }
   | { type: MainActionType.ORDER_RESET }
@@ -78,9 +75,6 @@ export type MainAction =
 type IMainDispatch = (action: MainAction) => any;
 
 export enum MainActionType {
-  DATA_REQUEST = 'DATA_REQUEST',
-  DATA_LOADED = 'DATA_LOADED',
-  DATA_FAILED = 'DATA_FAILED',
   INGREDIENT_ADD_TO_BASKET = 'INGREDIENT_ADD_TO_BASKET',
 
   INGREDIENT_REMOVE_FROM_BASKET = 'INGREDIENT_REMOVE_FROM_BASKET',
@@ -180,17 +174,11 @@ function initWsOrders(dispatch: IMainDispatch) {
   }
 }
 
-export const initData = () => async (dispatch: IMainDispatch) => {
-  dispatch({ type: MainActionType.DATA_REQUEST });
-
-  try {
-    const { isAuthorized } = await API.restoreAuth();
-    const { ingredients } = await API.getBurgerParts();
-    initWsOrders(dispatch);
-    logg('ingredients', ingredients);
-    dispatch({ type: MainActionType.DATA_LOADED, ingredients, isAuthorized });
-  } catch (e: any) {
-    dispatch({ type: MainActionType.DATA_FAILED, message: e.toString() });
+export const initOrderFeedSocket = () => async (dispatch: IMainDispatch) => {
+  const token = getTokenAuth();
+  if (token) {
+    dispatch({ type: MainActionType.WS_ORDER_CONNECTION_START, token });
+    logg('initOrderFeedSocket', token);
   }
 };
 
@@ -204,7 +192,7 @@ export const orderAuthorizedActionCreator = () => async (dispatch: IMainDispatch
     selectedIds.push(selectedBun.ingredientId);
     selectedIds.push(selectedBun.ingredientId);
   }
-  
+
   // order срабатывает с сильным запозданием, поэтому перевесим SUCCESS на проверку через сокеты
   API.order(selectedIds)
     .catch(e => {
