@@ -3,7 +3,7 @@ import styles from './order-details.module.css';
 import { Assets } from '../../../../Assets';
 import { useParams } from 'react-router-dom';
 import { formatOrderNumber } from '../../../../services/converters/formatOrderNumber';
-import { useMainState } from '../../../../services/hooks/useMainState';
+import { useOrderState } from '../../../../services/hooks';
 
 
 const ICON_URL = Assets.images.orderDone;
@@ -14,7 +14,7 @@ interface OrderPageParams {
 
 export function OrderDetails() {
 
-  const { showedOrders } = useMainState();
+  const { showedOrders } = useOrderState();
   const { id = '-1' } = useParams<OrderPageParams>();
   const order = useMemo(() => showedOrders.find(order => order.id === id), [showedOrders, id]);
   if (order == null) return null;

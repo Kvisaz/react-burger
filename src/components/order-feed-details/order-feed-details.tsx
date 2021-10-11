@@ -7,11 +7,11 @@ import { OrderData } from '../order-data/order-data';
 import { OrderFeedDetailsPartList } from './components/order-feed-details-part-list/order-feed-details-part-list';
 import { OrderFeedItemStatus } from '../order-feed-item-status/order-feed-item-status';
 import { formatOrderNumber } from '../../services/converters/formatOrderNumber';
-import { useMainState } from '../../services/hooks/useMainState';
+import { useOrderState } from '../../services/hooks';
 
 export function OrderFeedDetails() {
   const { id } = useParams<IOrderDetailsUrlParams>();
-  const { orderFeed } = useMainState();
+  const { orderFeed } = useOrderState();
   const order = useMemo(() => orderFeed.find(o => o.id === id), [orderFeed, id]);
 
   if (order == null) return (

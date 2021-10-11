@@ -3,10 +3,9 @@ import styles from './reset-password.module.css';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useHistory } from 'react-router-dom';
 import { Routes } from '../../services/Routes';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../services/store';
+import { useDispatch } from 'react-redux';
 import { IBurgerActionType, resetPassActionCreator } from '../../services/actions';
-import { useMainState } from '../../services/hooks/useMainState';
+import { useMainState } from '../../services/hooks';
 
 export function ResetPassword() {
 

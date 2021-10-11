@@ -8,7 +8,7 @@ import { useDrop } from 'react-dnd';
 import { IdObject } from '../../services/model/IdObject';
 import { DraggableBurgerConstructorItem } from './components/draggable-burger-constructor-item/draggable-burger-constructor-item';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useMainState } from '../../services/hooks/useMainState';
+import { useOrderState } from '../../services/hooks';
 
 function mapBun(bun: IConstructorElementData, suffix: string, type: IConstructorElementType): IConstructorElementData {
   return {
@@ -22,7 +22,7 @@ function mapBun(bun: IConstructorElementData, suffix: string, type: IConstructor
 export function BurgerConstructor() {
   const dispatch = useDispatch();
 
-  const { selectedBun, selectedParts: parts, sum } = useMainState();
+  const { selectedBun, selectedParts: parts, sum } = useOrderState();
 
   const [_, dropTargetRef] = useDrop({
     accept: 'item',

@@ -1,32 +1,4 @@
-import { IBurgerPart } from '../../model/IBurgerPart';
-import { IConstructorElementData } from '../../model/IConstructorElementData';
-import { IOrderFeedItem } from '../../model/IOrderFeedItem';
-
 export interface IMainState {
-
-  // get ingredients
-  // isIngredientsRequest: boolean;
-  // isIngredientsLoaded: boolean;
-  // isIngredientsFailed: boolean;
-  // ingredients: IBurgerPart[];
-
-
-  // selected
-  ingredientAmountMap: Record<string, number>;
-  sum: number;
-  selectedBun?: IConstructorElementData;
-  selectedParts: IConstructorElementData[];
-
-  selectedIngredient?: IBurgerPart;
-
-  // общая лента заказов
-  orderFeed: IOrderFeedItem[];
-  orderTotal: number;
-  orderToday: number;
-
-  isOrderRequest: boolean;
-  isOrderSuccess: boolean;
-  isOrderFailed: boolean;
 
   currentTabIndex: number;
   tabs: ITab[];
@@ -94,11 +66,25 @@ export interface IMainState {
   isProfileUpdateSuccess?: boolean;
   isProfileUpdateFail?: boolean;
 
-  showCreatedOrder?: IOrderFeedItem;
-  showedOrders: IOrderFeedItem[];
 }
 
 
 interface ITab {
   name: string;
 }
+
+export const InitialMainState: IMainState = {
+  currentTabIndex: 0,
+  tabs: [
+    {
+      name: 'Булки',
+    },
+    {
+      name: 'Соусы',
+    },
+    {
+      name: 'Начинки',
+    },
+  ],
+
+};

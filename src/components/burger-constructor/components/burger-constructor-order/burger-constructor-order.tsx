@@ -6,12 +6,13 @@ import { useDispatch } from 'react-redux';
 import { IBurgerActionType, orderAuthorizedActionCreator } from '../../../../services/actions';
 import { useHistory } from 'react-router-dom';
 import { Routes } from '../../../../services/Routes';
-import { useMainState } from '../../../../services/hooks/useMainState';
+import { useMainState, useOrderState } from '../../../../services/hooks';
 
 
 export function BurgerConstructorOrder() {
   const dispatch = useDispatch();
-  const { isAuthorized, sum } = useMainState();
+  const { isAuthorized } = useMainState();
+  const { sum } = useOrderState();
   const history = useHistory();
 
   const onOrderButtonClick = useCallback(() => {

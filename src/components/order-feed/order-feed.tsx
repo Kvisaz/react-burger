@@ -4,7 +4,7 @@ import styles from './order-feed.module.css';
 import { updateOrderFeedFromHttp } from '../../services/actions';
 import { OrderFeedItem } from '../order-feed-item/order-feed-item';
 import PropTypes from 'prop-types';
-import { useMainState } from '../../services/hooks/useMainState';
+import { useOrderState } from '../../services/hooks';
 
 export interface IOrderFeedProps {
   withStatus?: boolean
@@ -17,7 +17,7 @@ OrderFeed.propTypes = {
 export function OrderFeed({withStatus}: IOrderFeedProps) {
   const dispatch = useDispatch();
 
-  const { orderFeed } = useMainState();
+  const { orderFeed } = useOrderState();
   const hasOrders = useMemo(() => orderFeed.length > 0, [orderFeed]);
 
   useEffect(() => {

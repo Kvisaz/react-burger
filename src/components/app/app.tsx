@@ -22,8 +22,7 @@ import {
 import { IBurgerActionType, initData, logoutActionCreator, setModalUrlOn } from '../../services/actions';
 import { Loading } from '../loading/loading';
 import { ProtectedAuthRoute } from '../common/protected-auth-route/protected-auth-route';
-import { useMainState } from '../../services/hooks/useMainState';
-import { useIngredientsState } from '../../services/hooks/useIngredientsState';
+import { useIngredientsState, useMainState, useOrderState } from '../../services/hooks';
 
 
 function App() {
@@ -34,9 +33,12 @@ function App() {
     isLoginRequest,
     isModalUrl,
     isAuthorizationChecking,
+  } = useMainState();
+
+  const {
     isOrderFailed,
     showCreatedOrder,
-  } = useMainState();
+  } = useOrderState();
 
   const { isIngredientsRequest } = useIngredientsState();
 

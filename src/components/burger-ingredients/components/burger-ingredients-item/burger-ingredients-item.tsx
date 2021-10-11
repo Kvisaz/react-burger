@@ -8,7 +8,7 @@ import { MoneyCounter } from '../../../common/money-counter/money-counter';
 import { useHistory } from 'react-router-dom';
 import { Routes } from '../../../../services/Routes';
 import { setModalUrlOn } from '../../../../services/actions';
-import { useMainState } from '../../../../services/hooks/useMainState';
+import { useOrderState } from '../../../../services/hooks';
 
 interface IBurgerConstructorItemProps {
   part: IBurgerPart;
@@ -20,7 +20,6 @@ BurgerIngredientsItem.propTypes = {
 
 export function BurgerIngredientsItem({ part }: IBurgerConstructorItemProps) {
 
-  const state = useMainState();
   const dispatch = useDispatch();
 
   const [_, dragRef] = useDrag({
@@ -28,7 +27,7 @@ export function BurgerIngredientsItem({ part }: IBurgerConstructorItemProps) {
     item: { id: part._id },
   }, [part]);
 
-  const { ingredientAmountMap } = state;
+  const { ingredientAmountMap } = useOrderState();
   const { price, name, image, _id } = part;
   const amount = ingredientAmountMap[_id] ?? 0;
 

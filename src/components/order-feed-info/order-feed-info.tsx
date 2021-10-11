@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import styles from './order-feed-info.module.css';
-import { useMainState } from '../../services/hooks/useMainState';
 import { countOrderStatus } from '../../services/converters/countOrderStatus';
 import { formatOrderNumber } from '../../services/converters/formatOrderNumber';
+import { useOrderState } from '../../services/hooks';
 
 const classNames = {
   columnTitle: 'text text_type_main-medium mb-6',
@@ -14,7 +14,7 @@ const classNames = {
 
 export function OrderFeedInfo() {
 
-  const { orderFeed, orderTotal, orderToday } = useMainState();
+  const { orderFeed, orderTotal, orderToday } = useOrderState();
 
   const orderStatusMap = useMemo(() => countOrderStatus(orderFeed), [orderFeed]);
   const done = useMemo(() => orderStatusMap.done.slice(0, 6), [orderStatusMap.done]);
@@ -30,7 +30,7 @@ export function OrderFeedInfo() {
           <div className={classNames.columnTitle}>Готовы:</div>
           <div className={classNames.done}>
             {
-              done.map(order => (<div>{formatOrderNumber(order.number)}</div>))
+              done.map(order => (<div key={order.id}>{formatOrderNumber(order.number)}</div>))
             }
           </div>
         </div>

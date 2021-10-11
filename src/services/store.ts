@@ -1,6 +1,6 @@
 import { applyMiddleware, compose, createStore, Store } from 'redux';
 import thunk from 'redux-thunk';
-import { IMainState, IngredientsState, rootReducer } from './reducers';
+import { IMainState, IRootState, rootReducer } from './reducers';
 import { BurgerAction, IBurgerActionType } from './actions';
 import { IWSActions, socketMiddleWare } from './middleware/socketMiddleWare';
 
@@ -42,8 +42,5 @@ export interface IAppStore extends Store<IMainState, BurgerAction> {
 }
 
 export interface IGetState {
-  (): {
-    main: IMainState,
-    ingredients: IngredientsState
-  };
+  (): IRootState;
 }

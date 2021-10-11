@@ -212,7 +212,7 @@ export const initData = () => async (dispatch: IBurgerDispatch) => {
 
 export const orderAuthorizedActionCreator = () => async (dispatch: IBurgerDispatch, getState: IGetState) => {
   dispatch({ type: IBurgerActionType.ORDER_REQUEST });
-  const state = getState().main;
+  const state = getState().orders;
 
   const selectedBun = state.selectedBun;
   const selectedIds = state.selectedParts.map(i => i.ingredientId);
