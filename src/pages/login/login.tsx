@@ -38,7 +38,7 @@ export function Login() {
     });
   }, [dispatch, email]);
 
-  const onButtonClick = useCallback(() => {
+  const onSubmit = useCallback(() => {
     dispatch(MAIN_ACTION.loginActionCreator({
       email, password,
     }));
@@ -48,16 +48,16 @@ export function Login() {
     {isAuthorized
       ? (<Redirect to={urlAfterLogging} />)
       : (
-        <div className={styles.content}>
+        <form className={styles.content} onSubmit={onSubmit}>
           <div className={`text text_type_main-medium ${styles.label}`}>Вход</div>
           <Input type={'email'} placeholder={'Email'} value={email} onChange={onLoginChange} />
           <PasswordInput name={'password'} value={password} onChange={onPasswordChange} />
-          <Button onClick={onButtonClick} size={'medium'} type={'primary'}>Войти</Button>
+          <Button size={'medium'} type={'primary'}>Войти</Button>
           <div className={`text text_type_main-small ${styles.about}`}>
             <div>Вы новый пользователь? <Link to={Routes.register}>Зарегистрироваться</Link></div>
             <div>Забыли пароль? <Link to={Routes.forgotPassword}>Восстановить пароль</Link></div>
           </div>
-        </div>
+        </form>
       )}
   </div>);
 }

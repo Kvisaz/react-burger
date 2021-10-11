@@ -18,8 +18,8 @@ export function ProfileEditor() {
   } = useMainState();
 
   const profileChanged = useMemo(() => userEmail !== email
-      || userName !== name
-      || password !== userPassword,
+    || userName !== name
+    || password !== userPassword,
     [userName, userEmail, name, email, password, userPassword]);
 
   const dispatch = useDispatch();
@@ -55,7 +55,7 @@ export function ProfileEditor() {
     });
   }, [dispatch, name, email]);
 
-  const onUpdateClick = useCallback(() => {
+  const onSubmit = useCallback(() => {
     dispatch(MAIN_ACTION.updateProfileActionCreator());
   }, [dispatch]);
 
@@ -78,16 +78,16 @@ export function ProfileEditor() {
   return (
     <>
       {isProfileSuccess ? (
-          <div className={styles.main}>
+          <form className={styles.main} onSubmit={onSubmit}>
             <Input placeholder={'Имя'} value={name} onChange={onNameChange} />
             <Input placeholder={'Логин'} value={email} onChange={onEmailChange} />
             <PasswordInput name={'password'} value={password} onChange={onPasswordChange} />
             <div className={buttonClass}>
                                     <span onClick={onResetClick}
                                           className={`text text_type_main-small ${styles.link}`}>Отмена</span>
-              <Button onClick={onUpdateClick} size={'medium'} type={'primary'}>Сохранить</Button>
+              <Button size={'medium'} type={'primary'}>Сохранить</Button>
             </div>
-          </div>
+          </form>
         )
         : (
           <Loading />

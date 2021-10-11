@@ -19,7 +19,7 @@ export function ForgotPassword() {
     dispatch({ type: MainActionType.RESTORE_PAGE_CHANGE, email: e.target.value });
   }, [dispatch]);
 
-  const onButtonClick = useCallback(() => {
+  const onSubmit = useCallback(() => {
     dispatch(MAIN_ACTION.restorePassActionCreator({ email }));
   }, [dispatch, email]);
 
@@ -34,13 +34,13 @@ export function ForgotPassword() {
   }, [history, isRestoreSuccess]);
 
   return (<div className={styles.wrap}>
-    <div className={styles.content}>
+    <form className={styles.content} onSubmit={onSubmit}>
       <div className={`text text_type_main-medium ${styles.label}`}>Восстановление пароля</div>
       <Input type={'email'} placeholder={'Укажите email'} value={email} onChange={onEmailChange} />
-      <Button onClick={onButtonClick} size={'medium'} type={'primary'}>Восстановить</Button>
+      <Button size={'medium'} type={'primary'}>Восстановить</Button>
       <div className={`text text_type_main-small ${styles.about}`}>
         <div>Вспомнили пароль? <Link to={Routes.login}>Войти</Link></div>
       </div>
-    </div>
+    </form>
   </div>);
 }

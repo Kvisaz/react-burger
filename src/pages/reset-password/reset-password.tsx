@@ -43,19 +43,19 @@ export function ResetPassword() {
   }, [dispatch, userResetPassword]);
 
 
-  const onButtonClick = useCallback(() => {
+  const onSubmit = useCallback(() => {
     dispatch(MAIN_ACTION.resetPassActionCreator());
   }, [dispatch]);
 
   return (<div className={styles.wrap}>
-    <div className={styles.content}>
+    <form className={styles.content} onSubmit={onSubmit}>
       <div className={`text text_type_main-medium ${styles.label}`}>Восстановление пароля</div>
       <PasswordInput name={'password'} value={userResetPassword} onChange={onPasswordChange} />
       <Input type={'text'} placeholder={'Введите код из письма'} value={userResetCode} onChange={onCodeChange} />
-      <Button onClick={onButtonClick} size={'medium'} type={'primary'}>Сохранить</Button>
+      <Button size={'medium'} type={'primary'}>Сохранить</Button>
       <div className={`text text_type_main-small ${styles.about}`}>
         <div>Вспомнили пароль? <Link to={Routes.login}>Войти</Link></div>
       </div>
-    </div>
+    </form>
   </div>);
 }

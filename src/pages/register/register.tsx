@@ -52,7 +52,7 @@ export function Register() {
     });
   }, [dispatch, email, name]);
 
-  const onButtonClick = useCallback(() => {
+  const onSubmit = useCallback(() => {
     dispatch(MAIN_ACTION.registerActionCreator({
       email, name, password,
     }));
@@ -62,16 +62,16 @@ export function Register() {
     {isAuthorized
       ? (<Redirect to={urlAfterLogging} />)
       : (
-        <div className={styles.content}>
+        <form className={styles.content} onSubmit={onSubmit}>
           <div className={`text text_type_main-medium ${styles.label}`}>Регистрация</div>
           <Input type={'text'} placeholder={'Имя'} value={name} onChange={onNameChange} size={'default'} />
           <Input type={'email'} placeholder={'Email'} value={email} onChange={onLoginChange} />
           <PasswordInput name={'password'} value={password} onChange={onPasswordChange} />
-          <Button onClick={onButtonClick} size={'medium'} type={'primary'}>Зарегистрироваться</Button>
+          <Button size={'medium'} type={'primary'}>Зарегистрироваться</Button>
           <div className={`text text_type_main-small ${styles.about}`}>
             <div>Уже зарегистрированы? <Link to={Routes.login}>Войти</Link></div>
           </div>
-        </div>
+        </form>
       )
     }
   </div>);
