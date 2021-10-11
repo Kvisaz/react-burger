@@ -14,6 +14,7 @@ export type OrderAction =
   | { type: OrderActionActionType.ORDER_SUCCESS, payload: IOrderPayLoad }
   | { type: OrderActionActionType.ORDER_FAILED }
   | { type: OrderActionActionType.ORDER_FEED_UPDATE, orderFeed: IOrderFeedItem[] }
+  | { type: OrderActionActionType.ORDER_MESSAGE_RESET }
   | { type: OrderActionActionType.WS_ORDER_CONNECTION_START, token: string }
   | { type: OrderActionActionType.WS_ORDER_CONNECTION_SUCCESS }
   | { type: OrderActionActionType.WS_ORDER_CONNECTION_CLOSE }
@@ -25,9 +26,7 @@ export type OrderAction =
   | { type: OrderActionActionType.BASKET_ITEM_SWAP, selectedId1: string, selectedId2: string }
 
 
-export interface IOrderPayLoad {
-  orderId: number,
-  name: string,
+export interface IOrderPayLoad extends IApiOrderFeedItem{
 }
 
 
@@ -56,6 +55,7 @@ export enum OrderActionActionType {
   ORDER_REQUEST = 'ORDER_REQUEST',
   ORDER_SUCCESS = 'ORDER_SUCCESS',
   ORDER_FAILED = 'ORDER_FAILED',
+  ORDER_MESSAGE_RESET = 'ORDER_MESSAGE_RESET',
 
   WS_ORDER_CONNECTION_SUCCESS = 'WS_ORDER_CONNECTION_SUCCESS',
   WS_ORDER_CONNECTION_START = 'WS_ORDER_CONNECTION_START',
@@ -110,9 +110,18 @@ const orderAuthorizedActionCreator = () => async (dispatch: OrderDispatch, getSt
 
   // order срабатывает с сильным запозданием, поэтому перевесим SUCCESS на проверку через сокеты
   API.order(selectedIds)
+    .then(result => {
+      dispatch({ type: OrderActionActionType.ORDER_SUCCESS, payload: result });
+      setTimeout(()=>{
+        dispatch({ type: OrderActionActionType.ORDER_MESSAGE_RESET });
+      }, 1500)
+    })
     .catch(e => {
       console.error(e);
       dispatch({ type: OrderActionActionType.ORDER_FAILED });
+      setTimeout(()=>{
+        dispatch({ type: OrderActionActionType.ORDER_MESSAGE_RESET });
+      }, 1500)
     });
 };
 
@@ -126,7 +135,7 @@ const initOrderFeedSocket = () => async (dispatch: OrderDispatch) => {
 };
 
 const showOrderPopup = (order: IOrderFeedItem) => async (dispatch: OrderDispatch) => {
-  dispatch({ type: OrderActionActionType.ORDERED_POPUP_SHOW, order })
+  dispatch({ type: OrderActionActionType.ORDERED_POPUP_SHOW, order });
 };
 
 

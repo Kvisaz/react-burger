@@ -1,4 +1,4 @@
-import { MainActionType, OrderActionActionType } from '../actions';
+import { OrderActionActionType } from '../actions';
 import { logg } from '../utils/log';
 
 

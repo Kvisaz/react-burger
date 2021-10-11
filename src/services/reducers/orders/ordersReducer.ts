@@ -24,13 +24,18 @@ export function ordersReducer(state: IOrderState = InitialOrdersFeedState, actio
         isOrderRequest: true,
         isOrderSuccess: false,
         isOrderFailed: false,
+        orderMessage: 'Идет запрос к серверу...',
+        isBadOrderMessage: false,
       };
     case OrderActionActionType.ORDER_SUCCESS:
+      console.log('ORDER_SUCCESS ', action);
       return {
         ...resetOrderBasket(state),
         isOrderRequest: false,
         isOrderSuccess: true,
         isOrderFailed: false,
+        orderMessage: 'Бургер успешно заказан',
+        isBadOrderMessage: false,
       };
     case OrderActionActionType.ORDER_FAILED:
       return {
@@ -38,6 +43,14 @@ export function ordersReducer(state: IOrderState = InitialOrdersFeedState, actio
         isOrderRequest: false,
         isOrderFailed: true,
         isOrderSuccess: false,
+        orderMessage: 'Ошибка сервера, попробуйте повторить заказ...',
+        isBadOrderMessage: true,
+      };
+    case OrderActionActionType.ORDER_MESSAGE_RESET:
+      return {
+        ...state,
+        orderMessage: undefined,
+        isBadOrderMessage: false,
       };
     case OrderActionActionType.INGREDIENT_ADD_TO_BASKET:
       return onSelectAction(action, state);

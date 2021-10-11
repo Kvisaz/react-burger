@@ -18,7 +18,8 @@ export interface IOrderState {
   isOrderRequest: boolean;
   isOrderSuccess: boolean;
   isOrderFailed: boolean;
-
+  orderMessage?: string;
+  isBadOrderMessage?: boolean;
 
   showCreatedOrder?: IOrderFeedItem;
   showedOrders: IOrderFeedItem[];

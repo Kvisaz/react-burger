@@ -1,7 +1,7 @@
 import { applyMiddleware, compose, createStore, Store } from 'redux';
 import thunk from 'redux-thunk';
 import { IMainState, IRootState, rootReducer } from './reducers';
-import { MainAction, MainActionType, OrderActionActionType } from './actions';
+import { MainAction, OrderActionActionType } from './actions';
 import { IWSActions, socketMiddleWare } from './middleware/socketMiddleWare';
 
 declare global {

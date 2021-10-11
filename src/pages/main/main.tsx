@@ -2,8 +2,8 @@ import React from 'react';
 import styles from './main.module.css';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { BurgerIngredients } from '../../components/burger-ingredients/burger-ingredients';
-import { BurgerConstructor } from '../../components/burger-constructor/burger-constructor';
 import { DndProvider } from 'react-dnd';
+import { OrderBasket } from '../../components/order-basket/order-basket';
 
 export function Main() {
   return (<DndProvider backend={HTML5Backend}>
@@ -13,7 +13,7 @@ export function Main() {
         <BurgerIngredients />
       </div>
       <div className={styles.col_right}>
-        <BurgerConstructor />
+        <OrderBasket />
       </div>
     </main>
   </DndProvider>);

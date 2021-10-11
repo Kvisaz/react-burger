@@ -26,11 +26,25 @@ export class ApiService {
     const data: IApiOrderConfig = {
       ingredients: selectedIds,
     };
-    return this.fetchPost<IApiOrderConfig, IApiOrderResponse>(this.endpoints.order, data)
-      .then(data => ({
-        name: data.name,
-        orderId: data.order.number,
-      }));
+    try {
+      let responseBody = await this.tryOrder(data);
+      if (!responseBody.success) {
+        const { message } = responseBody;
+        logg('order responseBody not success', message);
+        if (isBadToken(message)) {
+          logg('order invalid token');
+          const { accessToken } = await this.refreshToken();
+          if (accessToken) {
+            logg('order token refreshed ', accessToken);
+            responseBody = await this.tryOrder(data);
+          } else return Promise.reject('can`t order token refreshed');
+        } else return Promise.reject(message);
+      }
+      return responseBody.order;
+    } catch (e) {
+      console.warn(e);
+      return Promise.reject(e);
+    }
   }
 
   async registerUser(data: IApiRegisterUserData): Promise<IApiRegisterUserResponse> {
@@ -190,6 +204,23 @@ export class ApiService {
     }
   }
 
+  private async tryOrder(data: IApiOrderConfig): Promise<IApiUserOrderResponse> {
+    try {
+      const apiResponse = await fetch(this.endpoints.order, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': getTokenAuth() ?? '',
+        },
+        body: JSON.stringify(data),
+      });
+      return await apiResponse.json();
+    } catch (e) {
+      console.warn(e);
+      return Promise.reject(e);
+    }
+  }
+
 
   async fetchOrdersFeed(): Promise<IApiOrderFeedItem[]> {
     const orderFeed: IApiOrderFeedItem[] = [];
@@ -238,7 +269,9 @@ export class ApiService {
   }
 
   private async checkResponse<T extends IApiResponse>(apiResponse: Response): Promise<T> {
-    if (!apiResponse.ok) return Promise.reject('apiResponse not ok');
+    if (!apiResponse.ok) {
+      return Promise.reject('apiResponse not ok');
+    }
 
     return apiResponse.json()
       .then((data: T) => {
@@ -286,13 +319,11 @@ export interface IApiOrderConfig {
 
 export interface IApiOrderResponse {
   name: string; // "Краторный метеоритный бургер",
-  order: { number: number };
+  order: IApiOrderFeedItem;
   success: boolean;
 }
 
-export interface IApiOrderResult {
-  name: string; // "Краторный метеоритный бургер",
-  orderId: number;
+export interface IApiOrderResult extends IApiOrderFeedItem {
 }
 
 export interface IApiRegisterUserData {
@@ -332,6 +363,12 @@ export interface IApiUserProfileResponse {
     name: string;
     email: string;
   };
+}
+
+export interface IApiUserOrderResponse {
+  success: boolean;
+  message?: string;
+  order: IApiOrderFeedItem;
 }
 
 export interface IApiUserProfilePatchData {

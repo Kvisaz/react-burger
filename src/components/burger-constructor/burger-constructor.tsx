@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styles from './burger-constructor.module.css';
 import { BurgerConstructorOrder } from './components/burger-constructor-order/burger-constructor-order';
 import { IConstructorElementData, IConstructorElementType } from '../../services/model/IConstructorElementData';
@@ -9,6 +9,7 @@ import { IdObject } from '../../services/model/IdObject';
 import { DraggableBurgerConstructorItem } from './components/draggable-burger-constructor-item/draggable-burger-constructor-item';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useOrderState } from '../../services/hooks';
+import { Loading } from '../loading/loading';
 
 function mapBun(bun: IConstructorElementData, suffix: string, type: IConstructorElementType): IConstructorElementData {
   return {
@@ -19,10 +20,15 @@ function mapBun(bun: IConstructorElementData, suffix: string, type: IConstructor
   };
 }
 
+const NO_SELECTED_MESSAGE = 'Соберите еще один бургер, бросьте сюда что-нибудь из конструктора слева!';
+
 export function BurgerConstructor() {
   const dispatch = useDispatch();
 
   const { selectedBun, selectedParts: parts, sum } = useOrderState();
+
+  const isNoSelected = useMemo(() => selectedBun == null && parts?.length < 1, [selectedBun, parts]);
+
 
   const [_, dropTargetRef] = useDrop({
     accept: 'item',
@@ -34,7 +40,9 @@ export function BurgerConstructor() {
 
   return (
     <section className={`mt-4 mb-4 ${styles.main}`} ref={dropTargetRef}>
-      {selectedBun && <ConstructorElement {...mapBun(selectedBun, 'верх', IConstructorElementType.TOP)} />}
+      {
+        isNoSelected ? <Loading text={NO_SELECTED_MESSAGE} /> :
+          selectedBun && <ConstructorElement {...mapBun(selectedBun, 'верх', IConstructorElementType.TOP)} />}
       <div className={`mt-4 mb-4 ${styles.list}`}>
         {parts.map(part => (
           <DraggableBurgerConstructorItem key={part.selectedId} {...part} />))}
@@ -44,7 +52,8 @@ export function BurgerConstructor() {
         <div className={`mt-10 mb-10 ${styles.sum}`}>
           <BurgerConstructorOrder />
         </div>
-      )}
+      )
+      }
     </section>
   );
 }
