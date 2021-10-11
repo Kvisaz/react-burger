@@ -9,6 +9,11 @@
     flex: 1;
 }
 
+.link {
+    display: flex;
+    align-items: center;
+}
+
 .left {
     composes: col;
     display: flex;
