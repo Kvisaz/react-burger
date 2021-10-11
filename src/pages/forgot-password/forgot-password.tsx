@@ -4,7 +4,7 @@ import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-component
 import { Link, useHistory } from 'react-router-dom';
 import { Routes } from '../../services/Routes';
 import { useDispatch } from 'react-redux';
-import { MainActionType, restorePassActionCreator } from '../../services/actions';
+import { MAIN_ACTION, MainActionType } from '../../services/actions';
 import { useMainState } from '../../services/hooks/useMainState';
 
 export function ForgotPassword() {
@@ -20,7 +20,7 @@ export function ForgotPassword() {
   }, [dispatch]);
 
   const onButtonClick = useCallback(() => {
-    dispatch(restorePassActionCreator({ email }));
+    dispatch(MAIN_ACTION.restorePassActionCreator({ email }));
   }, [dispatch, email]);
 
   useEffect(() => {

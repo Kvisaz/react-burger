@@ -3,7 +3,7 @@ import styles from './profile.module.css';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import { Routes } from '../../services/Routes';
 import { useDispatch } from 'react-redux';
-import { logoutActionCreator } from '../../services/actions';
+import { MAIN_ACTION } from '../../services/actions';
 import { ProfileEditor } from '../../components/profile-editor/profile-editor';
 import { OrderFeed } from '../../components/order-feed/order-feed';
 
@@ -11,7 +11,7 @@ export function Profile() {
   const dispatch = useDispatch();
 
   const onLogoutClick = useCallback(() => {
-    dispatch(logoutActionCreator());
+    dispatch(MAIN_ACTION.logoutActionCreator());
   }, [dispatch]);
 
   return (

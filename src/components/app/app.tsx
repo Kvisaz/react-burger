@@ -19,11 +19,10 @@ import {
   Register,
   ResetPassword,
 } from '../../pages';
-import { initOrderFeedSocket, logoutActionCreator, MainActionType, setModalUrlOn } from '../../services/actions';
+import { INGREDIENTS_ACTION, MAIN_ACTION, MainActionType } from '../../services/actions';
 import { Loading } from '../loading/loading';
 import { ProtectedAuthRoute } from '../common/protected-auth-route/protected-auth-route';
 import { useIngredientsState, useMainState, useOrderState } from '../../services/hooks';
-import { INGREDIENTS_ACTION } from '../../services/actions';
 
 
 function App() {
@@ -67,7 +66,7 @@ function App() {
 
   useEffect(()=>{
     if(isAuthorized){
-      dispatch(initOrderFeedSocket())
+      dispatch(MAIN_ACTION.initOrderFeedSocket())
     }
   },[isAuthorized])
 
@@ -76,7 +75,7 @@ function App() {
    */
   useEffect(() => {
     if (showCreatedOrder) {
-      dispatch(setModalUrlOn());
+      dispatch(MAIN_ACTION.setModalUrlOn());
       dispatch({ type: MainActionType.ORDERED_POPUP_SHOW, order: showCreatedOrder });
       history.replace({
         pathname: Routes.orderPageLinkCreator(showCreatedOrder.id),
@@ -87,7 +86,7 @@ function App() {
 
   useEffect(() => {
     if (isOrderFailed) {
-      dispatch(logoutActionCreator());
+      dispatch(MAIN_ACTION.logoutActionCreator());
     }
   }, [dispatch, isOrderFailed]);
 

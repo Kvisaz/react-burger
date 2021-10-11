@@ -4,7 +4,7 @@ import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burg
 import { Link, Redirect } from 'react-router-dom';
 import { Routes } from '../../services/Routes';
 import { useDispatch } from 'react-redux';
-import { MainActionType, registerActionCreator } from '../../services/actions';
+import { MAIN_ACTION, MainActionType } from '../../services/actions';
 import { useMainState } from '../../services/hooks/useMainState';
 
 export function Register() {
@@ -53,7 +53,7 @@ export function Register() {
   }, [dispatch, email, name]);
 
   const onButtonClick = useCallback(() => {
-    dispatch(registerActionCreator({
+    dispatch(MAIN_ACTION.registerActionCreator({
       email, name, password,
     }));
   }, [email, name, password, dispatch]);

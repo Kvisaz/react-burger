@@ -167,14 +167,7 @@ export interface IAuthCheckStartData {
   ingredientId: string
 }
 
-function initWsOrders(dispatch: IMainDispatch) {
-  const token = getTokenAuth();
-  if (token) {
-    dispatch({ type: MainActionType.WS_ORDER_CONNECTION_START, token });
-  }
-}
-
-export const initOrderFeedSocket = () => async (dispatch: IMainDispatch) => {
+const initOrderFeedSocket = () => async (dispatch: IMainDispatch) => {
   const token = getTokenAuth();
   if (token) {
     dispatch({ type: MainActionType.WS_ORDER_CONNECTION_START, token });
@@ -182,7 +175,7 @@ export const initOrderFeedSocket = () => async (dispatch: IMainDispatch) => {
   }
 };
 
-export const orderAuthorizedActionCreator = () => async (dispatch: IMainDispatch, getState: IGetState) => {
+const orderAuthorizedActionCreator = () => async (dispatch: IMainDispatch, getState: IGetState) => {
   dispatch({ type: MainActionType.ORDER_REQUEST });
   const state = getState().orders;
 
@@ -201,7 +194,7 @@ export const orderAuthorizedActionCreator = () => async (dispatch: IMainDispatch
     });
 };
 
-export const onIngredientDropActionCreator = (id: string) => (dispatch: IMainDispatch, getState: IGetState) => {
+const onIngredientDropActionCreator = (id: string) => (dispatch: IMainDispatch, getState: IGetState) => {
   const { ingredients } = getState().ingredients;
   const ingredient = ingredients.find(i => i._id === id);
   if (ingredient) {
@@ -209,7 +202,7 @@ export const onIngredientDropActionCreator = (id: string) => (dispatch: IMainDis
   }
 };
 
-export const registerActionCreator = (data: IApiRegisterUserData) => async (dispatch: IMainDispatch) => {
+const registerActionCreator = (data: IApiRegisterUserData) => async (dispatch: IMainDispatch) => {
   dispatch({ type: MainActionType.REGISTRATION_USER_REQUEST, data });
 
   API.registerUser(data)
@@ -218,17 +211,16 @@ export const registerActionCreator = (data: IApiRegisterUserData) => async (disp
     .catch(() => dispatch({ type: MainActionType.REGISTRATION_USER_FAIL }));
 };
 
-export const loginActionCreator = (data: IApiLoginData) => async (dispatch: IMainDispatch) => {
+const loginActionCreator = (data: IApiLoginData) => async (dispatch: IMainDispatch) => {
   dispatch({ type: MainActionType.LOGIN_REQUEST, data });
 
   API.login(data)
     .then((response) => {
       dispatch({ type: MainActionType.LOGIN_SUCCESS, data: response, password: data.password });
-      initWsOrders(dispatch);
     }).catch(() => dispatch({ type: MainActionType.LOGIN_FAIL }));
 };
 
-export const logoutActionCreator = () => async (dispatch: IMainDispatch) => {
+const logoutActionCreator = () => async (dispatch: IMainDispatch) => {
   dispatch({ type: MainActionType.LOGOUT_REQUEST });
   dispatch({ type: MainActionType.WS_ORDER_CONNECTION_CLOSE });
   API.logout()
@@ -236,7 +228,7 @@ export const logoutActionCreator = () => async (dispatch: IMainDispatch) => {
     .catch(() => dispatch({ type: MainActionType.LOGOUT_FAIL }));
 };
 
-export const restorePassActionCreator = (data: IApiRestorePasswordData) =>
+const restorePassActionCreator = (data: IApiRestorePasswordData) =>
   async (dispatch: IMainDispatch) => {
     dispatch({ type: MainActionType.RESTORE_PASS_REQUEST, data });
     API.restorePassword(data)
@@ -244,7 +236,7 @@ export const restorePassActionCreator = (data: IApiRestorePasswordData) =>
       .catch(() => dispatch({ type: MainActionType.RESTORE_PASS_FAIL }));
   };
 
-export const resetPassActionCreator = () =>
+const resetPassActionCreator = () =>
   async (dispatch: IMainDispatch, getState: IGetState) => {
     const { userResetCode: token = '', userResetPassword: password = '' } = getState().main;
     const data: IApiResetPasswordData = {
@@ -258,7 +250,7 @@ export const resetPassActionCreator = () =>
       .catch(() => dispatch({ type: MainActionType.RESET_PASS_FAIL }));
   };
 
-export const requestProfileActionCreator = () =>
+const requestProfileActionCreator = () =>
   async (dispatch: IMainDispatch) => {
     dispatch({ type: MainActionType.PROFILE_REQUEST });
     API.getProfile()
@@ -269,7 +261,7 @@ export const requestProfileActionCreator = () =>
       .catch(() => dispatch({ type: MainActionType.PROFILE_FAIL }));
   };
 
-export const updateProfileActionCreator = () =>
+const updateProfileActionCreator = () =>
   async (dispatch: IMainDispatch, getState: IGetState) => {
     const { profileName = '', profileEmail = '', profilePassword = '' } = getState().main;
     const data = {
@@ -289,17 +281,17 @@ export const updateProfileActionCreator = () =>
       });
   };
 
-export const setModalUrlOn = () =>
+const setModalUrlOn = () =>
   async (dispatch: IMainDispatch) => {
     dispatch({ type: MainActionType.SET_MODAL_URL, isModal: true });
   };
 
-export const setModalUrlOff = () =>
+const setModalUrlOff = () =>
   async (dispatch: IMainDispatch) => {
     dispatch({ type: MainActionType.SET_MODAL_URL, isModal: false });
   };
 
-export const updateOrderFeedFromHttp = () =>
+const updateOrderFeedFromHttp = () =>
   async (dispatch: IMainDispatch, getState: IGetState) => {
     try {
       const apiOrderFeed = await API.fetchOrdersFeed();
@@ -310,3 +302,20 @@ export const updateOrderFeedFromHttp = () =>
       console.warn(e);
     }
   };
+
+
+export const MAIN_ACTION = {
+  initOrderFeedSocket,
+  updateOrderFeedFromHttp,
+  setModalUrlOff,
+  setModalUrlOn,
+  updateProfileActionCreator,
+  requestProfileActionCreator,
+  resetPassActionCreator,
+  restorePassActionCreator,
+  logoutActionCreator,
+  loginActionCreator,
+  registerActionCreator,
+  onIngredientDropActionCreator,
+  orderAuthorizedActionCreator
+};

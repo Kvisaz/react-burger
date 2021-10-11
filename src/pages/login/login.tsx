@@ -4,7 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import styles from './login.module.css';
 import { Routes } from '../../services/Routes';
 import { useDispatch } from 'react-redux';
-import { MainActionType, loginActionCreator } from '../../services/actions';
+import { MAIN_ACTION, MainActionType } from '../../services/actions';
 import { useMainState } from '../../services/hooks/useMainState';
 
 export function Login() {
@@ -39,7 +39,7 @@ export function Login() {
   }, [dispatch, email]);
 
   const onButtonClick = useCallback(() => {
-    dispatch(loginActionCreator({
+    dispatch(MAIN_ACTION.loginActionCreator({
       email, password,
     }));
   }, [dispatch, email, password]);

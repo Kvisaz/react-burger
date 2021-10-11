@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { useHistory, useLocation } from 'react-router-dom';
 import { LocationState, Routes } from '../../../services/Routes';
 import { useDispatch } from 'react-redux';
-import { setModalUrlOff } from '../../../services/actions';
+import { MAIN_ACTION } from '../../../services/actions';
 
 interface IModalProps {
   title?: string;
@@ -29,7 +29,7 @@ export function Modal({ title = '', children }: IModalProps) {
   const backToUrl = locationState?.backTo ?? Routes.main;
 
   const hide = useCallback(() => {
-    dispatch(setModalUrlOff());
+    dispatch(MAIN_ACTION.setModalUrlOff());
     history.replace({ pathname: backToUrl, state: null });
   }, [dispatch, history, backToUrl]);
 

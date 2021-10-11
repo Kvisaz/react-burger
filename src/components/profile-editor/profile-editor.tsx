@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import styles from './profile-editor.module.css';
 import { useDispatch } from 'react-redux';
-import { MainActionType, requestProfileActionCreator, updateProfileActionCreator } from '../../services/actions';
+import { MAIN_ACTION, MainActionType } from '../../services/actions';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Loading } from '../loading/loading';
 import { useMainState } from '../../services/hooks/useMainState';
@@ -56,7 +56,7 @@ export function ProfileEditor() {
   }, [dispatch, name, email]);
 
   const onUpdateClick = useCallback(() => {
-    dispatch(updateProfileActionCreator());
+    dispatch(MAIN_ACTION.updateProfileActionCreator());
   }, [dispatch]);
 
   const onResetClick = useCallback(() => {
@@ -71,7 +71,7 @@ export function ProfileEditor() {
 
   useEffect(() => {
     if (!isProfileSuccess) {
-      dispatch(requestProfileActionCreator());
+      dispatch(MAIN_ACTION.requestProfileActionCreator());
     }
   }, [isProfileSuccess, dispatch]);
 

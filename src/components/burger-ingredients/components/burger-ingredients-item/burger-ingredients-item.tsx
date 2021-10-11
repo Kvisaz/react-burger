@@ -7,7 +7,7 @@ import { IBurgerPart, IBurgerPartPropType } from '../../../../services/model/IBu
 import { MoneyCounter } from '../../../common/money-counter/money-counter';
 import { useHistory } from 'react-router-dom';
 import { Routes } from '../../../../services/Routes';
-import { setModalUrlOn } from '../../../../services/actions';
+import { MAIN_ACTION } from '../../../../services/actions';
 import { useOrderState } from '../../../../services/hooks';
 
 interface IBurgerConstructorItemProps {
@@ -34,7 +34,7 @@ export function BurgerIngredientsItem({ part }: IBurgerConstructorItemProps) {
   const history = useHistory();
 
   const onItemClick = useCallback((ingredient: IBurgerPart) => {
-    dispatch(setModalUrlOn());
+    dispatch(MAIN_ACTION.setModalUrlOn());
     history.replace({
       pathname: Routes.ingredientLinkCreator(ingredient._id),
     });

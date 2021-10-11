@@ -4,7 +4,7 @@ import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burg
 import { Link, useHistory } from 'react-router-dom';
 import { Routes } from '../../services/Routes';
 import { useDispatch } from 'react-redux';
-import { MainActionType, resetPassActionCreator } from '../../services/actions';
+import { MAIN_ACTION, MainActionType } from '../../services/actions';
 import { useMainState } from '../../services/hooks';
 
 export function ResetPassword() {
@@ -44,7 +44,7 @@ export function ResetPassword() {
 
 
   const onButtonClick = useCallback(() => {
-    dispatch(resetPassActionCreator());
+    dispatch(MAIN_ACTION.resetPassActionCreator());
   }, [dispatch]);
 
   return (<div className={styles.wrap}>

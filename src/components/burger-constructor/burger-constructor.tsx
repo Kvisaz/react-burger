@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './burger-constructor.module.css';
 import { BurgerConstructorOrder } from './components/burger-constructor-order/burger-constructor-order';
 import { IConstructorElementData, IConstructorElementType } from '../../services/model/IConstructorElementData';
-import { onIngredientDropActionCreator } from '../../services/actions';
+import { MAIN_ACTION } from '../../services/actions';
 import { useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { IdObject } from '../../services/model/IdObject';
@@ -28,7 +28,7 @@ export function BurgerConstructor() {
     accept: 'item',
     drop(item) {
       const { id } = item as IdObject;
-      dispatch(onIngredientDropActionCreator(id));
+      dispatch(MAIN_ACTION.onIngredientDropActionCreator(id));
     },
   }, [dispatch]);
 
