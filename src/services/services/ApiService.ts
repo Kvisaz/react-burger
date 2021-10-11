@@ -1,15 +1,16 @@
-import { IBurgerPart } from './model/IBurgerPart';
+import { IBurgerPart } from '../model/IBurgerPart';
 import {
   deleteTokenCookies,
   getTokenAuth,
   getTokenRefresh,
   setTokenAuthCookie,
   setTokenRefreshCookie,
-} from './cookieTokens';
-import { IApiOrderFeedItem } from './model/IOrderFeedItem';
-import { logg } from './utils/log';
+} from '../cookieTokens';
+import { IApiOrderFeedItem } from '../model/IOrderFeedItem';
+import { logg } from '../utils/log';
 
-export class Api {
+
+export class ApiService {
   constructor(private readonly endpoints: IApiEndpoints) {
   }
 
@@ -406,3 +407,17 @@ export interface IApiOrderFetchResponse {
   total: number;
   totalToday: number;
 }
+
+const END_POINTS: IApiEndpoints = {
+  ingredients: 'https://norma.nomoreparties.space/api/ingredients',
+  order: 'https://norma.nomoreparties.space/api/orders',
+  login: 'https://norma.nomoreparties.space/api/auth/login',
+  logout: 'https://norma.nomoreparties.space/api/auth/logout',
+  token: 'https://norma.nomoreparties.space/api/auth/token',
+  registerUser: 'https://norma.nomoreparties.space/api/auth/register',
+  restorePassword: 'https://norma.nomoreparties.space/api/password-reset',
+  resetPassword: 'https://norma.nomoreparties.space/api/password-reset/reset',
+  userData: 'https://norma.nomoreparties.space/api/auth/user',
+  orderFeed: 'https://norma.nomoreparties.space/api/orders/all',
+};
+export const API = new ApiService(END_POINTS);

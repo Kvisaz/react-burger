@@ -6,7 +6,7 @@ import {
   IApiProfileData,
   IApiRegisterUserData,
   IApiRegisterUserResponse,
-} from '../../Api';
+} from '../../services/ApiService';
 
 
 export function mainReducer(state: IMainState = InitialMainState, action: MainAction): IMainState {

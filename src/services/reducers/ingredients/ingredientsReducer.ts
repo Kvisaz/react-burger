@@ -2,7 +2,7 @@ import { MainAction, MainActionType } from '../../actions';
 import { IngredientsState, InitialIngredientsState } from './IngredientsState';
 import { logg } from '../../utils/log';
 import { IBurgerPart } from '../../model/IBurgerPart';
-import { IngredientStorage } from '../../storages/IngredientStorage';
+import { IngredientStorage } from '../../services/IngredientStorage';
 
 export function ingredientsReducer(state: IngredientsState = InitialIngredientsState, action: MainAction): IngredientsState {
   switch (action.type) {

@@ -5,7 +5,7 @@ import { logg } from '../../utils/log';
 import { OrderStatus } from '../../model/IOrderFeedItem';
 import { IConstructorElementData } from '../../model/IConstructorElementData';
 import { mapApiOrderData } from '../../converters/getBurgerParts';
-import { IngredientStorage } from '../../storages/IngredientStorage';
+import { IngredientStorage } from '../../services/IngredientStorage';
 import { InitialOrdersFeedState, IOrderState } from './ordersFeedState';
 
 

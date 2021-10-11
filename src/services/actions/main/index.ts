@@ -1,9 +1,8 @@
 import { IBurgerPart } from '../../model/IBurgerPart';
 import { IGetState } from '../../store';
 import {
-  Api,
+  API,
   IApiAuthCheckResult,
-  IApiEndpoints,
   IApiLoginData,
   IApiLoginResponse,
   IApiLogoutResponse,
@@ -14,7 +13,7 @@ import {
   IApiRestorePasswordData,
   IApiTokenData,
   IApiTokenResponse,
-} from '../../Api';
+} from '../../services/ApiService';
 import { IApiOrderFeedItem, IOrderFeedItem } from '../../model/IOrderFeedItem';
 import { mapApiOrderData } from '../../converters/getBurgerParts';
 import { getTokenAuth } from '../../cookieTokens';
@@ -173,21 +172,6 @@ export interface IAuthCheckStartData {
   selectedId: string,
   ingredientId: string
 }
-
-const END_POINTS: IApiEndpoints = {
-  ingredients: 'https://norma.nomoreparties.space/api/ingredients',
-  order: 'https://norma.nomoreparties.space/api/orders',
-  login: 'https://norma.nomoreparties.space/api/auth/login',
-  logout: 'https://norma.nomoreparties.space/api/auth/logout',
-  token: 'https://norma.nomoreparties.space/api/auth/token',
-  registerUser: 'https://norma.nomoreparties.space/api/auth/register',
-  restorePassword: 'https://norma.nomoreparties.space/api/password-reset',
-  resetPassword: 'https://norma.nomoreparties.space/api/password-reset/reset',
-  userData: 'https://norma.nomoreparties.space/api/auth/user',
-  orderFeed: 'https://norma.nomoreparties.space/api/orders/all',
-};
-
-const API = new Api(END_POINTS);
 
 function initWsOrders(dispatch: IMainDispatch) {
   const token = getTokenAuth();
