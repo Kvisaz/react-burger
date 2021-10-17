@@ -49,7 +49,7 @@ export function BurgerConstructor() {
       </div>
       {selectedBun && <ConstructorElement {...mapBun(selectedBun, 'низ', IConstructorElementType.BOTTOM)} />}
       {sum > 0 && selectedBun && (
-        <div className={`mt-10 mb-10 ${styles.sum}`}>
+        <div className={`mt-10 mb-10 ${styles.sum}`} data-cy="burger-basket-order-button">
           <BurgerConstructorOrder />
         </div>
       )

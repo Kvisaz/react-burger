@@ -5,30 +5,51 @@ describe('drag and drop burger parts', function() {
 
 
   it('should drag first item to the order', () => {
-    const dataTransfer = new DataTransfer();
-
-    const burgerParts = cy.get('[data-cy=burger-part]');
-
-    burgerParts.eq(0).trigger('dragstart', {
-      dataTransfer
-    });
-
-    cy.get('[data-cy=burger-basket]').trigger('drop', {
-      dataTransfer
-    });
+    dragDropByIndex(0);
   });
 
   it('should drag some items to the basket', () => {
-    const dataTransfer = new DataTransfer();
+    dragDropByIndex(2);
+    dragDropByIndex(4);
+    dragDropByIndex(6);
+    getOrderButton().then($button => {
+      if ($button.is(':visible')){
+        console.log('order button is visible')
+      }
+    })
+  })
 
-    const burgerParts = cy.get('[data-cy=burger-part]');
-
-    burgerParts.eq(2).trigger('dragstart', {
-      dataTransfer
-    });
-
-    cy.get('[data-cy=burger-basket]').trigger('drop', {
-      dataTransfer
-    });
-  });
 });
+
+
+function getBurgerParts(){
+  return cy.get('[data-cy=burger-part]');
+}
+
+function getOrderBasket(){
+  return cy.get('[data-cy=burger-basket]');
+}
+
+function getOrderButton(){
+  return cy.get('[data-cy=burger-basket-order-button]');
+}
+
+function getOrderedItems(){
+  return cy.get('[data-cy=burger-basket-order-item]');
+}
+
+function getDraggableOrderedItems(){
+  return cy.get('[data-cy=burger-basket-order-item]').filter('[draggable]');
+}
+
+function dragDropByIndex(index: number) {
+  const dataTransfer = new DataTransfer();
+
+   getBurgerParts().eq(index).trigger('dragstart', {
+    dataTransfer,
+  });
+
+  getOrderBasket().trigger('drop', {
+    dataTransfer,
+  });
+}

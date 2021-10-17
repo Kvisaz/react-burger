@@ -70,7 +70,7 @@ export function DraggableBurgerConstructorItem(props: IBurgerConstructorItemProp
   dragRef(dropRef(ref));
   const opacity = isDragging ? 0 : 1;
   return (
-    <div className={styles.basketItem} ref={ref} style={{ opacity }}>
+    <div className={styles.basketItem} ref={ref} style={{ opacity }} data-cy="burger-basket-order-item">
       <ConstructorElement {...props}
                           handleClose={
                             () => dispatch(ORDERS_ACTION.removeFromBasket(
