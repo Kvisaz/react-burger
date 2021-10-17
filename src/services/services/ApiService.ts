@@ -8,6 +8,7 @@ import {
 } from '../cookieTokens';
 import { IApiOrderFeedItem } from '../model/IOrderFeedItem';
 import { logg } from '../utils/log';
+import { IWsOrderMessage } from '../actions';
 
 
 export class ApiService {
@@ -222,19 +223,30 @@ export class ApiService {
   }
 
 
-  async fetchOrdersFeed(): Promise<IApiOrderFeedItem[]> {
-    const orderFeed: IApiOrderFeedItem[] = [];
+  async fetchOrdersFeed(): Promise<IWsOrderMessage> {
+    const orders: IApiOrderFeedItem[] = [];
+    let totalToday = 0;
+    let total = 0;
+    let success = false;
     try {
       const apiResponse = await fetch(this.endpoints.orderFeed);
       const data: IApiOrderFetchResponse = await apiResponse.json();
       if (data.success && data.orders) {
-        data.orders.forEach(order => orderFeed.push(order));
+        data.orders.forEach(order => orders.push(order));
+        totalToday = data.totalToday;
+        total = data.total;
+        success = true;
       }
     } catch (e) {
       console.warn(e);
       return Promise.reject(e);
     }
-    return orderFeed;
+    return {
+      success,
+      orders,
+      totalToday,
+      total
+    };
   }
 
   private async fetchPatchProfile(data: IApiUserProfilePatchData): Promise<IApiUserProfileResponse> {

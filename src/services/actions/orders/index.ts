@@ -13,20 +13,19 @@ export type OrderAction =
   | { type: OrderActionActionType.ORDER_REQUEST }
   | { type: OrderActionActionType.ORDER_SUCCESS, payload: IOrderPayLoad }
   | { type: OrderActionActionType.ORDER_FAILED }
-  | { type: OrderActionActionType.ORDER_FEED_UPDATE, orderFeed: IOrderFeedItem[] }
   | { type: OrderActionActionType.ORDER_MESSAGE_RESET }
   | { type: OrderActionActionType.WS_ORDER_CONNECTION_START, token: string }
   | { type: OrderActionActionType.WS_ORDER_CONNECTION_SUCCESS }
   | { type: OrderActionActionType.WS_ORDER_CONNECTION_CLOSE }
   | { type: OrderActionActionType.WS_ORDER_CONNECTION_CLOSED, event: any }
   | { type: OrderActionActionType.WS_ORDER_CONNECTION_ERROR, error: any }
-  | { type: OrderActionActionType.WS_ORDER_GET_MESSAGE, message: IWsOrderMessage }
+  | { type: OrderActionActionType.ORDERS_FEED_UPDATE, message: IWsOrderMessage }
   | { type: OrderActionActionType.WS_ORDER_SEND_MESSAGE, message: any }
   | { type: OrderActionActionType.ORDERED_POPUP_SHOW, order: IOrderFeedItem }
   | { type: OrderActionActionType.BASKET_ITEM_SWAP, selectedId1: string, selectedId2: string }
 
 
-export interface IOrderPayLoad extends IOrderFeedItem{
+export interface IOrderPayLoad extends IOrderFeedItem {
 }
 
 
@@ -47,8 +46,6 @@ export enum OrderActionActionType {
   INGREDIENT_ADD_TO_BASKET = 'INGREDIENT_ADD_TO_BASKET',
   INGREDIENT_REMOVE_FROM_BASKET = 'INGREDIENT_REMOVE_FROM_BASKET',
 
-  ORDER_FEED_UPDATE = 'ORDER_FEED_UPDATE',
-
   BASKET_ITEM_SWAP = 'BASKET_ITEM_SWAP',
 
   ORDER_RESET = 'ORDER_RESET',
@@ -62,7 +59,7 @@ export enum OrderActionActionType {
   WS_ORDER_CONNECTION_ERROR = 'WS_ORDER_CONNECTION_ERROR',
   WS_ORDER_CONNECTION_CLOSED = 'WS_ORDER_CONNECTION_CLOSED',
   WS_ORDER_CONNECTION_CLOSE = 'WS_ORDER_CONNECTION_CLOSE',
-  WS_ORDER_GET_MESSAGE = 'WS_ORDER_GET_MESSAGE',
+  ORDERS_FEED_UPDATE = 'ORDERS_FEED_UPDATE',
   WS_ORDER_SEND_MESSAGE = 'WS_ORDER_SEND_MESSAGE',
 
   // отправить при открытии окна с информацией о полученном заказе
@@ -77,9 +74,17 @@ const updateOrderFeedFromHttp = () =>
   async (dispatch: OrderDispatch, getState: IGetState) => {
     try {
       const apiOrderFeed = await API.fetchOrdersFeed();
+      console.log('updateOrderFeedFromHttp', apiOrderFeed)
       const { ingredients } = getState().ingredients;
-      const orderFeed = apiOrderFeed.map(order => mapApiOrderData(order, ingredients));
-      dispatch({ type: OrderActionActionType.ORDER_FEED_UPDATE, orderFeed });
+      const { total, totalToday, orders } = apiOrderFeed;
+      dispatch({
+        type: OrderActionActionType.ORDERS_FEED_UPDATE,
+        message: {
+          orders,
+          total,
+          totalToday,
+        },
+      });
     } catch (e) {
       console.warn(e);
     }
@@ -114,16 +119,16 @@ const orderAuthorizedActionCreator = () => async (dispatch: OrderDispatch, getSt
   API.order(selectedIds)
     .then(result => {
       dispatch({ type: OrderActionActionType.ORDER_SUCCESS, payload: mapApiOrderData(result, ingredients) });
-      setTimeout(()=>{
+      setTimeout(() => {
         dispatch({ type: OrderActionActionType.ORDER_MESSAGE_RESET });
-      }, 1500)
+      }, 1500);
     })
     .catch(e => {
       console.error(e);
       dispatch({ type: OrderActionActionType.ORDER_FAILED });
-      setTimeout(()=>{
+      setTimeout(() => {
         dispatch({ type: OrderActionActionType.ORDER_MESSAGE_RESET });
-      }, 1500)
+      }, 1500);
     });
 };
 

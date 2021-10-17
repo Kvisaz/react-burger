@@ -206,7 +206,7 @@ describe('order feed reducer', () => {
       .toEqual(state2);
   });
 
-  it('should WS_ORDER_GET_MESSAGE', () => {
+  it('should ORDERS_FEED_UPDATE', () => {
 
     const state1 = {
       ...INITIAL_STATE,
@@ -229,40 +229,12 @@ describe('order feed reducer', () => {
 
 
     expect(reducer(state1,
-      { type: OrderActionActionType.WS_ORDER_GET_MESSAGE, message: wsMessageSuccess }))
+      { type: OrderActionActionType.ORDERS_FEED_UPDATE, message: wsMessageSuccess }))
       .toEqual(state2Success);
 
     expect(reducer(state1,
-      { type: OrderActionActionType.WS_ORDER_GET_MESSAGE, message: wsMessageFail }))
+      { type: OrderActionActionType.ORDERS_FEED_UPDATE, message: wsMessageFail }))
       .toEqual({ ...state1 });
-  });
-
-  it('should ORDER_FEED_UPDATE', () => {
-
-    const state1 = {
-      ...INITIAL_STATE,
-    };
-
-    const order1: IOrderFeedItem = {
-      createdAt: '', id: '1', ingredients: [], name: '', number: 0, status: OrderStatus.CREATED,
-    };
-
-    const order2: IOrderFeedItem = {
-      createdAt: '', id: '2', ingredients: [], name: '', number: 0, status: OrderStatus.CREATED,
-    };
-    const orderFeed: IOrderFeedItem[] = [
-      order1, order2,
-    ];
-
-    const state2Success = {
-      ...INITIAL_STATE,
-      orderFeed,
-    };
-
-
-    expect(reducer(state1,
-      { type: OrderActionActionType.ORDER_FEED_UPDATE, orderFeed }))
-      .toEqual(state2Success);
   });
 
 

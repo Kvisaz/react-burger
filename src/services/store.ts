@@ -16,7 +16,7 @@ const wsActions: IWSActions = {
   wsClose: OrderActionActionType.WS_ORDER_CONNECTION_CLOSE,
   onOpen: OrderActionActionType.WS_ORDER_CONNECTION_SUCCESS,
   onError: OrderActionActionType.WS_ORDER_CONNECTION_ERROR,
-  onMessage: OrderActionActionType.WS_ORDER_GET_MESSAGE,
+  onMessage: OrderActionActionType.ORDERS_FEED_UPDATE,
   wsSendMessage: OrderActionActionType.WS_ORDER_SEND_MESSAGE,
   onClose: OrderActionActionType.WS_ORDER_CONNECTION_CLOSED,
 };

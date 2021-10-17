@@ -59,13 +59,8 @@ export function ordersReducer(state: IOrderState = InitialOrdersFeedState, actio
       return onRemoveAction(action, state);
     case OrderActionActionType.BASKET_ITEM_SWAP:
       return onBasketItemSwap(action, state);
-    case OrderActionActionType.WS_ORDER_GET_MESSAGE:
+    case OrderActionActionType.ORDERS_FEED_UPDATE:
       return onWsOrderGetMessage(action, state);
-    case OrderActionActionType.ORDER_FEED_UPDATE:
-      return {
-        ...state,
-        orderFeed: action.orderFeed,
-      };
     case OrderActionActionType.ORDERED_POPUP_SHOW:
       return {
         ...state,
@@ -191,12 +186,12 @@ function resetOrderBasket(state: IOrderState): IOrderState {
 }
 
 function onWsOrderGetMessage(
-  action: { type: OrderActionActionType.WS_ORDER_GET_MESSAGE, message: IWsOrderMessage },
+  action: { type: OrderActionActionType.ORDERS_FEED_UPDATE, message: IWsOrderMessage },
   state: IOrderState,
 ):
   IOrderState {
 
-  logg('WS_ORDER_GET_MESSAGE meesage', action);
+  logg('WS_ORDER_GET_MESSAGE message', action);
   const { success, orders, total: orderTotal, totalToday: orderToday } = action.message;
 
   if (success) {
