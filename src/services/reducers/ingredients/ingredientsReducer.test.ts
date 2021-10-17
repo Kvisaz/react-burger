@@ -22,7 +22,7 @@ describe('ingredients reducer', ()=>{
     })
   })
 
-  it('should set isIngredientsRequest', () => {
+  it('should set fail', () => {
     // @ts-ignore
     expect(reducer(initialState, { type: IngredientActionType.DATA_FAILED})).toEqual({
       ...initialState,
