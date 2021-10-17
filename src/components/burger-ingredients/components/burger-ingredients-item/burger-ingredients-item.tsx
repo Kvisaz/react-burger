@@ -44,7 +44,7 @@ export function BurgerIngredientsItem({ part }: IBurgerConstructorItemProps) {
   const hasAmount = amount > 0;
   const counter = hasAmount ? (<Counter count={amount} size='default' />) : null;
   return (
-    <div className={styles.item} onClick={() => onItemClick(part)} ref={dragRef}>
+    <div data-cy="burger-part" className={styles.item} onClick={() => onItemClick(part)} ref={dragRef}>
       <img src={image} alt={name} className={styles.image} />
       <MoneyCounter sum={price} />
       <div className={`text text_type_main-default ${styles.name}`}>{name}</div>

@@ -39,7 +39,7 @@ export function BurgerConstructor() {
   }, [dispatch]);
 
   return (
-    <section className={`mt-4 mb-4 ${styles.main}`} ref={dropTargetRef}>
+    <section className={`mt-4 mb-4 ${styles.main}`} ref={dropTargetRef} data-cy="burger-basket">
       {
         isNoSelected ? <Loading text={NO_SELECTED_MESSAGE} /> :
           selectedBun && <ConstructorElement {...mapBun(selectedBun, 'верх', IConstructorElementType.TOP)} />}
