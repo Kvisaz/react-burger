@@ -28,7 +28,7 @@ export function ordersReducer(state: IOrderState = InitialOrdersFeedState, actio
         isBadOrderMessage: false,
       };
     case OrderActionActionType.ORDER_SUCCESS:
-      console.log('ORDER_SUCCESS ', action);
+      logg('ORDER_SUCCESS ', action);
       return {
         ...resetOrderBasket(state),
         isOrderRequest: false,

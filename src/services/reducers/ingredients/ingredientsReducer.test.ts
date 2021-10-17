@@ -3,12 +3,15 @@ import { InitialIngredientsState } from './IngredientsState';
 import { IngredientActionType } from '../../actions';
 
 import mockIngredients from '../../mock/ingredients.json';
+import { loggOff } from '../../utils/log';
 
 const ingredients = mockIngredients;
 const reducer = ingredientsReducer;
 const initialState = InitialIngredientsState;
 
 describe('ingredients reducer', ()=>{
+  loggOff();
+
   it('should return the initial state', () => {
     // @ts-ignore
     expect(reducer(undefined, {})).toEqual(initialState)
