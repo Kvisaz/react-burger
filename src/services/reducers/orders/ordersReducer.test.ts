@@ -1,8 +1,9 @@
 import mockIngredients from '../../mock/ingredients.json';
 import { ordersReducer } from './ordersReducer';
 import { InitialOrdersFeedState } from './ordersState';
-import { OrderActionActionType } from '../../actions';
+import { IRemovePayLoad, OrderActionActionType } from '../../actions';
 import { IConstructorElementData } from '../../model/IConstructorElementData';
+import { IBurgerPart } from '../../model/IBurgerPart';
 
 const ingredients = mockIngredients;
 const reducer = ordersReducer;
@@ -81,12 +82,14 @@ describe('order feed reducer', () => {
 
   });
 
-  /*
     it('should REMOVE_FROM_BASKET', () => {
+
+      const mockIngredient = ingredients[2];
+      const selectedIngredient = mapToSelected(mockIngredient);
 
       const state1 = {
         ...initialState,
-        ingredients: [mockIngredient],
+        selectedParts: [selectedIngredient],
       };
 
       const removePayload: IRemovePayLoad = {
@@ -98,9 +101,19 @@ describe('order feed reducer', () => {
         { type: OrderActionActionType.INGREDIENT_REMOVE_FROM_BASKET, payload: removePayload }))
         .toEqual({
           ...state1,
-          ingredients: [],
+          selectedParts: [],
         });
     });
-  */
 
 });
+
+
+function mapToSelected(a: IBurgerPart): IConstructorElementData {
+  return  {
+    price: a.price,
+    text: a.name,
+    thumbnail: a.image,
+    ingredientId: a._id,
+    selectedId: a._id
+  }
+}
