@@ -16,8 +16,6 @@ export function mainReducer(state: IMainState = InitialMainState, action: MainAc
         ...state,
         currentTabIndex: action.index,
       };
-    /*    case IBurgerActionType.BASKET_ITEM_SWAP:
-          return onBasketItemSwap(action, state);*/
     case MainActionType.REGISTRATION_PAGE_CHANGE:
       return onRegisterPageChange(action, state);
     case MainActionType.REGISTRATION_USER_REQUEST:
