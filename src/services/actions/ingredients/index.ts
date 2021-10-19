@@ -30,4 +30,3 @@ export type IngredientAction =
   | { type: IngredientActionType.DATA_REQUEST }
   | { type: IngredientActionType.DATA_LOADED, ingredients: IBurgerPart[] }
   | { type: IngredientActionType.DATA_FAILED, message: string }
-  | typeof initData

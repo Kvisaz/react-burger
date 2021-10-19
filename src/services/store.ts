@@ -1,7 +1,7 @@
-import { applyMiddleware, compose, createStore, Store } from 'redux';
+import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
-import { IMainState, IRootState, rootReducer } from './reducers';
-import { MainAction, OrderActionActionType } from './actions';
+import { IRootState, rootReducer } from './reducers';
+import { IngredientAction, MainAction, OrderAction, OrderActionActionType } from './actions';
 import { IWSActions, socketMiddleWare } from './middleware/socketMiddleWare';
 
 declare global {
@@ -33,11 +33,11 @@ export const AppStore = createStore(
     ),
   ));
 
-export type RootState = ReturnType<typeof AppStore.getState>
-export type AppDispatch = typeof AppStore.dispatch
+type AppAction = MainAction | OrderAction | IngredientAction;
 
-export interface IAppStore extends Store<IMainState, MainAction> {
-}
+export type RootState = ReturnType<typeof AppStore.getState>
+export type AppDispatch = typeof AppStore.dispatch;
+
 
 export interface IGetState {
   (): IRootState;
