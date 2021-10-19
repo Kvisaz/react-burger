@@ -3,13 +3,13 @@ import styles from './burger-constructor.module.css';
 import { BurgerConstructorOrder } from './components/burger-constructor-order/burger-constructor-order';
 import { IConstructorElementData, IConstructorElementType } from '../../services/model/IConstructorElementData';
 import { ORDERS_ACTION } from '../../services/actions';
-import { useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { IdObject } from '../../services/model/IdObject';
 import { DraggableBurgerConstructorItem } from './components/draggable-burger-constructor-item/draggable-burger-constructor-item';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useOrderState } from '../../services/hooks';
 import { Loading } from '../loading/loading';
+import { useAppDispatch } from '../../services/hooks/useAppDispatch';
 
 function mapBun(bun: IConstructorElementData, suffix: string, type: IConstructorElementType): IConstructorElementData {
   return {
@@ -23,7 +23,7 @@ function mapBun(bun: IConstructorElementData, suffix: string, type: IConstructor
 const NO_SELECTED_MESSAGE = 'Соберите еще один бургер, бросьте сюда что-нибудь из конструктора слева!';
 
 export function BurgerConstructor() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const { selectedBun, selectedParts: parts, sum } = useOrderState();
 

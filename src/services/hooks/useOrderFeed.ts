@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { ORDERS_ACTION } from '../actions';
 import { useMainState } from './useMainState';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from './useAppDispatch';
 
 export function useOrderFeed() {
   const {
     isAuthorized,
   } = useMainState();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (isAuthorized) {

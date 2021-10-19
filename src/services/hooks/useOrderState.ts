@@ -1,7 +1,7 @@
-import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { IOrderState } from '../reducers/orders';
+import { useAppSelector } from './useAppSelector';
 
 export function useOrderState(): IOrderState {
-  return useSelector((state: RootState) => ({ ...state.orders }));
+  return useAppSelector((state: RootState) => ({ ...state.orders }));
 }

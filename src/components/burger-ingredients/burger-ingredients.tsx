@@ -3,14 +3,14 @@ import styles from './burger-ingredients.module.css';
 import { BurgerIngredientsTabs } from './components/burger-ingredients-tabs/burger-ingredients-tabs';
 import { BurgerIngredientsSection } from './components/burger-ingredients-section/burger-ingredients-section';
 import { IBurgerPart } from '../../services/model/IBurgerPart';
-import { useDispatch } from 'react-redux';
 import { MainActionType } from '../../services/actions';
 import { useIngredientsState } from '../../services/hooks/useIngredientsState';
+import { useAppDispatch } from '../../services/hooks/useAppDispatch';
 
 export function BurgerIngredients() {
 
   const { ingredients } = useIngredientsState();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const listRef = useRef<HTMLDivElement>(null);
   const ref1 = useRef<HTMLDivElement>(null);

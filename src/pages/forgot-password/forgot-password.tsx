@@ -3,15 +3,14 @@ import styles from './forgot-password.module.css';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useHistory } from 'react-router-dom';
 import { Routes } from '../../services/Routes';
-import { useDispatch } from 'react-redux';
 import { MAIN_ACTION, MainActionType } from '../../services/actions';
-import { useMainState } from '../../services/hooks/useMainState';
+import { useMainState, useAppDispatch } from '../../services/hooks';
 
 export function ForgotPassword() {
 
   const { userRestoreEmail: email = '', isRestoreSuccess } = useMainState();
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const history = useHistory();
 
   const onEmailChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {

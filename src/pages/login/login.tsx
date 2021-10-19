@@ -3,13 +3,12 @@ import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burg
 import { Link, Redirect } from 'react-router-dom';
 import styles from './login.module.css';
 import { Routes } from '../../services/Routes';
-import { useDispatch } from 'react-redux';
 import { MAIN_ACTION, MainActionType } from '../../services/actions';
-import { useMainState } from '../../services/hooks/useMainState';
+import { useMainState, useAppDispatch } from '../../services/hooks';
 
 export function Login() {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const {
     loginPageEmail: email = '',
     loginPagePassword: password = '',

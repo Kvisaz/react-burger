@@ -2,13 +2,13 @@ import React, { useCallback } from 'react';
 import styles from './profile.module.css';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import { Routes } from '../../services/Routes';
-import { useDispatch } from 'react-redux';
 import { MAIN_ACTION } from '../../services/actions';
 import { ProfileEditor } from '../../components/profile-editor/profile-editor';
 import { OrderFeed } from '../../components/order-feed/order-feed';
+import { useAppDispatch } from '../../services/hooks';
 
 export function Profile() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onLogoutClick = useCallback(() => {
     dispatch(MAIN_ACTION.logout());

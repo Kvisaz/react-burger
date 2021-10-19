@@ -3,14 +3,13 @@ import styles from './reset-password.module.css';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useHistory } from 'react-router-dom';
 import { Routes } from '../../services/Routes';
-import { useDispatch } from 'react-redux';
 import { MAIN_ACTION, MainActionType } from '../../services/actions';
-import { useMainState } from '../../services/hooks';
+import { useAppDispatch, useMainState } from '../../services/hooks';
 
 export function ResetPassword() {
 
   const history = useHistory();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const {
     userResetPassword = '',
     userResetCode = '',

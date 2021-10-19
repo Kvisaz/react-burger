@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import styles from './profile-editor.module.css';
-import { useDispatch } from 'react-redux';
 import { MAIN_ACTION, MainActionType } from '../../services/actions';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Loading } from '../loading/loading';
 import { useMainState } from '../../services/hooks/useMainState';
+import { useAppDispatch } from '../../services/hooks/useAppDispatch';
 
 export function ProfileEditor() {
   const {
@@ -22,7 +22,7 @@ export function ProfileEditor() {
     || password !== userPassword,
     [userName, userEmail, name, email, password, userPassword]);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     e.persist(); // deprecated since React 17

@@ -3,13 +3,12 @@ import styles from './register.module.css';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Redirect } from 'react-router-dom';
 import { Routes } from '../../services/Routes';
-import { useDispatch } from 'react-redux';
 import { MAIN_ACTION, MainActionType } from '../../services/actions';
-import { useMainState } from '../../services/hooks/useMainState';
+import { useAppDispatch, useMainState } from '../../services/hooks';
 
 export function Register() {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const {
     userRegisterEmail: email = '',
     userRegisterName: name = '',

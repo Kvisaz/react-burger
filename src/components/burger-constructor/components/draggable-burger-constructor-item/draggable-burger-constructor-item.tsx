@@ -1,10 +1,10 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 import styles from './draggable-burger-constructor-item.module.css';
 import { ORDERS_ACTION } from '../../../../services/actions';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { DragSourceMonitor, useDrag, useDrop } from 'react-dnd';
+import { useAppDispatch } from '../../../../services/hooks/useAppDispatch';
 
 interface IBurgerConstructorItemProps {
   ingredientId: string;
@@ -39,7 +39,7 @@ interface DragItem {
 
 export function DraggableBurgerConstructorItem(props: IBurgerConstructorItemProps) {
   const { selectedId, ingredientId } = props;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const ref = useRef<HTMLDivElement>(null);
 

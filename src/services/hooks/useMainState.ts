@@ -1,7 +1,7 @@
 import { IMainState } from '../reducers';
-import { useSelector } from 'react-redux';
 import { RootState } from '../store';
+import { useAppSelector } from './useAppSelector';
 
 export function useMainState(): IMainState {
-  return useSelector((state: RootState) => ({ ...state.main }));
+  return useAppSelector((state: RootState) => ({ ...state.main }));
 }

@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients-item.module.css';
@@ -9,6 +8,7 @@ import { useHistory } from 'react-router-dom';
 import { Routes } from '../../../../services/Routes';
 import { MAIN_ACTION } from '../../../../services/actions';
 import { useOrderState } from '../../../../services/hooks';
+import { useAppDispatch } from '../../../../services/hooks/useAppDispatch';
 
 interface IBurgerConstructorItemProps {
   part: IBurgerPart;
@@ -20,7 +20,7 @@ BurgerIngredientsItem.propTypes = {
 
 export function BurgerIngredientsItem({ part }: IBurgerConstructorItemProps) {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [_, dragRef] = useDrag({
     type: 'item',

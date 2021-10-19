@@ -2,9 +2,9 @@ import React from 'react';
 import styles from './burger-ingredients-tabs.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 import { MainActionType } from '../../../../services/actions';
 import { useMainState } from '../../../../services/hooks/useMainState';
+import { useAppDispatch } from '../../../../services/hooks/useAppDispatch';
 
 
 BurgerIngredientsTabs.propTypes = {
@@ -13,7 +13,7 @@ BurgerIngredientsTabs.propTypes = {
 
 export function BurgerIngredientsTabs() {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { currentTabIndex, tabs } = useMainState();
 
   const onClick = (value: string) => {

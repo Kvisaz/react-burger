@@ -4,7 +4,6 @@ import { AppHeader } from '../app-header/app-header';
 import { Modal } from '../common/modal/modal';
 import { IngredientDetails } from '../burger-ingredients/components/ingredient-details/ingredient-details';
 import { OrderDetails } from '../burger-constructor/components/order-details/order-details';
-import { useDispatch } from 'react-redux';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { Routes } from '../../services/Routes';
 import { ProtectedRoute } from '../common/protected-route/protected-route';
@@ -23,6 +22,7 @@ import { INGREDIENTS_ACTION, MAIN_ACTION, ORDERS_ACTION } from '../../services/a
 import { Loading } from '../loading/loading';
 import { ProtectedAuthRoute } from '../common/protected-auth-route/protected-auth-route';
 import { useIngredientsState, useMainState, useOrderState } from '../../services/hooks';
+import { useAppDispatch } from '../../services/hooks/useAppDispatch';
 
 
 function App() {
@@ -58,7 +58,7 @@ function App() {
       isLoginRequest,
     ]);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(MAIN_ACTION.restoreAuth());
     dispatch(INGREDIENTS_ACTION.initData());

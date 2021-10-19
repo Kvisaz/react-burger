@@ -6,8 +6,8 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { useHistory, useLocation } from 'react-router-dom';
 import { LocationState, Routes } from '../../../services/Routes';
-import { useDispatch } from 'react-redux';
 import { MAIN_ACTION } from '../../../services/actions';
+import { useAppDispatch } from '../../../services/hooks/useAppDispatch';
 
 interface IModalProps {
   title?: string;
@@ -25,7 +25,7 @@ export function Modal({ title = '', children }: IModalProps) {
 
   const history = useHistory();
   const { state: locationState } = useLocation<LocationState>();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const backToUrl = locationState?.backTo ?? Routes.main;
 
   const hide = useCallback(() => {
