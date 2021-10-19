@@ -1,8 +1,9 @@
-import { applyMiddleware, compose, createStore } from 'redux';
-import thunk from 'redux-thunk';
-import { IRootState, rootReducer } from './reducers';
+import { Action, ActionCreator, applyMiddleware, compose, createStore } from 'redux';
+import thunk, { ThunkAction, ThunkMiddleware } from 'redux-thunk';
+import { IMainState, IngredientsState, IRootState, rootReducer } from './reducers';
 import { IngredientAction, MainAction, OrderAction, OrderActionActionType } from './actions';
 import { IWSActions, socketMiddleWare } from './middleware/socketMiddleWare';
+import { IOrderState } from './reducers/orders';
 
 declare global {
   interface Window {
@@ -23,6 +24,9 @@ const wsActions: IWSActions = {
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+type AppAction = MainAction | OrderAction | IngredientAction;
+type AppState = IMainState | IOrderState | IngredientsState;
+
 
 export const AppStore = createStore(
   rootReducer,
@@ -33,11 +37,14 @@ export const AppStore = createStore(
     ),
   ));
 
-type AppAction = MainAction | OrderAction | IngredientAction;
 
 export type RootState = ReturnType<typeof AppStore.getState>
 export type AppDispatch = typeof AppStore.dispatch;
 
+
+export type AppThunk<TReturn = void> = ActionCreator<
+  ThunkAction<TReturn, Action, RootState, AppAction>
+  >;
 
 export interface IGetState {
   (): IRootState;
