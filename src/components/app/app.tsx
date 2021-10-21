@@ -4,74 +4,80 @@ import { AppHeader } from '../app-header/app-header';
 import { Modal } from '../common/modal/modal';
 import { IngredientDetails } from '../burger-ingredients/components/ingredient-details/ingredient-details';
 import { OrderDetails } from '../burger-constructor/components/order-details/order-details';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../services/store';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { Routes } from '../../services/Routes';
 import { ProtectedRoute } from '../common/protected-route/protected-route';
-import { ForgotPassword, Login, Main, Orders, Page404, Profile, Register, ResetPassword } from '../../pages';
-import { initData, logoutActionCreator, setModalUrlOn } from '../../services/actions';
+import {
+  ForgotPassword,
+  Login,
+  Main,
+  OrderFeedDetails,
+  OrderFeedPage,
+  Page404,
+  Profile,
+  Register,
+  ResetPassword,
+} from '../../pages';
+import { INGREDIENTS_ACTION, MAIN_ACTION, ORDERS_ACTION } from '../../services/actions';
 import { Loading } from '../loading/loading';
 import { ProtectedAuthRoute } from '../common/protected-auth-route/protected-auth-route';
+import { useIngredientsState, useMainState, useOrderState } from '../../services/hooks';
+import { useAppDispatch } from '../../services/hooks/useAppDispatch';
 
 
 function App() {
   const {
-    isOrderSuccess,
-    orders,
     isRestoreRequest,
-    isIngredientsRequest,
-    isOrderRequest,
     isResetRequest,
     isRegisterRequest,
-    isRegisterFailed,
     isLoginRequest,
     isModalUrl,
+    isAuthorized,
     isAuthorizationChecking,
-    isOrderFailed,
-  } = useSelector((state: RootState) => ({ ...state }));
+  } = useMainState();
+
+  const {
+    showCreatedOrder,
+  } = useOrderState();
+
+  const { isIngredientsRequest } = useIngredientsState();
+
   const history = useHistory();
   const location = useLocation();
 
   const isLoading = useMemo(() => isIngredientsRequest
     || isRestoreRequest
     || isResetRequest
-    || isOrderRequest
     || isRegisterRequest
     || isLoginRequest
     || isAuthorizationChecking
     , [
       isAuthorizationChecking,
-      isIngredientsRequest, isOrderRequest, isResetRequest,
+      isIngredientsRequest, isResetRequest,
       isRestoreRequest, isRegisterRequest,
       isLoginRequest,
     ]);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(initData());
+    dispatch(MAIN_ACTION.restoreAuth());
+    dispatch(INGREDIENTS_ACTION.initData());
   }, [dispatch]);
+
 
   /**
    *  redirector
    */
   useEffect(() => {
-    if (isOrderSuccess && orders && orders.length > 0) {
-      const { orderId } = orders[orders.length - 1];
-      dispatch(setModalUrlOn());
+    if (showCreatedOrder) {
+      dispatch(MAIN_ACTION.setModalUrlOn());
+      dispatch(ORDERS_ACTION.showOrderPopup(showCreatedOrder));
       history.replace({
-        pathname: Routes.orderPageLinkCreator(orderId),
+        pathname: Routes.orderPageLinkCreator(showCreatedOrder.id),
       });
       return;
     }
-  }, [dispatch, history, orders, isOrderSuccess, isRegisterFailed,
-  ]);
-
-  useEffect(() => {
-    if (isOrderFailed) {
-      dispatch(logoutActionCreator());
-    }
-  }, [dispatch, isOrderFailed]);
+  }, [dispatch, history, showCreatedOrder]);
 
   return (
     <div className={styles.App}>
@@ -84,8 +90,10 @@ function App() {
           <ProtectedAuthRoute path={Routes.register} exact={true}><Register /></ProtectedAuthRoute>
           <ProtectedAuthRoute path={Routes.forgotPassword} exact={true}><ForgotPassword /></ProtectedAuthRoute>
           <Route path={Routes.resetPassword} exact={true}><ResetPassword /></Route>
-          <ProtectedRoute path={Routes.profile} exact={true}><Profile /></ProtectedRoute>
-          <ProtectedRoute path={Routes.orders} exact={true}><Orders /></ProtectedRoute>
+          <Route path={Routes.orderFeed} exact={true}><OrderFeedPage /></Route>
+          <Route path={Routes.orderFeedDetails} exact={true}><OrderFeedDetails /></Route>
+          <ProtectedRoute path={Routes.profileOrdersDetails} exact={true}><OrderFeedDetails /></ProtectedRoute>
+          <ProtectedRoute path={Routes.profile}><Profile /></ProtectedRoute>
           <Route path={Routes.ingredient} exact={true}>
             <IngredientDetails />
           </Route>

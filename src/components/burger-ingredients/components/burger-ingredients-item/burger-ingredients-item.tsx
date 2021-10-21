@@ -1,56 +1,54 @@
 import React, { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients-item.module.css';
-import { IBurgerPart, IBurgerPartPropType } from '../../../../model/IBurgerPart';
+import { IBurgerPart, IBurgerPartPropType } from '../../../../services/model/IBurgerPart';
 import { MoneyCounter } from '../../../common/money-counter/money-counter';
-import { RootState } from '../../../../services/store';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Routes } from '../../../../services/Routes';
-import { setModalUrlOn } from '../../../../services/actions';
+import { MAIN_ACTION } from '../../../../services/actions';
+import { useOrderState } from '../../../../services/hooks';
+import { useAppDispatch } from '../../../../services/hooks/useAppDispatch';
 
 interface IBurgerConstructorItemProps {
-	part: IBurgerPart;
+  part: IBurgerPart;
 }
 
 BurgerIngredientsItem.propTypes = {
-	part: IBurgerPartPropType.isRequired,
+  part: IBurgerPartPropType.isRequired,
 };
 
 export function BurgerIngredientsItem({ part }: IBurgerConstructorItemProps) {
 
-	const state = useSelector((state: RootState) => ({ ...state }));
-	const dispatch = useDispatch();
-	const location = useLocation();
+  const dispatch = useAppDispatch();
 
-	const [_, dragRef] = useDrag({
-		type: 'item',
-		item: { id: part._id },
-	}, [part]);
+  const [_, dragRef] = useDrag({
+    type: 'item',
+    item: { id: part._id },
+  }, [part]);
 
-	const { ingredientAmountMap } = state;
-	const { price, name, image, _id } = part;
-	const amount = ingredientAmountMap[_id] ?? 0;
+  const { ingredientAmountMap } = useOrderState();
+  const { price, name, image, _id } = part;
+  const amount = ingredientAmountMap[_id] ?? 0;
 
-	const history = useHistory();
+  const history = useHistory();
 
-	const onItemClick = useCallback((ingredient: IBurgerPart) => {
-		dispatch(setModalUrlOn());
-		history.replace({
-			pathname: Routes.ingredientLinkCreator(ingredient._id),
-		});
+  const onItemClick = useCallback((ingredient: IBurgerPart) => {
+    dispatch(MAIN_ACTION.setModalUrlOn());
+    history.replace({
+      pathname: Routes.ingredientLinkCreator(ingredient._id),
+    });
 
-	}, [history, dispatch]);
+  }, [history, dispatch]);
 
-	const hasAmount = amount > 0;
-	const counter = hasAmount ? (<Counter count={amount} size='default' />) : null;
-	return (
-		<div className={styles.item} onClick={() => onItemClick(part)} ref={dragRef}>
-			<img src={image} alt={name} className={styles.image} />
-			<MoneyCounter sum={price} />
-			<div className={`text text_type_main-default ${styles.name}`}>{name}</div>
-			{counter}
-		</div>
-	);
+  const hasAmount = amount > 0;
+  const counter = hasAmount ? (<Counter count={amount} size='default' />) : null;
+  return (
+    <div data-cy="burger-part" className={styles.item} onClick={() => onItemClick(part)} ref={dragRef}>
+      <img src={image} alt={name} className={styles.image} />
+      <MoneyCounter sum={price} />
+      <div className={`text text_type_main-default ${styles.name}`}>{name}</div>
+      {counter}
+    </div>
+  );
 }
