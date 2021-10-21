@@ -1,9 +1,0 @@
-.section {
-}
-
-.list {
-    display: flex;
-    gap: 24px;
-    flex-wrap: wrap;
-    align-items: flex-start;
-}
